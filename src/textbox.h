@@ -1,9 +1,10 @@
 #ifndef TEXTBOX_H
 #define TEXTBOX_H
 
-#include <QTextEdit>
 #include "mainwindow.h"
 #include "syntaxhighlighter.h"
+
+#include <QTextEdit>
 #include <QKeyEvent>
 
 #include <string>
@@ -29,7 +30,9 @@ public:
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
     void moveCursorBack();
+    void moveCursorForward();
     string getCursorPos();
+    string getAroundChars();
 
 signals:
 
@@ -78,29 +81,54 @@ protected:
         }*/
 
         else if (e->key() == Qt::Key_Apostrophe) {
-            QTextEdit::keyPressEvent(e);
-            insertPlainText("'");
-            moveCursorBack();
+            if (getAroundChars() != "''") {
+                QTextEdit::keyPressEvent(e);
+                insertPlainText("'");
+                moveCursorBack();
+            }
+            else {
+              moveCursorForward();
+            }
         }
         else if (e->key() == Qt::Key_QuoteDbl) {
-            QTextEdit::keyPressEvent(e);
-            insertPlainText("\"");
-            moveCursorBack();
+        	if (getAroundChars() != "\"\"") {
+	            QTextEdit::keyPressEvent(e);
+	            insertPlainText("\"");
+	            moveCursorBack();
+	        }
+	        else {
+	        	moveCursorForward();
+	        }
         }
         else if (e->key() == Qt::Key_BracketLeft) {
-            QTextEdit::keyPressEvent(e);
-            insertPlainText("]");
-            moveCursorBack();
+            if (getAroundChars() != "[]") {
+                QTextEdit::keyPressEvent(e);
+                insertPlainText("]");
+                moveCursorBack();
+            }
+            else {
+                moveCursorForward();
+            }
         }
         else if (e->key() == Qt::Key_BraceLeft) {
-            QTextEdit::keyPressEvent(e);
-            insertPlainText("}");
-            moveCursorBack();
+            if (getAroundChars() != "{}") {
+                QTextEdit::keyPressEvent(e);
+                insertPlainText("}");
+                moveCursorBack();
+            }
+            else {
+                moveCursorForward();
+            }
         }
         else if (e->key() == Qt::Key_ParenLeft) {
-            QTextEdit::keyPressEvent(e);
-            insertPlainText(")");
-            moveCursorBack();
+            if (getAroundChars() != "()") {
+                QTextEdit::keyPressEvent(e);
+                insertPlainText(")");
+                moveCursorBack();
+            }
+            else {
+                moveCursorForward();
+            }
         }
 
         else if (e->key() == Qt::Key_Backspace) {

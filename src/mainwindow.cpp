@@ -158,6 +158,18 @@ void MainWindow::OpenFile(QString path) {
         infopanel->updateText();
         UpdateTitle();
 
+        bool contain = false;
+        for (const File & file : files) {
+            if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
+                contain = true;
+                break;
+            }
+        }
+        if (!contain) {
+            File file(getFilename(filename), filetext, filename, currentDir, false);
+            files.insert(files.end(), file);
+        }
+
         saveLastFile();
         //textbox->isNew = false;
     }
@@ -309,6 +321,12 @@ void MainWindow::showLastFiles() {
     flwidget->show();
 }
 
+void MainWindow::showTabFiles() {
+	flwidget->fileslist->loadTabFiles();
+	flwidget->flsearch->setFocus();
+	flwidget->show();
+}
+
 void MainWindow::updateShortcuts() {
     QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+q"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(Exit()));
@@ -339,4 +357,7 @@ void MainWindow::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence("Ctrl+`"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showCurrentDirFiles()));
+
+    shortcut = new QShortcut(QKeySequence("Ctrl+p"), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(showTabFiles()));
 }

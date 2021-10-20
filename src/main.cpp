@@ -31,8 +31,8 @@
  * Ctrl+Delete (в файллисте) - Удаляет выделенный файл
  * Ctrl+k - Открывает директорию
  * Ctrl+Shift+s - Сохранить файл как
- *
- *
+ * Ctrl+p - Open tab files
+ * Alt+s - Open last files
  *
  *
 */
@@ -54,6 +54,9 @@
 
 /*
   Идеи для редактора.
+
+  +• Dobavit pri napisanii " v "" - peremeshenie cursora vleva
+  +• Dobavit na ctrl+p otkritie spiska filov, kotorie otkriti shyas
 
   • Можно добавить при выделении текста, если это цветовой код, то менять цвет квадратика в инфопанели
   • Вместо сразу открытия последнего файла, можно просто подгружать отдельный лист на ctrl+???
@@ -93,8 +96,6 @@
   +• Звёздочка, если файл не сохранён
   +• Скейл интерфейса
 */
-
-#include <source_location>
 
 void readJson()
 {

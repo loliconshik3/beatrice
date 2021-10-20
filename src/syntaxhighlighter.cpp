@@ -6,17 +6,23 @@
 
 using namespace std;
 
-SyntaxHighlighter::SyntaxHighlighter(QObject *parent) : QSyntaxHighlighter(parent)
+SyntaxHighlighter::SyntaxHighlighter(QObject *parent, MainWindow *proot) : QSyntaxHighlighter(parent)
 {
-
+	root = proot;
 }
 
 void SyntaxHighlighter::highlightBlock(const QString &text) {
+    return;
+
     map<string, string> reg_color = {
         {"[0-9]", "#71c919"},
         {"\\b(if|then|endif)\\b", "#d097a3"},
         {"\\b(call|local|function|library|endfunction)\\b", "#ff8080"}
     };
+
+    if (true) { //file ext
+        reg_color = { {"", ""} };
+    }
 
     QTextCharFormat format;
     QRegExp rx;

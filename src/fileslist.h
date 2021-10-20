@@ -22,6 +22,7 @@ public:
 
     void loadDirectoryFiles(string path);
     void loadLastFiles();
+    void loadTabFiles();
 
 public slots:
     void redrawFiles();

@@ -47,6 +47,7 @@ public slots:
     void aboutScreen();
     void showCurrentDirFiles();
     void showLastFiles();
+    void showTabFiles();
 
     void Exit() {
         exit(0);

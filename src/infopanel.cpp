@@ -23,19 +23,12 @@ MainWindow::InfoPanel::InfoPanel(MainWindow *parent) :
 
 void MainWindow::InfoPanel::updateText() {
     string totalText = "";
-    string fname = root->filename;
+    string fname = getFilename(root->filename);
     string cursorPos = root->textbox->getCursorPos();
     string tabSize = to_string(root->textbox->tabSize);
     string fontSize = to_string(root->textbox->font().pixelSize());
     string directory = getFilename(root->currentDir);
     string extension = getFileExt(fname);
-
-    char sep = '/';
-    vector<string> out;
-    split(fname, sep, out);
-    if (out.size() > 1) {
-        fname = out[out.size()-1];
-    }
 
     if (root->isFileOld()) {
         fname += "*";

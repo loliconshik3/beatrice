@@ -23,7 +23,7 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    highlighter = new SyntaxHighlighter(this);
+    highlighter = new SyntaxHighlighter(this, parent);
     highlighter->setDocument(this->document());
 
     QShortcut *shortcut = new QShortcut(QKeySequence("Alt+r"), this);
@@ -191,6 +191,17 @@ void MainWindow::Textbox::enterKey() {
     }
 }
 
+string MainWindow::Textbox::getAroundChars() {
+    QTextCursor cursor = textCursor();
+	string aroundChars = "";
+
+	cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, 2);
+    aroundChars = cursor.selectedText().toStdString();
+	
+	return aroundChars;
+}
+
 void MainWindow::Textbox::backspace() {
     QTextCursor cursor = textCursor();
 
@@ -266,6 +277,14 @@ void MainWindow::Textbox::moveCursorBack() {
     cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
 
     setTextCursor(cursor);
+}
+
+void MainWindow::Textbox::moveCursorForward() {
+	QTextCursor cursor = textCursor();
+
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1);
+
+	setTextCursor(cursor);
 }
 
 void MainWindow::Textbox::moveCursorRight() {

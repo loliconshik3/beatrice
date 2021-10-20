@@ -14,6 +14,7 @@ public:
     string name;
     string text;
     string path;
+    string extension;
     string directory;
 };
 

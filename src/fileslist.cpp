@@ -111,6 +111,22 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
     setCurrentItem(item(0));
 }
 
+void MainWindow::FileListWidget::FilesList::loadTabFiles() {
+    string fileName = "";
+    files.clear();
+    clear();
+
+    for (const File & file : root->files) {
+        fileName = file.path;
+
+        files[fileName] = file.path;
+        addItem(fileName.c_str());
+    }
+
+    sortItems();
+    setCurrentItem(item(0));	
+}
+
 void MainWindow::FileListWidget::FilesList::openFile() {
     if (count() > 0) {
         QString curItem = currentItem()->text();
