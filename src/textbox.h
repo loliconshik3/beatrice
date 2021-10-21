@@ -54,12 +54,14 @@ private slots:
     void tabulation();
     void removeLine();
     void duplicateLine();
+    int countOfTabs(string str);
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(QRectF /*rect_f*/);
     void updateLineNumberArea(int /*slider_pos*/);
     void updateLineNumberArea();
     void onTextChanged();
-    int countOfTabs(string str);
+    void completeQuotes(string quote);
+    void completeBrackets(string bracket, bool isNew = true);
 
 private:
 
@@ -81,54 +83,55 @@ protected:
         }*/
 
         else if (e->key() == Qt::Key_Apostrophe) {
-            if (getAroundChars() != "''") {
-                QTextEdit::keyPressEvent(e);
-                insertPlainText("'");
-                moveCursorBack();
-            }
-            else {
-              moveCursorForward();
-            }
+            completeQuotes("'");
         }
         else if (e->key() == Qt::Key_QuoteDbl) {
-        	if (getAroundChars() != "\"\"") {
-	            QTextEdit::keyPressEvent(e);
-	            insertPlainText("\"");
-	            moveCursorBack();
-	        }
-	        else {
-	        	moveCursorForward();
-	        }
+            completeQuotes("\"");
         }
+
         else if (e->key() == Qt::Key_BracketLeft) {
-            if (getAroundChars() != "[]") {
+            completeBrackets("[", true);
+            /*if (getAroundChars() != "[]") {
                 QTextEdit::keyPressEvent(e);
                 insertPlainText("]");
                 moveCursorBack();
             }
             else {
                 moveCursorForward();
-            }
+            }*/
         }
+        else if (e->key() == Qt::Key_BracketRight) {
+            completeBrackets("]", false);
+        }
+
         else if (e->key() == Qt::Key_BraceLeft) {
-            if (getAroundChars() != "{}") {
+            completeBrackets("{", true);
+            /*if (getAroundChars() != "{}") {
                 QTextEdit::keyPressEvent(e);
                 insertPlainText("}");
                 moveCursorBack();
             }
             else {
                 moveCursorForward();
-            }
+            }*/
         }
+        else if (e->key() == Qt::Key_BraceRight) {
+            completeBrackets("}", false);
+        }
+
         else if (e->key() == Qt::Key_ParenLeft) {
-            if (getAroundChars() != "()") {
+            completeBrackets("(", true);
+            /*if (getAroundChars() != "()") {
                 QTextEdit::keyPressEvent(e);
                 insertPlainText(")");
                 moveCursorBack();
             }
             else {
                 moveCursorForward();
-            }
+            }*/
+        }
+        else if (e->key() == Qt::Key_ParenRight) {
+            completeBrackets(")", false);
         }
 
         else if (e->key() == Qt::Key_Backspace) {

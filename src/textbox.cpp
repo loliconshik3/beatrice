@@ -371,8 +371,54 @@ void MainWindow::Textbox::tabulation() {
     insertPlainText(tabString);
 }
 
+void MainWindow::Textbox::completeQuotes(string quote) {
+    string totalQuote = quote + quote;
 
+    if (getAroundChars() != totalQuote) {
+        insertPlainText(totalQuote.c_str());
+        moveCursorBack();
+    }
+    else {
+        moveCursorForward();
+    }
+}
 
+void MainWindow::Textbox::completeBrackets(string bracket, bool isNew) {
+    map<string, string> bracketsList = {
+        {"(", ")"},
+        {"{", "}"},
+        {"[", "]"}
+    };
+    map<string, string> oppositeBracketsList = {
+        {")", "("},
+        {"}", "{"},
+        {"]", "["}
+    };
+    string totalBrackets = "";
+
+    if (isNew) {
+        string oppositeBracket = bracketsList[bracket];
+        totalBrackets = bracket + oppositeBracket;
+    }
+    else {
+        string oppositeBracket = oppositeBracketsList[bracket];
+        totalBrackets = oppositeBracket + bracket;
+    }
+
+    if (getAroundChars() != totalBrackets) {
+        if (isNew) {
+            insertPlainText(totalBrackets.c_str());
+            moveCursorBack();
+        }
+        else {
+            insertPlainText(bracket.c_str());
+        }
+    }
+    else {
+        moveCursorForward();
+    }
+
+}
 
 
 void MainWindow::Textbox::onTextChanged() {
