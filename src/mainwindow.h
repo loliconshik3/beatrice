@@ -18,6 +18,7 @@ public:
     string currentDir = "";
 
     vector<File> files;
+    File currentFile;
 
     class FileListWidget;
     class Textbox;
@@ -39,6 +40,8 @@ public:
 
 public slots:
     void NewFile();
+    void openUpFile();
+    void openDownFile();
     void insertSaveCommand(bool saveas=false);
     void SaveFile(QString name=nullptr);
     void OpenFile(QString path=nullptr);

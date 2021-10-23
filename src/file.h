@@ -16,6 +16,14 @@ public:
     string path;
     string extension;
     string directory;
+
+    bool operator == (const File &f1)
+    {
+       if(f1.path == this->path)
+         return true;
+       else
+         return false;
+    }
 };
 
 #endif // FILE_H

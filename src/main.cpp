@@ -33,6 +33,8 @@
  * Ctrl+Shift+s - Сохранить файл как
  * Ctrl+p - Open tab files
  * Alt+s - Open last files
+ * Alt+Up - Открывает верхний открытый файл
+ * Alt+Down - Открывает нижний открытый файл
  *
  *
 */

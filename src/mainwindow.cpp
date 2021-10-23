@@ -77,8 +77,18 @@ void MainWindow::NewFile() {
     saveLastFile();
     textbox->isNew = true;
 
-    File file("Untitled", "", currentDir+"/Untitled", currentDir, true);
-    files.insert(files.end(), file);
+    bool contain = false;
+    for (const File & file : files) {
+        if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
+            contain = true;
+            break;
+        }
+    }
+    if (!contain) {
+        File file("Untitled", "", currentDir+"/Untitled", currentDir, true);
+        files.insert(files.begin(), file);
+        currentFile = file;
+    }
 }
 
 void MainWindow::OpenFile(QString path) {
@@ -158,17 +168,22 @@ void MainWindow::OpenFile(QString path) {
         infopanel->updateText();
         UpdateTitle();
 
+        File contFile;
         bool contain = false;
         for (const File & file : files) {
             if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
                 contain = true;
+                contFile = file;
                 break;
             }
         }
         if (!contain) {
             File file(getFilename(filename), filetext, filename, currentDir, false);
-            files.insert(files.end(), file);
+            files.insert(files.begin(), file);
+            contFile = file;
         }
+
+        currentFile = contFile;
 
         saveLastFile();
         //textbox->isNew = false;
@@ -327,6 +342,37 @@ void MainWindow::showTabFiles() {
 	flwidget->show();
 }
 
+void MainWindow::openUpFile() {
+    if (files.size() > 1) {
+        auto it = std::find(files.begin(), files.end(), currentFile);
+
+        if (it != files.end())
+        {
+            int index = it - files.begin();
+            if (index > 0) {
+                cout << index << endl;
+                OpenFile(files[index-1].path.c_str());
+            }
+        }
+    }
+}
+
+void MainWindow::openDownFile() {
+    if (files.size() > 1) {
+        auto it = std::find(files.begin(), files.end(), currentFile);
+
+        if (it != files.end())
+        {
+            int index = it - files.begin();
+            int size = files.size()-1;
+            if (index < size) {
+                cout << index << " | " << size << endl;
+                OpenFile(files[index+1].path.c_str());
+            }
+        }
+    }
+}
+
 void MainWindow::updateShortcuts() {
     QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+q"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(Exit()));
@@ -360,4 +406,10 @@ void MainWindow::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence("Ctrl+p"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showTabFiles()));
+
+    shortcut = new QShortcut(QKeySequence("Alt+Up"), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(openUpFile()));
+
+    shortcut = new QShortcut(QKeySequence("Alt+Down"), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(openDownFile()));
 }
