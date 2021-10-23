@@ -1,5 +1,26 @@
 #include "utils.h"
 
+bool containFile(vector<File> files, File fl) {
+    bool contain = false;
+    for (const File & file : files) {
+        if (fl.path == file.path) {
+            contain = true;
+            break;
+        }
+    }
+    return contain;
+}
+
+File getContainedFile(vector<File> files, File fl) {
+    File contFile;
+    for (const File &file : files) {
+        if (fl == file) {
+            contFile = file;
+            break;
+        }
+    }
+    return contFile;
+}
 
 void writeStandartConfig() {
     QString fileName = (getHomeDir() + "/.beatrice/config.json").c_str();

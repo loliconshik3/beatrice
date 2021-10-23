@@ -10,3 +10,10 @@ File::File(string name, string text, string path, string directory, bool isNew)
     this->directory = directory;
     this->isNew = isNew;
 }
+
+bool File::isSaved() {
+    if (savedText == text) {
+        return true;
+    }
+    return false;
+}

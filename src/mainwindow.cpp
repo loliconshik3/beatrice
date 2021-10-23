@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setMinimumSize(QSize(1000, 600));
     currentDir = fs::current_path();
-    UpdateTitle();
+    currentFile = File("Untitled", "", currentDir+"/Untitled", getFilename(currentDir), true);
     //setMaximumSize(QSize(1000, 600));
 
     setStyleSheet("QWidget { background: #1f222d}");//#262728 }");//#2e2f30
@@ -40,12 +40,19 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::UpdateTitle() {
-    string fname = getFilename(filename);
+    /*string fname = getFilename(filename);
     if (isFileOld()) {
         fname += "*";
     }
     auto windowName = fname + " @ " + getFilename(currentDir) + " - beatrice";
 
+    setWindowTitle(windowName.c_str());*/
+
+    string fname = currentFile.name;
+    /*if (!currentFile->isSaved()) {
+        fname += "*";
+    }*/
+    auto windowName = fname + " @ " + currentFile.directory + " - beatrice";
     setWindowTitle(windowName.c_str());
 }
 
@@ -88,6 +95,90 @@ void MainWindow::NewFile() {
         File file("Untitled", "", currentDir+"/Untitled", currentDir, true);
         files.insert(files.begin(), file);
         currentFile = file;
+    }
+}
+
+void MainWindow::openFile(QString path) {
+    string homedir = getHomeDir();
+    bool createNewFile = false;
+
+    QString fileDir = "";
+    QString fileName = "";
+    QString fileText = "";
+    QString filePath = path;
+
+    if (path != nullptr) {
+        filePath = path.replace("~/", (homedir+"/").c_str());
+
+        QFile pathFile(filePath);
+        if (!pathFile.exists()) {
+            if (path.contains(homedir.c_str())) {
+                filePath = path;
+                createNewFile = true;
+            }
+            else {
+                filePath = currentDir.c_str() + QString("/") + path;
+                QFile pathFile(filePath);
+                if (!pathFile.exists()) {
+                    createNewFile = true;
+                }
+            }
+            cout << filePath.toStdString() << endl;
+        }
+        fileDir = getPathDir(filePath.toStdString()).c_str();
+
+        textbox->clear();
+
+        if (!createNewFile) {
+            QFile file(filePath);
+
+            File fl = File(fileName.toStdString(), fileText.toStdString(), filePath.toStdString(), fileDir.toStdString(), false);
+
+            if (containFile(files, fl)) {
+                fl = getContainedFile(files, fl);
+                textbox->setText(fl.text.c_str());
+                currentFile = fl;
+
+                textbox->setFocus();
+                infopanel->updateText();
+                UpdateTitle();
+
+                saveLastFile();
+                return;
+            }
+            else if (file.open(QIODevice::ReadWrite)) { // always check whether the file is open
+                textbox->clear();
+                fileName = getFilename(filePath.toStdString()).c_str();
+                textbox->setText(file.readAll());
+                fileText = textbox->toPlainText().toUtf8();
+                fileDir = getFilename(getPathDir(filePath.toStdString())).c_str();
+            }
+
+            file.close();
+        }
+        else {
+            textbox->clear();
+            fileName = fileName.toUtf8();
+            fileText = "";
+        }
+
+        File contFile = File(fileName.toStdString(), fileText.toStdString(), filePath.toStdString(), fileDir.toStdString(), createNewFile);
+        bool contain = containFile(files, contFile);
+
+        if (!contain) {
+            files.insert(files.begin(), contFile);
+        }
+
+        currentFile = contFile;
+
+        cout << contFile.path << endl;
+        cout << currentFile.name << endl;
+
+        textbox->setFocus();
+        infopanel->updateText();
+        UpdateTitle();
+
+        saveLastFile();
     }
 }
 
@@ -134,33 +225,21 @@ void MainWindow::OpenFile(QString path) {
         textbox->clear();
 
         if (not createNewFile) {
-            //myfile.open(fileName.toStdString());
             QFile file(fileName);
-            //string test = QFile("").readAll().toStdString();
 
-            if (file.open(QIODevice::ReadWrite)) {//if ( myfile.is_open() ) { // always check whether the file is open
+            if (file.open(QIODevice::ReadWrite)) { // always check whether the file is open
                 filename = fileName.toUtf8().toStdString();
                 textbox->setText(file.readAll());
-                /*while (getline(myfile, line)) {
-                    textbox->insertPlainText((line + "\n").c_str());
-                }*/
                 filetext = textbox->toPlainText().toUtf8().toStdString();
             }
 
             file.close();
-            //myfile.close();
             textbox->isNew = false;
         }
         else {
             QString name = fileName.toUtf8();
-            //std::ofstream outfile(name);
             filename = name.toUtf8().toStdString();
             filetext = "";
-
-            //outfile << filetext;
-
-            //outfile.close();
-            //textbox->isNew = true;
         }
 
         currentDir = getPathDir(filename);
@@ -186,18 +265,55 @@ void MainWindow::OpenFile(QString path) {
         currentFile = contFile;
 
         saveLastFile();
-        //textbox->isNew = false;
     }
 }
 
 void MainWindow::insertSaveCommand(bool saveas) {
-    if (textbox->isNew or saveas) {
+    if (currentFile.isNew or saveas) { //textbox->isNew or saveas
         commandline->clear();
         commandline->insert("save ");
         commandline->setFocus();
     }
     else {
-        SaveFile();
+        saveFile(); //SaveFile();
+    }
+}
+
+void MainWindow::saveFile(QString path) {
+    string homedir = getHomeDir();
+
+    QString fileName = "";
+    QString filePath = path;
+
+    if (!path.isEmpty()) {
+        filePath = currentDir.c_str() + QString("/") + path;
+        fileName = path;
+    }
+    else {
+        filePath = currentFile.path.c_str();
+        fileName = currentFile.name.c_str();
+    }
+
+    if (!filePath.isEmpty()) {
+        QFile file(filePath);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Unable to open file"),
+                file.errorString());
+            return;
+        }
+        QTextStream out(&file);
+        currentFile.name = fileName.toUtf8().toStdString();
+        currentFile.text = textbox->toPlainText().toUtf8().toStdString();
+        currentFile.path = filePath.toUtf8().toStdString();
+        currentFile.directory = getPathDir(currentFile.path);
+        currentFile.savedText = currentFile.text;
+        infopanel->updateText();
+        UpdateTitle();
+
+        out << currentFile.text.c_str();
+
+        file.close();
+        saveLastFile();
     }
 }
 
@@ -350,7 +466,6 @@ void MainWindow::openUpFile() {
         {
             int index = it - files.begin();
             if (index > 0) {
-                cout << index << endl;
                 OpenFile(files[index-1].path.c_str());
             }
         }
@@ -366,7 +481,6 @@ void MainWindow::openDownFile() {
             int index = it - files.begin();
             int size = files.size()-1;
             if (index < size) {
-                cout << index << " | " << size << endl;
                 OpenFile(files[index+1].path.c_str());
             }
         }

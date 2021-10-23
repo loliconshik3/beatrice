@@ -138,7 +138,7 @@ void MainWindow::FileListWidget::FilesList::openFile() {
             loadDirectoryFiles(path);
         }
         else {
-            root->OpenFile(path.c_str());
+            root->openFile(path.c_str());
             rootParent->hide();
         }
     }

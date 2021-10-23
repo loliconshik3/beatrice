@@ -19,6 +19,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include "file.h"
+
 using namespace std;
 
 void split(string &str, char delim, vector<string> &out);
@@ -26,6 +28,8 @@ string getPathDir(string path);
 string getFilename(string path);
 string getFileExt(string path);
 string getHomeDir();
+bool containFile(vector<File> files, File fl);
+File getContainedFile(vector<File> files, File fl);
 
 void writeStandartConfig();
 

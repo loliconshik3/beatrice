@@ -1,6 +1,7 @@
 #include "infopanel.h"
 #include "textbox.h"
 #include "utils.h"
+#include "file.h"
 
 #include <QtWidgets>
 #include <QTextCharFormat>
@@ -22,17 +23,42 @@ MainWindow::InfoPanel::InfoPanel(MainWindow *parent) :
 }
 
 void MainWindow::InfoPanel::updateText() {
-    string totalText = "";
+    /*string totalText = "";
     string fname = getFilename(root->filename);
     string cursorPos = root->textbox->getCursorPos();
     string tabSize = to_string(root->textbox->tabSize);
     string fontSize = to_string(root->textbox->font().pixelSize());
     string directory = getFilename(root->currentDir);
-    string extension = getFileExt(fname);
+    string extension = getFileExt(fname);*/
 
-    if (root->isFileOld()) {
+    /*if (root->isFileOld()) {
         fname += "*";
     }
+
+    list <string> args = {
+        fname + " (" + cursorPos + ")",
+        "ft:" + extension,
+        "Tab: " + tabSize,
+        "Font: " + fontSize + "px",
+        "Directory: " + directory,
+        "beatrice",
+        "by loliconshik3"
+    };
+
+    for (const string &arg : args) {
+        totalText += arg + " | ";
+    }
+    totalText = totalText.substr(0, totalText.length()-3);
+
+    setText(totalText.c_str());*/
+
+    string totalText = "";
+    string fname = root->currentFile.name;
+    string cursorPos = root->textbox->getCursorPos();
+    string extension = root->currentFile.extension;
+    string tabSize = to_string(root->textbox->tabSize);
+    string fontSize = to_string(root->textbox->font().pixelSize());
+    string directory = root->currentFile.directory;
 
     list <string> args = {
         fname + " (" + cursorPos + ")",

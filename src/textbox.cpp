@@ -3,6 +3,7 @@
 #include "infopanel.h"
 #include "linenumberarea.h"
 #include "utils.h"
+#include "file.h"
 
 #include <list>
 
@@ -424,6 +425,7 @@ void MainWindow::Textbox::completeBrackets(string bracket, bool isNew) {
 void MainWindow::Textbox::onTextChanged() {
     root->UpdateTitle();
     root->infopanel->updateText();
+    root->currentFile.text = toPlainText().toStdString();
 }
 
 int MainWindow::Textbox::lineNumberAreaWidth()

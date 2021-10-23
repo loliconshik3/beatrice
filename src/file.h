@@ -16,10 +16,21 @@ public:
     string path;
     string extension;
     string directory;
+    string savedText = "";
+
+    bool isSaved();
 
     bool operator == (const File &f1)
     {
        if(f1.path == this->path)
+         return true;
+       else
+         return false;
+    }
+
+    bool operator == (const File *f1)
+    {
+       if(f1->path == this->path)
          return true;
        else
          return false;

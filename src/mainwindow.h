@@ -44,7 +44,9 @@ public slots:
     void openDownFile();
     void insertSaveCommand(bool saveas=false);
     void SaveFile(QString name=nullptr);
+    void saveFile(QString path=nullptr);
     void OpenFile(QString path=nullptr);
+    void openFile(QString path=nullptr);
     void OpenFolder(QString path=nullptr);
     void changeFocus();
     void aboutScreen();

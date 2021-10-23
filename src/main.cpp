@@ -150,22 +150,22 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     MainWindow window;
 
-    MainWindow::FileListWidget flwidget(&window);
-    MainWindow::FileListWidget::FilesList fileslist(&flwidget);
-    MainWindow::FileListWidget::FileListSearch flsearch(&flwidget);
-
     MainWindow::Textbox textbox(&window);
     MainWindow::CommandLine commandline(&window);
     MainWindow::InfoPanel infopanel(&window);
 
+    MainWindow::FileListWidget flwidget(&window);
+    MainWindow::FileListWidget::FilesList fileslist(&flwidget);
+    MainWindow::FileListWidget::FileListSearch flsearch(&flwidget);
+
     QGridLayout *layout = new QGridLayout;
 
-    window.flwidget = &flwidget;
-    flwidget.fileslist = &fileslist;
-    flwidget.flsearch = &flsearch;
     window.commandline = &commandline;
     window.infopanel = &infopanel;
     window.textbox = &textbox;
+    window.flwidget = &flwidget;
+    flwidget.fileslist = &fileslist;
+    flwidget.flsearch = &flsearch;
 
     layout->addWidget(window.textbox, 0, 0);
     //layout->addWidget(&testbox);
@@ -182,6 +182,7 @@ int main(int argc, char *argv[])
     window.commandline->show();
     flwidget.hide();
     window.infopanel->updateText();
+    window.UpdateTitle();
 
     //QMessageBox::StandardButton reply;
     //reply = QMessageBox::question(&window, "Loader", "Load last file?",
