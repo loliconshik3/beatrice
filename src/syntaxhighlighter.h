@@ -13,6 +13,8 @@ public:
 
 	MainWindow *root;
     void highlightBlock(const QString &text);
+    map<string, string> generateJASS();
+    map<string, string> loadSyntax(const string &ext);
 };
 
 #endif // SYNTAXHIGHLIGHTER_H
