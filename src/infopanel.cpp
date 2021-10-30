@@ -36,10 +36,10 @@ void MainWindow::InfoPanel::updateText() {
 
     list <string> args = {
         fname + " (" + cursorPos + ")",
-        "ft:" + extension,
-        "Tab: " + tabSize,
-        "Font: " + fontSize + "px",
-        "Directory: " + directory,
+        "ext: " + extension,
+        "tab: " + tabSize,
+        "font: " + fontSize + "px",
+        "dir: " + directory,
         "beatrice",
         "by loliconshik3"
     };
