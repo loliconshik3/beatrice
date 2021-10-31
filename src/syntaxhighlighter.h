@@ -14,6 +14,7 @@ public:
 	MainWindow *root;
     void highlightBlock(const QString &text);
     map<string, string> generateJASS();
+    map<string, string> generatePython();
     map<string, string> loadSyntax(const string &ext);
 };
 

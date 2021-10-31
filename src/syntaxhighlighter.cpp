@@ -18,10 +18,23 @@ map<string, string> SyntaxHighlighter::generateJASS() {
     map<string, string> patterns = {
         //{"/*.**/", "#8a8d93"},
         {"[0-9]|=", "#71c919"},
-        //{"(?!function ).*(?= takes)", "#71c919"},
+        //{"(?=function )(.*)(?= takes)", "#71c919"},
         {"\\b(if|then|endif|loop|exitwhen|endloop)\\b", "#d097a3"},
         {"\\b(this|null|boolexpr|nothing|array|unit|integer|real|boolean|location|timer|group)\\b", "#c95b8e"},
         {"\\b(takes|returns|set|call|private|public|globals|endglobals|local|function|endfunction|library|endlibrary|struct|endstruct|method|endmethod)\\b", "#ff8080"}
+    };
+
+    return patterns;
+}
+
+map<string, string> SyntaxHighlighter::generatePython() {
+    map<string, string> patterns = {
+        //{"/*.**/", "#8a8d93"},
+        {"[0-9]|=", "#71c919"},
+        //{"(?=def )(.*)(?=()", "#71c919"},
+        {"\\b(if|for|in|while|break|try|except|pass|return)\\b", "#d097a3"},
+        {"\\b(self|True|False)\\b", "#c95b8e"},
+        {"\\b(def|class|from|import)\\b", "#ff8080"}
     };
 
     return patterns;
@@ -32,6 +45,9 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
 
     if (ext == "j") {
         patterns = generateJASS();
+    }
+    else if (ext == "py") {
+        patterns = generatePython();
     }
 
     return patterns;
