@@ -373,8 +373,14 @@ void MainWindow::Textbox::tabulation() {
 
 void MainWindow::Textbox::completeQuotes(string quote) {
     string totalQuote = quote + quote;
+    string achars = getAroundChars();
 
-    if (getAroundChars() != totalQuote) {
+    if (achars.length() > 1 && (achars.substr(0) != quote && achars.substr(1) == quote)) {
+        moveCursorForward();
+        return;
+    }
+
+    if (achars != totalQuote) {
         insertPlainText(totalQuote.c_str());
         moveCursorBack();
     }
