@@ -244,6 +244,20 @@ void MainWindow::SaveFile(QString name) {
         out << text;
 
         file.close();
+
+        bool contain = false;
+        for (const File & file : files) {
+            if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
+                contain = true;
+                break;
+            }
+        }
+        if (!contain) {
+            File file(filename, filetext, filename, currentDir, true);
+            files.insert(files.begin(), file);
+            currentFile = file;
+        }
+
         saveLastFile();
         textbox->isNew = false;
     }
