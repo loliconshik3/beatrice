@@ -45,9 +45,9 @@ void MainWindow::InfoPanel::updateText() {
     };
 
     for (const string &arg : args) {
-        totalText += arg + " | ";
+        totalText += arg + root->cfg->infoPanelSeparator;
     }
-    totalText = totalText.substr(0, totalText.length()-3);
+    totalText = totalText.substr(0, totalText.length()-root->cfg->infoPanelSeparator.length());
 
     setText(totalText.c_str());
 }

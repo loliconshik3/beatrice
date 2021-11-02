@@ -29,7 +29,7 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-    setMinimumSize(QSize(1000, 600));
+    setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
     currentDir = fs::current_path();
     UpdateTitle();
     //setMaximumSize(QSize(1000, 600));

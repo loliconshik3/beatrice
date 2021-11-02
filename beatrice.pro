@@ -10,6 +10,7 @@ CONFIG += c++17 g++11
 
 SOURCES += \
     src/commandline.cpp \
+    src/config.cpp \
     src/file.cpp \
     src/filelistsearch.cpp \
     src/filelistwidget.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     src/commandline.h \
+    src/config.h \
     src/file.h \
     src/filelistsearch.h \
     src/filelistwidget.h \

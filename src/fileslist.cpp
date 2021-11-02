@@ -26,17 +26,7 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QRect rect = QDesktopWidget().availableGeometry();
-    int width = rect.width() / 2;
-    int height = rect.height() / 3-25;
-    setGeometry(0, 25, width, height);
-
-    /*int x = (rect.width()-width)/2;
-    int y = (rect.height()-height)/2;
-    move(x, y);*/
-
-    /*QShortcut *shortcut = new QShortcut(QKeySequence("Esc"), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(closeWindow()));*/
+    setGeometry(0, root->cfg->fileListTopPadding, root->cfg->fileListWidth, root->cfg->fileListHeight);
 
     QShortcut *shortcut = new QShortcut(QKeySequence("Return"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));

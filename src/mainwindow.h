@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "config.h"
 #include "file.h"
 
 #include <QMainWindow>
@@ -19,6 +20,8 @@ public:
 
     vector<File> files;
     File currentFile;
+
+    Config *cfg = new Config();
 
     class FileListWidget;
     class Textbox;

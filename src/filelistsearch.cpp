@@ -13,9 +13,7 @@ MainWindow::FileListWidget::FileListSearch::FileListSearch(FileListWidget *paren
     setStyleSheet("QLineEdit { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
     setPlaceholderText("Type to filter...");
 
-    QRect rect = QDesktopWidget().availableGeometry();
-    int width = rect.width() / 2;
-    setGeometry(0, 0, width, 25);
+    setGeometry(0, 0, root->cfg->fileListSearchWidth, root->cfg->fileListSearchHeight);
 
     connect(this, &FileListSearch::textChanged, this, &FileListSearch::filterList);
 
