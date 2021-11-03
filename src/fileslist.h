@@ -10,10 +10,10 @@ using namespace std;
 class MainWindow::FileListWidget::FilesList : public QListWidget
 {
     Q_OBJECT
-public:
-
+private:
     const string BACK_NAME = ">> BACK <<";
 
+public:
     map<string, string> files;
     MainWindow *root;
     FileListWidget *rootParent = NULL;

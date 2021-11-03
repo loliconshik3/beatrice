@@ -14,9 +14,9 @@ class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
-    string filename = "Untitled";
-    string filetext = "";
-    string currentDir = "";
+    string filename     = "Untitled";
+    string filetext     = "";
+    string currentDir   = "";
     vector<QString> clipboard;
 
     vector<File> files;
@@ -29,10 +29,10 @@ public:
     class InfoPanel;
     class CommandLine;
 
-    Textbox *textbox = NULL;
-    InfoPanel *infopanel = NULL;
-    CommandLine *commandline = NULL;
-    FileListWidget *flwidget = NULL;
+    Textbox *textbox            = NULL;
+    InfoPanel *infopanel        = NULL;
+    CommandLine *commandline    = NULL;
+    FileListWidget *flwidget    = NULL;
 
     MainWindow(QWidget *parent = nullptr);
 

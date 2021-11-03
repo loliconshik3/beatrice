@@ -1,7 +1,9 @@
 #include "filelistwidget.h"
 #include "filelistsearch.h"
+#include "utils.h"
 
 #include <QDesktopWidget>
+#include <QHideEvent>
 
 MainWindow::FileListWidget::FileListWidget(MainWindow *parent) : QWidget(parent)
 {
@@ -16,8 +18,10 @@ MainWindow::FileListWidget::FileListWidget(MainWindow *parent) : QWidget(parent)
 
 void MainWindow::FileListWidget::closeEvent(QCloseEvent *e) {
     flsearch->clear();
+    log("Close file list widget"); e->type();
 }
 
 void MainWindow::FileListWidget::hideEvent(QHideEvent *event) {
     flsearch->clear();
+    log("Hide file list widget"); event->type();
 }

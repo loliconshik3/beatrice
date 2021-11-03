@@ -30,9 +30,9 @@ void MainWindow::FileListWidget::FileListSearch::filterList() {
 
 void MainWindow::FileListWidget::FileListSearch::Up() {
     if (not rootParent->fileslist->isHidden()) {
-        int itemIndex = rootParent->fileslist->currentIndex().row();
-        auto flist = rootParent->fileslist;
-        int maxIndex = 0;
+        int itemIndex   = rootParent->fileslist->currentIndex().row();
+        auto flist      = rootParent->fileslist;
+        int maxIndex    = 0;
 
         if (itemIndex > maxIndex) {
            flist->setCurrentItem(flist->item(itemIndex-1));
@@ -45,9 +45,9 @@ void MainWindow::FileListWidget::FileListSearch::Up() {
 
 void MainWindow::FileListWidget::FileListSearch::Down() {
     if (not rootParent->fileslist->isHidden()) {
-        int itemIndex = rootParent->fileslist->currentIndex().row();
-        int maxIndex = rootParent->fileslist->count()-1;
-        auto flist = rootParent->fileslist;
+        int itemIndex   = rootParent->fileslist->currentIndex().row();
+        int maxIndex    = rootParent->fileslist->count()-1;
+        auto flist      = rootParent->fileslist;
 
         if (itemIndex < maxIndex) {
            flist->setCurrentItem(flist->item(itemIndex+1));

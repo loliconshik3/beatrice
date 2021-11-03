@@ -8,5 +8,16 @@ File::File(string name, string text, string path, string directory, bool isNew)
     this->path = path;
     this->extension = getFileExt(name);
     this->directory = directory;
-    this->isNew = isNew;
+    this->isNew     = isNew;
+    this->savedText = text;
+}
+
+bool File::isSaved() {
+    bool result = false;
+
+    if (text == savedText) {
+        result = true;
+    }
+
+    return result;
 }

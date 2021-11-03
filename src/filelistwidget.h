@@ -16,8 +16,8 @@ public:
 
     class FilesList;
     class FileListSearch;
-    FileListSearch *flsearch = NULL;
-    FilesList *fileslist = NULL;
+    FileListSearch *flsearch    = NULL;
+    FilesList *fileslist        = NULL;
 
     explicit FileListWidget(MainWindow *parent = nullptr);
 

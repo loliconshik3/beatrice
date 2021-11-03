@@ -18,9 +18,9 @@ class MainWindow::Textbox : public QTextEdit
     Q_OBJECT
 
 public:
-    int tabSize = 4;
-    QString tabString = "    ";
-    bool isNew = true;
+    int tabSize         = 4;
+    QString tabString   = "    ";
+    bool isNew          = true;
 
     SyntaxHighlighter *highlighter = NULL;
 
@@ -73,7 +73,7 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *e) {
         if (e->key() == Qt::Key_Tab) {
-            tabulation();//insertPlainText(tabString);
+            tabulation();
         }
 
         /*switch (e->key()) {
@@ -91,14 +91,6 @@ protected:
 
         else if (e->key() == Qt::Key_BracketLeft) {
             completeBrackets("[", true);
-            /*if (getAroundChars() != "[]") {
-                QTextEdit::keyPressEvent(e);
-                insertPlainText("]");
-                moveCursorBack();
-            }
-            else {
-                moveCursorForward();
-            }*/
         }
         else if (e->key() == Qt::Key_BracketRight) {
             completeBrackets("]", false);
@@ -106,14 +98,6 @@ protected:
 
         else if (e->key() == Qt::Key_BraceLeft) {
             completeBrackets("{", true);
-            /*if (getAroundChars() != "{}") {
-                QTextEdit::keyPressEvent(e);
-                insertPlainText("}");
-                moveCursorBack();
-            }
-            else {
-                moveCursorForward();
-            }*/
         }
         else if (e->key() == Qt::Key_BraceRight) {
             completeBrackets("}", false);
@@ -121,14 +105,6 @@ protected:
 
         else if (e->key() == Qt::Key_ParenLeft) {
             completeBrackets("(", true);
-            /*if (getAroundChars() != "()") {
-                QTextEdit::keyPressEvent(e);
-                insertPlainText(")");
-                moveCursorBack();
-            }
-            else {
-                moveCursorForward();
-            }*/
         }
         else if (e->key() == Qt::Key_ParenRight) {
             completeBrackets(")", false);
