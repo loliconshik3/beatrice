@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
         //if (find)
         //Сделать чтобы при вводе аргумента, если отсутствует знак /, то не открывать файл, а менять тайтл
         // на текущую дерикторию + файлнейм
-        window.OpenFile(argv[1]);
+        window.openFile(argv[1]);
     }
     system("clear");
 

@@ -121,7 +121,6 @@ void MainWindow::openFile(QString path) {
     File *file          = new File("Untitled", "", path.toStdString(), "", true);
     string homedir      = getHomeDir();
     QString testPath    = path;
-    string oldPath      = path.toStdString();
     bool createNewFile  = false;
 
     QString filePath    = "";
@@ -146,7 +145,8 @@ void MainWindow::openFile(QString path) {
                 createNewFile = true;
             }
             else {
-                filePath = currentDir.c_str() + QString("/") + path;
+                string dir = fs::current_path();
+                filePath = dir.c_str() + QString("/") + path;
                 QFile pathFile(filePath);
                 if (!pathFile.exists()) {
                     createNewFile = true;
@@ -156,15 +156,19 @@ void MainWindow::openFile(QString path) {
         }
 
         QFile fl(filePath);
-        if (fl.open(QIODevice::ReadWrite)) {
+        if (fl.open(QIODevice::ReadOnly)) {
             fileText = fl.readAll();
         }
 
         string fpath = filePath.toStdString();
         string ftext = fileText.toStdString();
-        string fname = getFilename(filePath.toStdString());
+        string fname = getFilename(fpath);
         string fdir  = getFilename(getPathDir(fpath));
         bool fisNew  = createNewFile;
+
+        if (fname != "Untitled") {
+            fisNew = false;
+        }
 
         File *file = new File(fname, ftext, fpath, fdir, fisNew);
         files.insert(files.begin(), file);
