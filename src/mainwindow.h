@@ -19,8 +19,8 @@ public:
     string currentDir   = "";
     vector<QString> clipboard;
 
-    vector<File> files;
-    File currentFile;
+    vector<File*> files = {};
+    File *currentFile = new File();
 
     Config *cfg = new Config();
 
@@ -43,6 +43,8 @@ public:
     bool isFileOld();
 
 public slots:
+    void openFile();
+
     void NewFile();
     void openUpFile();
     void openDownFile();

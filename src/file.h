@@ -2,6 +2,11 @@
 #define FILE_H
 
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <filesystem>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -19,13 +24,14 @@ public:
     string savedText;
 
     bool isSaved();
+    bool inList(vector<File*> &fls);
 
     bool operator == (const File &f1)
     {
-       if(f1.path == this->path)
-         return true;
-       else
-         return false;
+        if(f1.path == this->path)
+          return true;
+        else
+          return false;
     }
 };
 

@@ -79,16 +79,22 @@ void MainWindow::NewFile() {
     textbox->isNew = true;
 
     bool contain = false;
-    for (const File & file : files) {
-        if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
+    for (const auto & file : files) {
+        if (QString(file->path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
             contain = true;
             break;
         }
     }
     if (!contain) {
-        File file("Untitled", "", currentDir+"/Untitled", currentDir, true);
+        File *file = new File("Untitled", "", currentDir+"/Untitled", currentDir, true);
         files.insert(files.begin(), file);
         currentFile = file;
+    }
+}
+
+void MainWindow::openFile() {
+    if (currentFile->inList(files)) {
+        log("work");
     }
 }
 
@@ -157,17 +163,17 @@ void MainWindow::OpenFile(QString path) {
         infopanel->updateText();
         UpdateTitle();
 
-        File contFile;
+        File *contFile = NULL;
         bool contain = false;
-        for (const File & file : files) {
-            if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
+        for (const auto & file : files) {
+            if (QString(file->path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
                 contain = true;
                 contFile = file;
                 break;
             }
         }
         if (!contain) {
-            File file(getFilename(filename), filetext, filename, currentDir, false);
+            File *file = new File(getFilename(filename), filetext, filename, currentDir, false);
             files.insert(files.begin(), file);
             contFile = file;
         }
@@ -176,6 +182,7 @@ void MainWindow::OpenFile(QString path) {
 
         log("Open file '" + filename + "'");
         saveLastFile();
+        openFile();
     }
 }
 
@@ -223,17 +230,20 @@ void MainWindow::SaveFile(QString name) {
         file.close();
 
         bool contain = false;
-        for (const File & file : files) {
-            if (QString(file.path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
+        for (const auto & file : files) {
+            if (QString(file->path.c_str()).contains(filename.c_str(), Qt::CaseInsensitive)) {
                 contain = true;
                 break;
             }
         }
         if (!contain) {
-            File file(filename, filetext, filename, currentDir, true);
+            File *file = new File(filename, filetext, filename, currentDir, true);
             files.insert(files.begin(), file);
             currentFile = file;
         }
+
+        currentFile->savedText = filetext;
+        openFile();
 
         log("Save file '" + filename + "'");
         saveLastFile();
@@ -336,7 +346,7 @@ void MainWindow::openUpFile() {
         {
             int index = it - files.begin();
             if (index > 0) {
-                OpenFile(files[index-1].path.c_str());
+                OpenFile(files[index-1]->path.c_str());
             }
         }
     }
@@ -351,7 +361,7 @@ void MainWindow::openDownFile() {
             int index = it - files.begin();
             int size = files.size()-1;
             if (index < size) {
-                OpenFile(files[index+1].path.c_str());
+                OpenFile(files[index+1]->path.c_str());
             }
         }
     }

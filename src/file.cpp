@@ -21,3 +21,13 @@ bool File::isSaved() {
 
     return result;
 }
+
+bool File::inList(vector<File*> &fls) {
+    for (const auto &fl : fls) {
+        if (fl->path == this->path) {
+            return true;
+        }
+    }
+
+    return false;
+}

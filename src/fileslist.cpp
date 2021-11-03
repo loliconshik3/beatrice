@@ -106,10 +106,10 @@ void MainWindow::FileListWidget::FilesList::loadTabFiles() {
     files.clear();
     clear();
 
-    for (const File & file : root->files) {
-        fileName = file.path;
+    for (const auto & file : root->files) {
+        fileName = file->path;
 
-        files[fileName] = file.path;
+        files[fileName] = file->path;
         addItem(fileName.c_str());
     }
 
