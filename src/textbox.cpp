@@ -41,6 +41,9 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_insertTabAtLine), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(insertTabAtLine()));
 
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeTabAtLine), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(removeTabAtLine()));
+
     connect(this, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
 
     // Line numbers
@@ -106,34 +109,20 @@ void MainWindow::Textbox::tabulation() {
 
 void MainWindow::Textbox::removeTabAtLine() {
     QTextCursor cursor  = textCursor();
-    int lineNumer       = cursor.block().blockNumber();
-    int columnNumer     = cursor.columnNumber();
-
-    cursor.movePosition(QTextCursor::Start);
-    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
-    setTextCursor(cursor);
-
-    int index = tabSize;
-    while (index > 0) {
-        cursor.deleteChar();
-        --index;
-    }
-
-    setTextCursor(cursor);
-}
-
-void MainWindow::Textbox::insertTabAtLine() {
-    QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
     int lineNumer       = cursor.block().blockNumber();
-    int columnNumer     = cursor.columnNumber();
 
     if (lines == 0) {
         cursor.movePosition(QTextCursor::Start);
         cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
         setTextCursor(cursor);
-        insertPlainText(tabString);
-        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer);
+
+        int index = tabSize;
+        while (index > 0) {
+            cursor.deleteChar();
+            --index;
+        }
+
         setTextCursor(cursor);
     }
     else {
@@ -155,6 +144,19 @@ void MainWindow::Textbox::insertTabAtLine() {
         cursor.setPosition(end, QTextCursor::KeepAnchor);
         setTextCursor(cursor);
     }
+}
+
+void MainWindow::Textbox::insertTabAtLine() {
+    QTextCursor cursor  = textCursor();
+    int lineNumer       = cursor.block().blockNumber();
+    int columnNumer     = cursor.columnNumber();
+
+    cursor.movePosition(QTextCursor::Start);
+    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
+    setTextCursor(cursor);
+    insertPlainText(tabString);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer);
+    setTextCursor(cursor);
 }
 
 void MainWindow::Textbox::scalePlus() {

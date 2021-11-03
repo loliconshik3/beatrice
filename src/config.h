@@ -53,6 +53,7 @@ public:
     QString sct_scalePlus       = "Ctrl+=";   //Increase text scale
     QString sct_scaleMinus      = "Ctrl+-";   //Decrease text scale
     QString sct_insertTabAtLine = "Ctrl+Tab"; //Insert tab at start of current line
+    QString sct_removeTabAtLine = "Shift+Tab";//Remove tab at start of current line
     //=============================
 
     Config();
