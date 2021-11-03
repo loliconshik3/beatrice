@@ -358,42 +358,42 @@ void MainWindow::openDownFile() {
 }
 
 void MainWindow::updateShortcuts() {
-    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+q"), this);
+    QShortcut *shortcut = new QShortcut(QKeySequence(cfg->sct_quit), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(Exit()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+s"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_save), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(insertSaveCommand()));//SaveFile()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+Shift+s"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_saveAs), this);
     connect(shortcut, &QShortcut::activated, this, [this]{ insertSaveCommand(true); });
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+o"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_open), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showCurrentDirFiles()));//OpenFile()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+k"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_openFolder), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(OpenFolder()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+n"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_new), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(NewFile()));
 
-    shortcut = new QShortcut(QKeySequence("Alt+e"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_changeFocus), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(changeFocus()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+i"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_about), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(aboutScreen()));
 
-    shortcut = new QShortcut(QKeySequence("Alt+s"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_showLastFiles), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showLastFiles()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+`"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_showCurrentDir), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showCurrentDirFiles()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+p"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_showTabFiles), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showTabFiles()));
 
-    shortcut = new QShortcut(QKeySequence("Alt+Up"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_openTopFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openUpFile()));
 
-    shortcut = new QShortcut(QKeySequence("Alt+Down"), this);
+    shortcut = new QShortcut(QKeySequence(cfg->sct_openBottomFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openDownFile()));
 }

@@ -30,6 +30,22 @@ public:
 
     string infoPanelSeparator = " | ";
 
+    //==========Shortcuts==========
+    QString sct_quit            = "Ctrl+q";
+    QString sct_save            = "Ctrl+s";
+    QString sct_saveAs          = "Ctrl+Shift+s";
+    QString sct_open            = "Ctrl+o";
+    QString sct_openFolder      = "Ctrl+k";
+    QString sct_new             = "Ctrl+n";
+    QString sct_changeFocus     = "Alt+e";    //Change focus from textbox to commandline and conversely
+    QString sct_about           = "Ctrl+i";   //Show about window
+    QString sct_showLastFiles   = "Alt+s";    //Show last opened files
+    QString sct_showCurrentDir  = "Ctrl+`";   //Show list of files in current dir (like sct_open)
+    QString sct_showTabFiles    = "Ctrl+p";   //Show list of opened files
+    QString sct_openTopFile     = "Alt+Up";   //Move to top opened file
+    QString sct_openBottomFile  = "Alt+Down"; //Move to bottom opened file
+    //=============================
+
     Config();
 };
 
