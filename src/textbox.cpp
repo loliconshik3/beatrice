@@ -113,6 +113,10 @@ void MainWindow::Textbox::removeTabAtLine() {
     int lineNumer       = cursor.block().blockNumber();
 
     if (lines == 0) {
+        if (countOfTabs(cursor.block().text().toStdString()) == 0) {
+            return;
+        }
+
         cursor.movePosition(QTextCursor::Start);
         cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
         setTextCursor(cursor);
