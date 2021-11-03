@@ -17,6 +17,7 @@ public:
     string filename = "Untitled";
     string filetext = "";
     string currentDir = "";
+    vector<QString> clipboard;
 
     vector<File> files;
     File currentFile;

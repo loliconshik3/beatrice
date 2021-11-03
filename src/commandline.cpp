@@ -10,7 +10,6 @@ MainWindow::CommandLine::CommandLine(MainWindow *parent) :
 {
     root = parent; //#1f1f1f //2e2f30
     setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
-    //setPlaceholderText("Type command...");
 
     QShortcut *shortcut = new QShortcut(QKeySequence("Return"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));
@@ -48,9 +47,6 @@ void MainWindow::CommandLine::launchCommand() {
                 if (size > 0 and size < 13) {
                     root->textbox->setTabSize(size);
                 }
-                /*else {
-                    return;
-                }*/
             }
             catch (const std::exception& e) { return; }
         }

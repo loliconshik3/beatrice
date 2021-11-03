@@ -1,44 +1,5 @@
 #include "utils.h"
 
-
-void writeStandartConfig() {
-    QString fileName = (getHomeDir() + "/.beatrice/config.json").c_str();
-
-    vector<QString> config = {
-        "{",
-        "    \"window-minimum-width\" : 1000, ",
-        "    \"window-minimum-height\" : 600, ",
-        "",
-        "    \"main-window-background\" : \"#1f222d\", ",
-        "",
-        "    \"textbox-border\" : \"none\", ",
-        "    \"textbox-background\" : \"#1f222d\", ",
-        "    \"textbox-font-color\" : \"lightGray\" ",
-        "}"
-    };
-
-    QFile file(fileName);
-    if (file.exists()) {
-        return;
-    }
-    if (!file.open(QIODevice::WriteOnly)) {
-        return;
-    }
-
-    QTextStream out(&file);
-
-    for (const auto &line : config) {
-        out << line+"\n";
-    }
-
-    file.close();
-}
-
-
-
-
-
-
 void split(string &str, char delim, vector<string> &out)
 {
     size_t start;

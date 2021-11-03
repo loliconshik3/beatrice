@@ -99,32 +99,6 @@
   +• Скейл интерфейса
 */
 
-void readJson()
-{
-    QString val;
-    QFile file((getHomeDir()+"/.beatrice/config.json").c_str());
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = file.readAll();
-    file.close();
-    qWarning() << val;
-    QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
-    QJsonObject sett2 = d.object();
-    QJsonValue value = sett2.value(QString("window-minimum-width"));
-    qWarning() << value;
-    QJsonObject item = value.toObject();
-    qWarning() << QObject::tr("QJsonObject of description: ") << item;
-
-    /* in case of string value get value and convert into string*/
-    qWarning() << QObject::tr("QJsonObject[appName] of description: ") << item["description"];
-    QJsonValue subobj = item["description"];
-    qWarning() << subobj.toString();
-
-    /* in case of array get array and convert into string*/
-    qWarning() << QObject::tr("QJsonObject[appName] of value: ") << item["imp"];
-    QJsonArray test = item["imp"].toArray();
-    qWarning() << test[1].toString();
-}
-
 void helpCommand() {
     cout << "beatrice | by loliconsik3" << endl;
     cout << "<file>" << endl;
@@ -135,8 +109,6 @@ void helpCommand() {
 
 int main(int argc, char *argv[])
 {
-    //std::cout << argv[1] << std::endl;
-
     if (argc > 1 and argv[1] == QString("-h")) {
         helpCommand();
         return 0;
@@ -144,8 +116,6 @@ int main(int argc, char *argv[])
 
     system("mkdir ~/.beatrice");
     system("mkdir ~/.beatrice/cache");
-    //system("cd ~/.beatrice && git clone https://github.com/loliconshik3/ledit");
-    writeStandartConfig();
 
     QApplication app(argc, argv);
     MainWindow window;
@@ -160,15 +130,14 @@ int main(int argc, char *argv[])
 
     QGridLayout *layout = new QGridLayout;
 
-    window.flwidget = &flwidget;
-    flwidget.fileslist = &fileslist;
-    flwidget.flsearch = &flsearch;
-    window.commandline = &commandline;
-    window.infopanel = &infopanel;
-    window.textbox = &textbox;
+    window.flwidget     = &flwidget;
+    flwidget.fileslist  = &fileslist;
+    flwidget.flsearch   = &flsearch;
+    window.commandline  = &commandline;
+    window.infopanel    = &infopanel;
+    window.textbox      = &textbox;
 
     layout->addWidget(window.textbox, 0, 0);
-    //layout->addWidget(&testbox);
     layout->addWidget(window.commandline, 2, 0);
     layout->addWidget(window.infopanel, 1, 0);
     layout->setContentsMargins(5, 5, 5, 5);
@@ -196,11 +165,6 @@ int main(int argc, char *argv[])
         // на текущую дерикторию + файлнейм
         window.OpenFile(argv[1]);
     }
-    else {
-        //window.loadLastFile();
-    }
-
-    //readJson();
 
     return app.exec();
 }

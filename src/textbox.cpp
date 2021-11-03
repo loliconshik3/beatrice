@@ -55,9 +55,9 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
 }
 
 void MainWindow::Textbox::insertTabAtLine() {
-    QTextCursor cursor = textCursor();
-    int lineNumer = cursor.block().blockNumber();
-    int columnNumer = cursor.columnNumber();
+    QTextCursor cursor  = textCursor();
+    int lineNumer       = cursor.block().blockNumber();
+    int columnNumer     = cursor.columnNumber();
 
     cursor.movePosition(QTextCursor::Start);
     cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
@@ -69,7 +69,7 @@ void MainWindow::Textbox::insertTabAtLine() {
 
 void MainWindow::Textbox::scalePlus() {
     QFont fnt = font();
-    int size = fnt.pixelSize();
+    int size  = fnt.pixelSize();
     if (size < 30) {
         fnt.setPixelSize(fnt.pixelSize()+1);
     }
@@ -79,7 +79,7 @@ void MainWindow::Textbox::scalePlus() {
 
 void MainWindow::Textbox::scaleMinus() {
     QFont fnt = font();
-    int size = fnt.pixelSize();
+    int size  = fnt.pixelSize();
     if (size > 15) {
         fnt.setPixelSize(fnt.pixelSize()-1);
     }
@@ -117,8 +117,8 @@ void MainWindow::Textbox::removeLine() {
 }
 
 void MainWindow::Textbox::setTabSize(int size) {
-    tabSize = size;
-    tabString = "";
+    tabSize     = size;
+    tabString   = "";
 
     while (size > 0) {
         tabString += " ";
@@ -136,11 +136,6 @@ void MainWindow::Textbox::enterKey() {
     QTextCursor cursor = textCursor();
 
     if (cursor.selectedText() != "") {    
-        /*cout << cursor.selectionStart() << " | " << cursor.selectionEnd() << endl;
-        int pos = cursor.selectionStart();
-        cursor.clearSelection();
-        cursor.setPosition(pos, QTextCursor::MoveAnchor);*/
-
         cursor.removeSelectedText();
     }
 
@@ -211,7 +206,7 @@ void MainWindow::Textbox::backspace() {
     else if (getCursorPos() != "1,1") {
         cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, tabSize);
         QString selectedText = cursor.selectedText();
-        int selectedLength = selectedText.length();
+        int selectedLength   = selectedText.length();
         if (selectedText == tabString) {
             cursor.removeSelectedText();
             setTextCursor(cursor);
@@ -349,12 +344,7 @@ void MainWindow::Textbox::moveCursorLeft() {
             checkTabText = checkTabText.substr(length-1-selTabSize, length-1);
         }
     }
-    /*else {
-        selTabSize = tabSize;
-    }*/
 
-    //cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, tabSize);
-    //int selTabSize = cursor.selectedText().length() - selectedSize;
     if (checkTabText.c_str() != tabString) {
         cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, selTabSize);
         cursor.movePosition(QTextCursor::Left, anchorState, 1);
@@ -372,8 +362,8 @@ void MainWindow::Textbox::tabulation() {
 }
 
 void MainWindow::Textbox::completeQuotes(string quote) {
-    string totalQuote = quote + quote;
-    string achars = getAroundChars();
+    string totalQuote   = quote + quote;
+    string achars       = getAroundChars();
 
     if (achars.length() > 1 && (achars.substr(0) != quote && achars.substr(1) == quote)) {
         moveCursorForward();

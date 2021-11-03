@@ -32,7 +32,6 @@ MainWindow::MainWindow(QWidget *parent)
     setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
     currentDir = fs::current_path();
     UpdateTitle();
-    //setMaximumSize(QSize(1000, 600));
 
     setStyleSheet("QWidget { background: #1f222d}");//#262728 }");//#2e2f30
 
@@ -72,9 +71,9 @@ void MainWindow::NewFile() {
     filename = "Untitled";
     filetext = "";
 
+    saveLastFile();
     UpdateTitle();
     infopanel->updateText();
-    saveLastFile();
     textbox->isNew = true;
 
     bool contain = false;
@@ -92,11 +91,11 @@ void MainWindow::NewFile() {
 }
 
 void MainWindow::OpenFile(QString path) {
-    string homedir = getHomeDir();
-    QString testPath = path;
-    bool createNewFile = false;
-    QString fileName = "";
-    string oldPath = path.toStdString();
+    string homedir      = getHomeDir();
+    QString testPath    = path;
+    bool createNewFile  = false;
+    QString fileName    = "";
+    string oldPath      = path.toStdString();
     ifstream myfile;
     string line;
 
@@ -134,33 +133,21 @@ void MainWindow::OpenFile(QString path) {
         textbox->clear();
 
         if (not createNewFile) {
-            //myfile.open(fileName.toStdString());
             QFile file(fileName);
-            //string test = QFile("").readAll().toStdString();
 
-            if (file.open(QIODevice::ReadWrite)) {//if ( myfile.is_open() ) { // always check whether the file is open
+            if (file.open(QIODevice::ReadWrite)) {
                 filename = fileName.toUtf8().toStdString();
                 textbox->setText(file.readAll());
-                /*while (getline(myfile, line)) {
-                    textbox->insertPlainText((line + "\n").c_str());
-                }*/
                 filetext = textbox->toPlainText().toUtf8().toStdString();
             }
 
             file.close();
-            //myfile.close();
             textbox->isNew = false;
         }
         else {
             QString name = fileName.toUtf8();
-            //std::ofstream outfile(name);
             filename = name.toUtf8().toStdString();
             filetext = "";
-
-            //outfile << filetext;
-
-            //outfile.close();
-            //textbox->isNew = true;
         }
 
         currentDir = getPathDir(filename);
@@ -186,7 +173,6 @@ void MainWindow::OpenFile(QString path) {
         currentFile = contFile;
 
         saveLastFile();
-        //textbox->isNew = false;
     }
 }
 
@@ -209,19 +195,7 @@ void MainWindow::SaveFile(QString name) {
         fileName = currentDir.c_str() + QString("/") + name;
     }
     else {
-        /*if (textbox->isNew) {
-            QString path = filename.c_str();
-            if (not path.contains(homedir.c_str())) {
-                path = currentDir.c_str() + QString("/") + path;
-            }
-
-            fileName = QFileDialog::getSaveFileName(this,
-                tr("Save File"), path,
-                tr("All Files (*)"));
-        }
-        else {*/
         fileName = filename.c_str();
-        //}
     }
 
     if (fileName.isEmpty())
@@ -301,11 +275,6 @@ void MainWindow::loadLastFile() {
     string line;
 
     myfile.open(path);
-
-    /*QFile file(path.c_str());
-    if (file.open(QIODevice::ReadOnly)) {
-        QString text = file.readAll();
-    }*/
 
     if ( myfile.is_open() ) {
         getline(myfile, line);

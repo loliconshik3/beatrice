@@ -27,6 +27,4 @@ string getFilename(string path);
 string getFileExt(string path);
 string getHomeDir();
 
-void writeStandartConfig();
-
 #endif // UTILS_H

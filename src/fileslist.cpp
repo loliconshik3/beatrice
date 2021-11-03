@@ -30,8 +30,10 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
 
     QShortcut *shortcut = new QShortcut(QKeySequence("Return"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
+
     shortcut = new QShortcut(QKeySequence("Enter"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
+
     connect(this, &FilesList::doubleClicked, this, &FilesList::openFile);
 
     shortcut = new QShortcut(QKeySequence("Ctrl+Delete"), this);
@@ -40,7 +42,7 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
 
 void MainWindow::FileListWidget::FilesList::loadLastFiles() {
     QString homedir = getHomeDir().c_str();
-    QString path = homedir + "/.beatrice/cache/lastfile";
+    QString path    = homedir + "/.beatrice/cache/lastfile";
 
     files.clear();
     clear();
@@ -72,30 +74,28 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
     string fileName;
     string line;
 
-    //string curdir = root->currentDir;
     files.clear();
     clear();
 
-    //string path = curdir;
-        for (const auto & entry : fs::directory_iterator(path)){
-            myfile.open(entry.path());
+    for (const auto & entry : fs::directory_iterator(path)){
+        myfile.open(entry.path());
 
-            if ( myfile.is_open()) { // always check whether the file is open
-                fileName = entry.path().filename();
+        if ( myfile.is_open()) { // always check whether the file is open
+            fileName = entry.path().filename();
 
-                if (entry.is_directory()) {
-                    fileName = "[" + fileName + "]";
-                }
-
-                files[fileName] = entry.path();
-                addItem(fileName.c_str());
+            if (entry.is_directory()) {
+                fileName = "[" + fileName + "]";
             }
 
-            myfile.close();
+            files[fileName] = entry.path();
+            addItem(fileName.c_str());
         }
-        fileName = BACK_NAME;
-        files[fileName] = getPathDir(path);
-        addItem(fileName.c_str());
+
+        myfile.close();
+    }
+    fileName        = BACK_NAME;
+    files[fileName] = getPathDir(path);
+    addItem(fileName.c_str());
 
     sortItems();
     setCurrentItem(item(0));
@@ -124,7 +124,6 @@ void MainWindow::FileListWidget::FilesList::openFile() {
 
         if (curItem == BACK_NAME.c_str() or curItem.contains("[")) {
             rootParent->flsearch->clear();
-            //root->OpenFolder(path.c_str());
             loadDirectoryFiles(path);
         }
         else {
@@ -137,12 +136,11 @@ void MainWindow::FileListWidget::FilesList::openFile() {
 void MainWindow::FileListWidget::FilesList::deleteFile() {
     if (count() > 0) {
         QString filename = currentItem()->text();
-        string path = files[filename.toStdString()];
+        string path      = files[filename.toStdString()];
         files.erase(filename.toStdString());
         takeItem(currentRow());
 
         if (path == root->filename) {
-            //root->textbox->isNew = true;
             root->filetext = "";
             root->infopanel->updateText();
         }
@@ -163,7 +161,7 @@ void MainWindow::FileListWidget::FilesList::redrawFiles() {
     clear();
 
     for (const auto & file : files) {
-        std::string fileName = QString(file.first.c_str()).toLower().toUtf8().constData();
+        std::string fileName    = QString(file.first.c_str()).toLower().toUtf8().constData();
         std::string searchQuery = rootParent->flsearch->text().toLower().toUtf8().constData();
 
         if ( fileName.find(searchQuery) != std::string::npos ) {
