@@ -169,6 +169,7 @@ void MainWindow::openFile(QString path) {
         File *file = new File(fname, ftext, fpath, fdir, fisNew);
         files.insert(files.begin(), file);
         updateCurrentFile(file);
+        saveLastFile();
     }
 }
 
@@ -434,7 +435,7 @@ void MainWindow::saveLastFile() {
 }
 
 void MainWindow::showCurrentDirFiles() {
-    flwidget->fileslist->loadDirectoryFiles(currentDir);
+    flwidget->fileslist->loadDirectoryFiles(getPathDir(currentFile->path));
     flwidget->flsearch->setFocus();
     flwidget->show();
 }

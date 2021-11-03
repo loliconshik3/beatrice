@@ -21,6 +21,7 @@
 
 using namespace std;
 
+bool replaceStr(string &str, const string &from, const string &to);
 void split(string &str, char delim, vector<string> &out);
 string getPathDir(string path);
 string getFilename(string path);

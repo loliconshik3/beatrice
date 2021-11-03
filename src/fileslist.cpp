@@ -57,6 +57,9 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
            QFile loadedFile(line);
            if (loadedFile.exists()) {
                string name = line.toStdString();
+
+               replaceStr(name, homedir.toStdString(), "~");
+
                if (name == root->currentFile->path) {
                    name += " (Current)";
                }
@@ -77,7 +80,6 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
 void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
     ifstream myfile;
     string fileName;
-    string line;
 
     files.clear();
     clear();
@@ -111,12 +113,15 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
 }
 
 void MainWindow::FileListWidget::FilesList::loadTabFiles() {
+    string homedir = getHomeDir();
     string fileName = "";
     files.clear();
     clear();
 
     for (const auto & file : root->files) {
         fileName = file->path;
+
+        replaceStr(fileName, homedir, "~");
 
         if (file->path == root->currentFile->path) {
             fileName += " (Current)";
