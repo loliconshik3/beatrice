@@ -13,7 +13,7 @@ using namespace std;
 class File
 {   
 public:
-    File(string name="Untitled", string text="", string path="", string directory="", bool isNew = true);
+    File(string name="Untitled", string text="", string path="", string directory="", bool isNew=true);
 
     bool isNew;
     string name;

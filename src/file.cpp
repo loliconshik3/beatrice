@@ -13,13 +13,11 @@ File::File(string name, string text, string path, string directory, bool isNew)
 }
 
 bool File::isSaved() {
-    bool result = false;
-
     if (text == savedText) {
-        result = true;
+        return true;
     }
 
-    return result;
+    return false;
 }
 
 bool File::inList(vector<File*> &fls) {

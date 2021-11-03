@@ -276,8 +276,6 @@ bool MainWindow::isFileOld() {
         if (filetext != text) {
             return true;
         }
-
-        return false;
     }
     return false;
 }
