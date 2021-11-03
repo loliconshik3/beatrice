@@ -54,6 +54,19 @@ map<string, string> SyntaxHighlighter::generateSharp() {
     return patterns;
 }
 
+map<string, string> SyntaxHighlighter::generateCPP() {
+    map<string, string> patterns = {
+        //{"/*.**/", "#8a8d93"},
+        {"[0-9]|=", "#71c919"},
+        //{"(?=function )(.*)(?= takes)", "#71c919"},
+        {"\\b(if|else|for|foreach|while)\\b", "#d097a3"},
+        {"\\b(const|auto|std|void|string|int|NULL|nullptr|byte|true|false|bool)\\b", "#c95b8e"},
+        {"\\b(class|using|namespace|return|#include|#define|#ifndef|#endif|public|private|protected)\\b", "#ff8080"}
+    };
+
+    return patterns;
+}
+
 map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     map<string, string> patterns = {};
 
@@ -65,6 +78,9 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     }
     else if (ext == "cs") {
         patterns = generateSharp();
+    }
+    else if (ext == "cpp" || ext == "h") {
+        patterns = generateCPP();
     }
 
     return patterns;
