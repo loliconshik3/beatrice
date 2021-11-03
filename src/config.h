@@ -31,8 +31,8 @@ public:
 
     string infoPanelSeparator = " | ";
 
-    string textboxFontFamily = "Source Code Pro";
-    int textboxFontSize   = 17;
+    string textboxFontFamily    = "Source Code Pro";
+    int textboxFontSize         = 17;
 
     //==========Shortcuts==========
     QString sct_quit            = "Ctrl+q";

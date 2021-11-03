@@ -149,6 +149,9 @@ void MainWindow::FileListWidget::FilesList::openFile() {
             rootParent->hide();
         }
     }
+    else {
+        rootParent->hide();
+    }
 }
 
 void MainWindow::FileListWidget::FilesList::deleteFile() {
