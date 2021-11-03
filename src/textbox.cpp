@@ -26,19 +26,19 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
     highlighter = new SyntaxHighlighter(this, parent);
     highlighter->setDocument(this->document());
 
-    QShortcut *shortcut = new QShortcut(QKeySequence("Alt+r"), this);
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeLine), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(removeLine()));
 
-    shortcut = new QShortcut(QKeySequence("Alt+d"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_duplicateLine), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(duplicateLine()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+="), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_scalePlus), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(scalePlus()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+-"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_scaleMinus), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(scaleMinus()));
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+Tab"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_insertTabAtLine), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(insertTabAtLine()));
 
     connect(this, SIGNAL(textChanged()), this, SLOT(onTextChanged()));

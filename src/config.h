@@ -44,6 +44,11 @@ public:
     QString sct_showTabFiles    = "Ctrl+p";   //Show list of opened files
     QString sct_openTopFile     = "Alt+Up";   //Move to top opened file
     QString sct_openBottomFile  = "Alt+Down"; //Move to bottom opened file
+    QString sct_removeLine      = "Alt+r";    //Remove line under text cursor
+    QString sct_duplicateLine   = "Alt+d";    //Duplicate line under text cursor
+    QString sct_scalePlus       = "Ctrl+=";   //Increase text scale
+    QString sct_scaleMinus      = "Ctrl+-";   //Decrease text scale
+    QString sct_insertTabAtLine = "Ctrl+Tab"; //Insert tab at start of current line
     //=============================
 
     Config();
