@@ -39,9 +39,9 @@ void MainWindow::InfoPanel::updateText() {
         "ext: " + extension,
         "tab: " + tabSize,
         "font: " + fontSize + "px",
-        "dir: " + directory,
+        "dir: " + directory/*,
         "beatrice",
-        "by loliconshik3"
+        "by loliconshik3"*/
     };
 
     for (const string &arg : args) {
