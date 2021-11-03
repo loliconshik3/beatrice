@@ -40,6 +40,20 @@ map<string, string> SyntaxHighlighter::generatePython() {
     return patterns;
 }
 
+
+map<string, string> SyntaxHighlighter::generateSharp() {
+    map<string, string> patterns = {
+        //{"/*.**/", "#8a8d93"},
+        {"[0-9]|=", "#71c919"},
+        //{"(?=def )(.*)(?=()", "#71c919"},
+        {"\\b(if|else|foreach|try|catch|while|break|return)\\b", "#d097a3"},
+        {"\\b(this|true|false|new|null|string|int)\\b", "#c95b8e"},
+        {"\\b(using|class|namespace|public|private|async|var|await)\\b", "#ff8080"}
+    };
+
+    return patterns;
+}
+
 map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     map<string, string> patterns = {};
 
@@ -48,6 +62,9 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     }
     else if (ext == "py") {
         patterns = generatePython();
+    }
+    else if (ext == "cs") {
+        patterns = generateSharp();
     }
 
     return patterns;
