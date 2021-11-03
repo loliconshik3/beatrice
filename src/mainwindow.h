@@ -44,6 +44,7 @@ public:
     bool isFileOld();
 
 public slots:
+    void newFile();
     void openFile(QString path=nullptr);
     void saveFile(QString path=nullptr);
     void updateCurrentFile(File *file);

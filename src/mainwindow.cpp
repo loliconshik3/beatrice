@@ -76,6 +76,14 @@ void MainWindow::OpenFolder(QString path) {
     UpdateTitle();
 }
 
+void MainWindow::newFile() {
+    log("Create new file");
+    string fdir = getPathDir(currentFile->path);
+
+    File *file = new File("Untitled", "", fdir+"/Untitled", getFilename(fdir), true);
+    updateCurrentFile(file);
+}
+
 void MainWindow::NewFile() {
     log("Create new file");
 
@@ -110,7 +118,7 @@ void MainWindow::updateCurrentFile(File *file) {
 }
 
 void MainWindow::openFile(QString path) {
-    File *file = new File("Untitled", "", path.toStdString(), "", true);
+    File *file          = new File("Untitled", "", path.toStdString(), "", true);
     string homedir      = getHomeDir();
     QString testPath    = path;
     string oldPath      = path.toStdString();
@@ -170,7 +178,7 @@ void MainWindow::saveFile(QString path) {
 
     log(currentFile->path);
     if (!path.isEmpty()) {
-        fileName = currentFile->directory.c_str() + QString("/") + path;
+        fileName = getPathDir(currentFile->path).c_str() + QString("/") + path;
     }
     else {
         fileName = currentFile->path.c_str();
@@ -203,7 +211,7 @@ void MainWindow::saveFile(QString path) {
                 updateCurrentFile(currentFile);
             }
 
-            log("Save file '" + filename + "'");
+            log("Save file '" + currentFile->name + "'");
             saveLastFile();
         }
     }
@@ -489,7 +497,7 @@ void MainWindow::updateShortcuts() {
     connect(shortcut, SIGNAL(activated()), this, SLOT(OpenFolder()));
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_new), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(NewFile()));
+    connect(shortcut, SIGNAL(activated()), this, SLOT(newFile())); //FILE | NewFile()
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_changeFocus), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(changeFocus()));
