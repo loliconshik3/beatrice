@@ -56,8 +56,13 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
 
            QFile loadedFile(line);
            if (loadedFile.exists()) {
-               files[line.toStdString()] = line.toStdString();
-               addItem(line);
+               string name = line.toStdString();
+               if (name == root->currentFile->path) {
+                   name += " (Current)";
+               }
+
+               files[name] = line.toStdString();
+               addItem(name.c_str());
            }
         }
         file.close();
@@ -87,6 +92,10 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
                 fileName = "[" + fileName + "]";
             }
 
+            if (entry.path() == root->currentFile->path) {
+                fileName += " (Current)";
+            }
+
             files[fileName] = entry.path();
             addItem(fileName.c_str());
         }
@@ -108,6 +117,10 @@ void MainWindow::FileListWidget::FilesList::loadTabFiles() {
 
     for (const auto & file : root->files) {
         fileName = file->path;
+
+        if (file->path == root->currentFile->path) {
+            fileName += " (Current)";
+        }
 
         files[fileName] = file->path;
         addItem(fileName.c_str());
@@ -145,7 +158,7 @@ void MainWindow::FileListWidget::FilesList::deleteFile() {
         }
 
         if (path == root->filename) {
-            root->filetext = "";
+            root->currentFile->text = ""; //FILE | root->filetext = "";
             root->infopanel->updateText();
         }
 
