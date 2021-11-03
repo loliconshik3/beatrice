@@ -4,6 +4,16 @@ void log(string text) {
     cout << "Log: " << text << endl;
 }
 
+int getSelectedLines(QTextCursor &cursor) {
+    int selectedLines = 0; //<--- this is it
+    if(!cursor.selection().isEmpty())
+    {
+        QString str = cursor.selection().toPlainText();
+        selectedLines = str.count("\n")+1;
+    }
+    return selectedLines;
+}
+
 void split(string &str, char delim, vector<string> &out)
 {
     size_t start;

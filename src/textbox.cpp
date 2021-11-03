@@ -16,8 +16,8 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
     root = parent; //font-size: 17px; font-family: Source Code Pro;
     setStyleSheet("QTextEdit { color: lightGray; border: none; background: #1f222d; }");
 
-    QFont fnt("Source Code Pro");
-    fnt.setPixelSize(17);
+    QFont fnt(root->cfg->textboxFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->textboxFontSize);
     setFont(fnt);
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -358,7 +358,31 @@ void MainWindow::Textbox::moveCursorLeft() {
 }
 
 void MainWindow::Textbox::tabulation() {
-    insertPlainText(tabString);
+    QTextCursor cursor = textCursor();
+    int lines = getSelectedLines(cursor);
+
+    if (lines == 0) {
+        insertPlainText(tabString);
+    }
+    else {
+        int start = cursor.selectionStart();
+        int end = cursor.selectionEnd();
+        cursor.setPosition(start);
+        int lineNum = cursor.block().blockNumber()+1;
+        setTextCursor(cursor);
+
+        int line = lineNum;
+        while (line < lines+lineNum) {
+            insertTabAtLine();
+            end += tabSize;
+            cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 1);
+            setTextCursor(cursor);
+            ++line;
+        }
+        cursor.setPosition(start);
+        cursor.setPosition(end, QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+    }
 }
 
 void MainWindow::Textbox::completeQuotes(string quote) {
