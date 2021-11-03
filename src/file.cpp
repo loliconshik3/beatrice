@@ -29,3 +29,15 @@ bool File::inList(vector<File*> &fls) {
 
     return false;
 }
+
+File *File::getFileInList(vector<File*> &fls) {
+    File *file = new File();
+
+    for (const auto &fl : fls) {
+        if (fl->path == this->path) {
+            return fl;
+        }
+    }
+
+    return file;
+}

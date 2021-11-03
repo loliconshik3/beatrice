@@ -29,6 +29,8 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
+    string path = fs::current_path();
+    currentFile = new File("Untitled", "", path+"/Untitled", getFilename(path), true);
     setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
     currentDir = fs::current_path();
     UpdateTitle();
@@ -39,13 +41,21 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::UpdateTitle() {
-    string fname = getFilename(filename);
+    string fname = currentFile->name;
+    if (!currentFile->isSaved()) {
+        fname += "*";
+    }
+    auto windowName = fname + " @ " + currentFile->directory + " - beatrice";
+
+    setWindowTitle(windowName.c_str());
+
+    /*FILE | string fname = getFilename(filename);
     if (isFileOld()) {
         fname += "*";
     }
     auto windowName = fname + " @ " + getFilename(currentDir) + " - beatrice";
 
-    setWindowTitle(windowName.c_str());
+    setWindowTitle(windowName.c_str());*/
 }
 
 void MainWindow::OpenFolder(QString path) {
@@ -92,9 +102,110 @@ void MainWindow::NewFile() {
     }
 }
 
-void MainWindow::openFile() {
-    if (currentFile->inList(files)) {
-        log("work");
+void MainWindow::updateCurrentFile(File *file) {
+    currentFile = file;
+    textbox->setText(currentFile->text.c_str());
+    UpdateTitle();
+    infopanel->updateText();
+}
+
+void MainWindow::openFile(QString path) {
+    File *file = new File("Untitled", "", path.toStdString(), "", true);
+    string homedir      = getHomeDir();
+    QString testPath    = path;
+    string oldPath      = path.toStdString();
+    bool createNewFile  = false;
+
+    QString filePath    = "";
+    QString fileText    = "";
+
+    if (file->inList(files)) {
+        log("in");
+        File *fl = file->getFileInList(files);
+        updateCurrentFile(fl);
+    }
+    else {
+        log("out");
+        testPath = path.replace("~/", (homedir+"/").c_str());
+
+        QFile pathFile(testPath);
+        if (pathFile.exists()) {
+            filePath = testPath;
+        }
+        else {
+            if (path.contains(homedir.c_str())) {
+                filePath = path;
+                createNewFile = true;
+            }
+            else {
+                filePath = currentDir.c_str() + QString("/") + path;
+                QFile pathFile(filePath);
+                if (!pathFile.exists()) {
+                    createNewFile = true;
+                }
+            }
+            cout << filePath.toStdString() << endl;
+        }
+
+        QFile fl(filePath);
+        if (fl.open(QIODevice::ReadWrite)) {
+            fileText = fl.readAll();
+        }
+
+        string fpath = filePath.toStdString();
+        string ftext = fileText.toStdString();
+        string fname = getFilename(filePath.toStdString());
+        string fdir  = getFilename(getPathDir(fpath));
+        bool fisNew  = createNewFile;
+
+        File *file = new File(fname, ftext, fpath, fdir, fisNew);
+        files.insert(files.begin(), file);
+        updateCurrentFile(file);
+    }
+}
+
+void MainWindow::saveFile(QString path) {
+    string homedir = getHomeDir();
+    QString fileName;
+
+    log(currentFile->path);
+    if (!path.isEmpty()) {
+        fileName = currentFile->directory.c_str() + QString("/") + path;
+    }
+    else {
+        fileName = currentFile->path.c_str();
+    }
+
+    if (!fileName.isEmpty()) {
+        QFile file(fileName);
+        if (file.open(QIODevice::WriteOnly)) {
+            QTextStream out(&file);
+
+            string fname = getFilename(fileName.toStdString());
+            string ftext = textbox->toPlainText().toStdString();
+            string fpath = fileName.toStdString();
+            string fdir = getFilename(getPathDir(fpath));
+            string fsavedText = currentFile->text;
+
+            auto text = textbox->toPlainText().toUtf8();
+            out << text;
+            file.close();
+
+            if (!currentFile->inList(files)) {
+                File *file = new File(fname, ftext, fpath, fdir, false);
+                files.insert(files.begin(), file);
+                updateCurrentFile(file);
+            }
+            else {
+                currentFile->name       = fname;
+                currentFile->savedText  = fsavedText;
+                currentFile->isNew      = false;
+                updateCurrentFile(currentFile);
+            }
+
+            log("Save file '" + filename + "'");
+            saveLastFile();
+        }
     }
 }
 
@@ -182,18 +293,17 @@ void MainWindow::OpenFile(QString path) {
 
         log("Open file '" + filename + "'");
         saveLastFile();
-        openFile();
     }
 }
 
 void MainWindow::insertSaveCommand(bool saveas) {
-    if (textbox->isNew or saveas) {
+    if (currentFile->isNew or saveas) { //FILE | textbox->isNew or saveas
         commandline->clear();
         commandline->insert("save ");
         commandline->setFocus();
     }
     else {
-        SaveFile();
+        saveFile();
     }
 }
 
@@ -241,9 +351,6 @@ void MainWindow::SaveFile(QString name) {
             files.insert(files.begin(), file);
             currentFile = file;
         }
-
-        currentFile->savedText = filetext;
-        openFile();
 
         log("Save file '" + filename + "'");
         saveLastFile();
@@ -305,7 +412,7 @@ void MainWindow::saveLastFile() {
     if (file.open(QIODevice::ReadWrite)) {
         QString fullText = file.readAll();
         QTextStream out(&file);
-        QString name = filename.c_str();
+        QString name = currentFile->path.c_str(); //FILE | QString name = filename.c_str();
 
         if (fullText.contains(name, Qt::CaseInsensitive)) {
             file.close();
@@ -344,7 +451,7 @@ void MainWindow::openUpFile() {
         {
             int index = it - files.begin();
             if (index > 0) {
-                OpenFile(files[index-1]->path.c_str());
+                openFile(files[index-1]->path.c_str()); //FILE | OpenFile(files[index-1]->path.c_str());
             }
         }
     }
@@ -359,7 +466,7 @@ void MainWindow::openDownFile() {
             int index = it - files.begin();
             int size = files.size()-1;
             if (index < size) {
-                OpenFile(files[index+1]->path.c_str());
+                openFile(files[index+1]->path.c_str()); //FILE | OpenFile(files[index+1]->path.c_str());
             }
         }
     }

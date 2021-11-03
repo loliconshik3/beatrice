@@ -9,6 +9,7 @@
 #include <string>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 class MainWindow : public QWidget
 {
@@ -20,7 +21,7 @@ public:
     vector<QString> clipboard;
 
     vector<File*> files = {};
-    File *currentFile = new File();
+    File *currentFile = NULL;
 
     Config *cfg = new Config();
 
@@ -43,7 +44,9 @@ public:
     bool isFileOld();
 
 public slots:
-    void openFile();
+    void openFile(QString path=nullptr);
+    void saveFile(QString path=nullptr);
+    void updateCurrentFile(File *file);
 
     void NewFile();
     void openUpFile();

@@ -23,7 +23,18 @@ MainWindow::InfoPanel::InfoPanel(MainWindow *parent) :
 
 void MainWindow::InfoPanel::updateText() {
     string totalText    = "";
-    string fname        = getFilename(root->filename);
+    string fname        = root->currentFile->name;
+    string cursorPos    = root->textbox->getCursorPos();
+    string tabSize      = to_string(root->textbox->tabSize);
+    string fontSize     = to_string(root->textbox->font().pixelSize());
+    string directory    = root->currentFile->directory;
+    string extension    = root->currentFile->extension;
+
+    if (!root->currentFile->isSaved()) {
+        fname += "*";
+    }
+
+    /*FILE | string fname        = getFilename(root->filename);
     string cursorPos    = root->textbox->getCursorPos();
     string tabSize      = to_string(root->textbox->tabSize);
     string fontSize     = to_string(root->textbox->font().pixelSize());
@@ -32,7 +43,7 @@ void MainWindow::InfoPanel::updateText() {
 
     if (root->isFileOld()) {
         fname += "*";
-    }
+    }*/
 
     list <string> args = {
         fname + " (" + cursorPos + ")",

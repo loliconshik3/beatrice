@@ -51,10 +51,10 @@ void MainWindow::CommandLine::launchCommand() {
             catch (const std::exception& e) { return; }
         }
         else if (out[0] == "open") {
-            root->OpenFile(out[1].c_str());
+            root->openFile(out[1].c_str()); //FILE | root->OpenFile(out[1].c_str());
         }
         else if (out[0] == "save") {
-            root->SaveFile(out[1].c_str());
+            root->saveFile(out[1].c_str()); //FILE | root->SaveFile(out[1].c_str());
         }
         else {
             return;
