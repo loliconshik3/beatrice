@@ -165,6 +165,7 @@ int main(int argc, char *argv[])
         // на текущую дерикторию + файлнейм
         window.OpenFile(argv[1]);
     }
+    system("clear");
 
     return app.exec();
 }

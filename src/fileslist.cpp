@@ -140,12 +140,16 @@ void MainWindow::FileListWidget::FilesList::deleteFile() {
         files.erase(filename.toStdString());
         takeItem(currentRow());
 
+        if (filename == BACK_NAME.c_str()) {
+            return;
+        }
+
         if (path == root->filename) {
             root->filetext = "";
             root->infopanel->updateText();
         }
 
-        if (filename == BACK_NAME.c_str() or filename.contains("[")) {
+        if (filename.contains("[")) {
             system(("rmdir '" + path + "'").c_str());
         }
         else {

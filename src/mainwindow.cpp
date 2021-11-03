@@ -67,6 +67,8 @@ void MainWindow::OpenFolder(QString path) {
 }
 
 void MainWindow::NewFile() {
+    log("Create new file");
+
     textbox->clear();
     filename = "Untitled";
     filetext = "";
@@ -172,6 +174,7 @@ void MainWindow::OpenFile(QString path) {
 
         currentFile = contFile;
 
+        log("Open file '" + filename + "'");
         saveLastFile();
     }
 }
@@ -232,6 +235,7 @@ void MainWindow::SaveFile(QString name) {
             currentFile = file;
         }
 
+        log("Save file '" + filename + "'");
         saveLastFile();
         textbox->isNew = false;
     }
@@ -296,7 +300,6 @@ void MainWindow::saveLastFile() {
         QString name = filename.c_str();
 
         if (fullText.contains(name, Qt::CaseInsensitive)) {
-            cout << "contain" << endl;
             file.close();
             return;
         }
@@ -333,7 +336,6 @@ void MainWindow::openUpFile() {
         {
             int index = it - files.begin();
             if (index > 0) {
-                cout << index << endl;
                 OpenFile(files[index-1].path.c_str());
             }
         }
@@ -349,7 +351,6 @@ void MainWindow::openDownFile() {
             int index = it - files.begin();
             int size = files.size()-1;
             if (index < size) {
-                cout << index << " | " << size << endl;
                 OpenFile(files[index+1].path.c_str());
             }
         }

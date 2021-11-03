@@ -26,5 +26,6 @@ string getPathDir(string path);
 string getFilename(string path);
 string getFileExt(string path);
 string getHomeDir();
+void log(string text);
 
 #endif // UTILS_H

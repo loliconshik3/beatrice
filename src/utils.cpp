@@ -1,5 +1,9 @@
 #include "utils.h"
 
+void log(string text) {
+    cout << "Log: " << text << endl;
+}
+
 void split(string &str, char delim, vector<string> &out)
 {
     size_t start;
