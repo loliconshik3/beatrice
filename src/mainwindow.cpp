@@ -127,12 +127,15 @@ void MainWindow::openFile(QString path) {
     QString fileText    = "";
 
     if (file->inList(files)) {
-        log("in");
         File *fl = file->getFileInList(files);
+        int pos = fl->cursorPosition;
         updateCurrentFile(fl);
+
+        QTextCursor cursor = textbox->textCursor();
+        cursor.setPosition(pos);
+        textbox->setTextCursor(cursor);
     }
     else {
-        log("out");
         testPath = path.replace("~/", (homedir+"/").c_str());
 
         QFile pathFile(testPath);

@@ -22,6 +22,7 @@ public:
     string extension;
     string directory;
     string savedText;
+    int cursorPosition;
 
     bool isSaved();
     bool inList(vector<File*> &fls);

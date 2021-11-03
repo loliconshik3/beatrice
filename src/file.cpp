@@ -10,6 +10,7 @@ File::File(string name, string text, string path, string directory, bool isNew)
     this->directory = directory;
     this->isNew     = isNew;
     this->savedText = text;
+    this->cursorPosition = 0;
 }
 
 bool File::isSaved() {

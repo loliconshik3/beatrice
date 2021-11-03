@@ -524,6 +524,7 @@ void MainWindow::Textbox::updateLineNumberArea(int /*slider_pos*/)
 }
 void MainWindow::Textbox::updateLineNumberArea()
 {
+    root->currentFile->cursorPosition = textCursor().position();
     root->infopanel->updateText();
 
     /*
