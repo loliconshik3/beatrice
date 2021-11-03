@@ -49,6 +49,7 @@ private slots:
     void moveCursorLeft();
     void moveCursorRight();
     void insertTabAtLine();
+    void removeTabAtLine();
     void enterKey();
     void backspace();
     void tabulation();

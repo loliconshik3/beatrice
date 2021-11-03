@@ -54,7 +54,57 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
     updateLineNumberAreaWidth(0);
 }
 
-void MainWindow::Textbox::insertTabAtLine() {
+
+int MainWindow::Textbox::countOfTabs(string str) {
+    int tabs = 0;
+    int symb = 0;
+    int spaces = 0;
+    for (const auto chr : str) {
+        if (chr == ' ') {
+            spaces++;
+        }
+        else {
+            symb++;
+            break;
+        }
+        if (spaces == tabSize) {
+            spaces=0;
+            tabs++;
+        }
+    }
+    return tabs;
+}
+
+
+void MainWindow::Textbox::tabulation() {
+    QTextCursor cursor  = textCursor();
+    int lines           = getSelectedLines(cursor);
+
+    if (lines == 0) {
+        insertPlainText(tabString);
+    }
+    else {
+        int start   = cursor.selectionStart();
+        int end     = cursor.selectionEnd();
+        cursor.setPosition(start);
+        int lineNum = cursor.block().blockNumber()+1;
+        setTextCursor(cursor);
+
+        int line = lineNum;
+        while (line < lines+lineNum) {
+            end += tabSize;
+            insertTabAtLine();
+            cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 1);
+            setTextCursor(cursor);
+            ++line;
+        }
+        cursor.setPosition(start);
+        cursor.setPosition(end, QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+    }
+}
+
+void MainWindow::Textbox::removeTabAtLine() {
     QTextCursor cursor  = textCursor();
     int lineNumer       = cursor.block().blockNumber();
     int columnNumer     = cursor.columnNumber();
@@ -62,9 +112,49 @@ void MainWindow::Textbox::insertTabAtLine() {
     cursor.movePosition(QTextCursor::Start);
     cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
     setTextCursor(cursor);
-    insertPlainText(tabString);
-    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer);
+
+    int index = tabSize;
+    while (index > 0) {
+        cursor.deleteChar();
+        --index;
+    }
+
     setTextCursor(cursor);
+}
+
+void MainWindow::Textbox::insertTabAtLine() {
+    QTextCursor cursor  = textCursor();
+    int lines           = getSelectedLines(cursor);
+    int lineNumer       = cursor.block().blockNumber();
+    int columnNumer     = cursor.columnNumber();
+
+    if (lines == 0) {
+        cursor.movePosition(QTextCursor::Start);
+        cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
+        setTextCursor(cursor);
+        insertPlainText(tabString);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer);
+        setTextCursor(cursor);
+    }
+    else {
+        int start   = cursor.selectionStart();
+        int end     = cursor.selectionEnd();
+        cursor.setPosition(start);
+        int lineNum = cursor.block().blockNumber()+1;
+        setTextCursor(cursor);
+
+        int line = lineNum;
+        while (line < lines+lineNum) {
+            end -= tabSize;
+            removeTabAtLine();
+            cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 1);
+            setTextCursor(cursor);
+            ++line;
+        }
+        cursor.setPosition(start);
+        cursor.setPosition(end, QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+    }
 }
 
 void MainWindow::Textbox::scalePlus() {
@@ -246,26 +336,6 @@ void MainWindow::Textbox::backspace() {
     setTextCursor(cursor);
 }
 
-int MainWindow::Textbox::countOfTabs(string str) {
-    int tabs = 0;
-    int symb = 0;
-    int spaces = 0;
-    for (const auto chr : str) {
-        if (chr == ' ') {
-            spaces++;
-        }
-        else {
-            symb++;
-            break;
-        }
-        if (spaces == tabSize) {
-            spaces=0;
-            tabs++;
-        }
-    }
-    return tabs;
-}
-
 void MainWindow::Textbox::moveCursorBack() {
     QTextCursor cursor = textCursor();
 
@@ -355,34 +425,6 @@ void MainWindow::Textbox::moveCursorLeft() {
     }
 
     setTextCursor(cursor);
-}
-
-void MainWindow::Textbox::tabulation() {
-    QTextCursor cursor = textCursor();
-    int lines = getSelectedLines(cursor);
-
-    if (lines == 0) {
-        insertPlainText(tabString);
-    }
-    else {
-        int start = cursor.selectionStart();
-        int end = cursor.selectionEnd();
-        cursor.setPosition(start);
-        int lineNum = cursor.block().blockNumber()+1;
-        setTextCursor(cursor);
-
-        int line = lineNum;
-        while (line < lines+lineNum) {
-            insertTabAtLine();
-            end += tabSize;
-            cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 1);
-            setTextCursor(cursor);
-            ++line;
-        }
-        cursor.setPosition(start);
-        cursor.setPosition(end, QTextCursor::KeepAnchor);
-        setTextCursor(cursor);
-    }
 }
 
 void MainWindow::Textbox::completeQuotes(string quote) {
