@@ -41,6 +41,7 @@ public:
     QString sct_open            = "Ctrl+o";
     QString sct_openFolder      = "Ctrl+k";
     QString sct_new             = "Ctrl+n";
+    QString sct_find            = "Ctrl+f";
     QString sct_changeFocus     = "Alt+e";      //Change focus from textbox to commandline and conversely
     QString sct_about           = "Ctrl+i";     //Show about window
     QString sct_showLastFiles   = "Alt+s";      //Show last opened files

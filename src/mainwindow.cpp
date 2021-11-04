@@ -325,6 +325,12 @@ void MainWindow::insertSaveCommand(bool saveas) {
     }
 }
 
+void MainWindow::insertFindCommand() {
+    commandline->clear();
+    commandline->insert("find ");
+    commandline->setFocus();
+}
+
 void MainWindow::SaveFile(QString name) {
     string homedir = getHomeDir();
     QString fileName;
@@ -542,4 +548,7 @@ void MainWindow::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_closeCurrentFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(closeCurrentFile()));
+
+    shortcut = new QShortcut(QKeySequence(cfg->sct_find), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(insertFindCommand()));
 }
