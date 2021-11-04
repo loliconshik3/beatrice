@@ -123,6 +123,10 @@ void MainWindow::FileListWidget::FilesList::loadTabFiles() {
 
         replaceStr(fileName, homedir, "~");
 
+        if (!file->isSaved()) {
+            fileName += "*";
+        }
+
         if (file->path == root->currentFile->path) {
             fileName += " (Current)";
         }

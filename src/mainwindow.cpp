@@ -81,6 +81,7 @@ void MainWindow::newFile() {
     string fdir = getPathDir(currentFile->path);
 
     File *file = new File("Untitled", "", fdir+"/Untitled", getFilename(fdir), true);
+    files.insert(files.begin(), file);
     updateCurrentFile(file);
 }
 
