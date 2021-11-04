@@ -217,10 +217,11 @@ void MainWindow::saveFile(QString path) {
                 currentFile->name       = fname;
                 currentFile->savedText  = fsavedText;
                 currentFile->isNew      = false;
-                updateCurrentFile(currentFile);
+                UpdateTitle();
+                infopanel->updateText();
             }
 
-            log("Save file '" + currentFile->name + "'");
+            log("Save file '" + currentFile->path + "'");
             saveLastFile();
         }
     }
