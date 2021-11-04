@@ -56,6 +56,11 @@ void MainWindow::CommandLine::launchCommand() {
         else if (out[0] == "save") {
             root->saveFile(out[1].c_str()); //FILE | root->SaveFile(out[1].c_str());
         }
+        else if (out[0] == "find") {
+            QString pattern = out[1].c_str();
+            QRegExp rx = QRegExp(pattern);
+            root->textbox->find(rx);
+        }
         else {
             return;
         }
