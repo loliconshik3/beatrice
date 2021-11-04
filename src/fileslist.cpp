@@ -28,15 +28,15 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
 
     setGeometry(0, root->cfg->fileListTopPadding, root->cfg->fileListWidth, root->cfg->fileListHeight);
 
-    QShortcut *shortcut = new QShortcut(QKeySequence("Return"), this);
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile1), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
 
-    shortcut = new QShortcut(QKeySequence("Enter"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile2), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
 
     connect(this, &FilesList::doubleClicked, this, &FilesList::openFile);
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+Delete"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listDeleteFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(deleteFile()));
 }
 
@@ -58,11 +58,11 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
            if (loadedFile.exists()) {
                string name = line.toStdString();
 
-               replaceStr(name, homedir.toStdString(), "~");
-
                if (name == root->currentFile->path) {
                    name += " (Current)";
                }
+
+               replaceStr(name, homedir.toStdString(), "~");
 
                files[name] = line.toStdString();
                addItem(name.c_str());

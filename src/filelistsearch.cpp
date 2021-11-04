@@ -17,10 +17,10 @@ MainWindow::FileListWidget::FileListSearch::FileListSearch(FileListWidget *paren
 
     connect(this, &FileListSearch::textChanged, this, &FileListSearch::filterList);
 
-    QShortcut *shortcut = new QShortcut(QKeySequence("Down"), this);
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveDown), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(Down()));
 
-    shortcut = new QShortcut(QKeySequence("Up"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveUp), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(Up()));
 }
 

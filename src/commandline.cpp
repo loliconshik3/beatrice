@@ -11,16 +11,16 @@ MainWindow::CommandLine::CommandLine(MainWindow *parent) :
     root = parent; //#1f1f1f //2e2f30
     setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
 
-    QShortcut *shortcut = new QShortcut(QKeySequence("Return"), this);
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand1), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));
 
-    shortcut = new QShortcut(QKeySequence("Tab"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_completeCommand), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(completeCommand()));
 
-    shortcut = new QShortcut(QKeySequence("Enter"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand2), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));
 
-    shortcut = new QShortcut(QKeySequence("Esc"), this);
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_cmdEscape), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(escape()));
 }
 
