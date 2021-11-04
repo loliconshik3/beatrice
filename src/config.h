@@ -54,6 +54,7 @@ public:
     QString sct_scaleMinus      = "Ctrl+-";   //Decrease text scale
     QString sct_insertTabAtLine = "Ctrl+Tab"; //Insert tab at start of current line
     QString sct_removeTabAtLine = "Shift+Tab";//Remove tab at start of current line
+    QString sct_closeCurrentFile= "Ctrl+w";   //Close current file and remove it from file list
     //=============================
 
     Config();

@@ -42,3 +42,18 @@ File *File::getFileInList(vector<File*> &fls) {
 
     return file;
 }
+
+bool File::removeFileFromList(vector<File*> &fls) {
+    File *fl = getFileInList(fls);
+
+    auto it = std::find(fls.begin(), fls.end(), fl);
+
+    if (it != fls.end())
+    {
+        int index = it - fls.begin();
+        fls.erase(fls.begin()+index);
+        return true;
+    }
+
+    return false;
+}

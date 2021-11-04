@@ -27,6 +27,7 @@ public:
     bool isSaved();
     bool inList(vector<File*> &fls);
     File *getFileInList(vector<File*> &fls);
+    bool removeFileFromList(vector<File*> &fls);
 
     bool operator == (const File &f1)
     {

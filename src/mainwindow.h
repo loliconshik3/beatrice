@@ -48,6 +48,7 @@ public slots:
     void openFile(QString path=nullptr);
     void saveFile(QString path=nullptr);
     void updateCurrentFile(File *file);
+    void closeCurrentFile();
 
     void NewFile();
     void openUpFile();

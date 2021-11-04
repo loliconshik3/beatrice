@@ -403,6 +403,16 @@ bool MainWindow::isFileOld() {
     return false;
 }
 
+void MainWindow::closeCurrentFile() {
+    currentFile->removeFileFromList(files);
+    if (files.size() > 0) {
+        openFile(files[0]->path.c_str());
+    }
+    else {
+        newFile();
+    }
+}
+
 void MainWindow::loadLastFile() {
     string homedir = getHomeDir();
     string path = homedir + "/.beatrice/cache/lastfile";
@@ -527,4 +537,7 @@ void MainWindow::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_openBottomFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openDownFile()));
+
+    shortcut = new QShortcut(QKeySequence(cfg->sct_closeCurrentFile), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(closeCurrentFile()));
 }
