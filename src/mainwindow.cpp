@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QClipboard>
 
 #include <string>
 #include <fstream>
@@ -70,7 +71,7 @@ void MainWindow::OpenFolder(QString path) {
     if (fileName.isEmpty())
         return;
     else {
-        currentDir = fileName.toStdString();
+        currentDirectory = fileName.toStdString();
     }
     infopanel->updateText();
     UpdateTitle();
@@ -78,7 +79,7 @@ void MainWindow::OpenFolder(QString path) {
 
 void MainWindow::newFile() {
     log("Create new file");
-    string fdir = getPathDir(currentFile->path);
+    string fdir = currentDirectory;
 
     File *file = new File("Untitled", "", fdir+"/Untitled", getFilename(fdir), true);
     files.insert(files.begin(), file);
@@ -460,7 +461,7 @@ void MainWindow::saveLastFile() {
 }
 
 void MainWindow::showCurrentDirFiles() {
-    flwidget->fileslist->loadDirectoryFiles(getPathDir(currentFile->path));
+    flwidget->fileslist->loadDirectoryFiles(currentDirectory);
     flwidget->flsearch->setFocus();
     flwidget->show();
 }
@@ -520,7 +521,7 @@ void MainWindow::updateShortcuts() {
     connect(shortcut, SIGNAL(activated()), this, SLOT(showCurrentDirFiles()));//OpenFile()));
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_openFolder), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(OpenFolder()));
+    connect(shortcut, SIGNAL(activated()), this, SLOT(showCurrentDirFiles()));
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_new), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(newFile())); //FILE | NewFile()

@@ -12,6 +12,7 @@ class MainWindow::FileListWidget::FilesList : public QListWidget
     Q_OBJECT
 private:
     const string BACK_NAME = ">> BACK <<";
+    const string PICK_NAME = ">> PICK THIS <<";
 
 public:
     map<string, string> files;

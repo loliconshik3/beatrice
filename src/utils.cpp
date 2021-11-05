@@ -83,6 +83,13 @@ string getHomeDir() {
     return homedir;
 }
 
+string replaceHomeDir(string path) {
+    string homedir = getHomeDir();
+    QString newPath = path.c_str();
+    newPath = newPath.replace((homedir+"/").c_str(), "~/");
+    return newPath.toStdString();
+}
+
 bool replaceStr(string &str, const string &from, const string &to) {
     size_t start_pos = str.find(from);
     if(start_pos == string::npos)

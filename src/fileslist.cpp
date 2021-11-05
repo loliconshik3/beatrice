@@ -107,6 +107,9 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
     fileName        = BACK_NAME;
     files[fileName] = getPathDir(path);
     addItem(fileName.c_str());
+    fileName        = PICK_NAME;
+    files[fileName] = path;
+    addItem(fileName.c_str());
 
     sortItems();
     setCurrentItem(item(0));
@@ -144,9 +147,14 @@ void MainWindow::FileListWidget::FilesList::openFile() {
         QString curItem = currentItem()->text();
         string path = files[curItem.toStdString()];
 
+        rootParent->flsearch->clear();
+
         if (curItem == BACK_NAME.c_str() or curItem.contains("[")) {
-            rootParent->flsearch->clear();
             loadDirectoryFiles(path);
+        }
+        else if (curItem == PICK_NAME.c_str()) {
+            root->OpenFolder(path.c_str());
+            rootParent->hide();
         }
         else {
             root->openFile(path.c_str()); //FILE | root->OpenFile(path.c_str());

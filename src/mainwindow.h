@@ -18,6 +18,7 @@ public:
     string filename     = "Untitled";
     string filetext     = "";
     string currentDir   = "";
+    string currentDirectory = fs::current_path();
     vector<QString> clipboard;
 
     vector<File*> files = {};

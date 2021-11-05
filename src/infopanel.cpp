@@ -18,7 +18,7 @@ MainWindow::InfoPanel::InfoPanel(MainWindow *parent) :
     root = parent;
     setContentsMargins(2, 0, 0, 0);
     //#2e2f30
-    setStyleSheet("QLabel { font-size: 18px; color: #1f222d; border: none; background: lightGray; font-family: Source Code Pro;}");
+    setStyleSheet("QLabel { font-size: 17px; color: #1f222d; border: none; background: lightGray; font-family: Source Code Pro;}");
 }
 
 void MainWindow::InfoPanel::updateText() {
@@ -29,6 +29,7 @@ void MainWindow::InfoPanel::updateText() {
     string fontSize     = to_string(root->textbox->font().pixelSize());
     string directory    = root->currentFile->directory;
     string extension    = root->currentFile->extension;
+    string currentdir   = replaceHomeDir(root->currentDirectory);
 
     if (!root->currentFile->isSaved()) {
         fname += "*";
@@ -46,11 +47,11 @@ void MainWindow::InfoPanel::updateText() {
     }*/
 
     list <string> args = {
-        fname + " (" + cursorPos + ")",
+        fname + " @ " + directory + " (" + cursorPos + ")",
         "ext: " + extension,
         "tab: " + tabSize,
         "font: " + fontSize + "px",
-        "dir: " + directory
+        "dir: " + currentdir
     };
 
     for (const string &arg : args) {
