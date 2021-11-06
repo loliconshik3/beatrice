@@ -173,11 +173,11 @@ void MainWindow::openFile(QString path) {
         string fdir  = getFilename(getPathDir(fpath));
         bool fisNew  = createNewFile;
 
-        if (fname != "Untitled") {
+        if (fname.find("Untitled") != string::npos) {
             fisNew = false;
         }
 
-        if (files.size() == 1 && files[0]->name == "Untitled" && files[0]->text == "") {
+        if (files.size() == 1 && files[0]->name.find("Untitled") != string::npos && files[0]->text == "") {
             files[0]->removeFileFromList(files);
         }
 
