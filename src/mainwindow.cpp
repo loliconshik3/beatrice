@@ -80,8 +80,10 @@ void MainWindow::OpenFolder(QString path) {
 void MainWindow::newFile() {
     log("Create new file");
     string fdir = currentDirectory;
+    string name = "Untitled" + to_string(cfg->newFileCount);
+    ++cfg->newFileCount;
 
-    File *file = new File("Untitled", "", fdir+"/Untitled", getFilename(fdir), true);
+    File *file = new File(name, "", fdir+"/"+name, getFilename(fdir), true);
     files.insert(files.begin(), file);
     updateCurrentFile(file);
 }

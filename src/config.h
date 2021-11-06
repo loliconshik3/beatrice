@@ -38,6 +38,8 @@ public:
     string textboxFontFamily    = "Source Code Pro";
     int textboxFontSize         = 17;
 
+    int newFileCount = 0;
+
     //==========Shortcuts==========
     QString sct_quit            = "Ctrl+q";
     QString sct_save            = "Ctrl+s";
