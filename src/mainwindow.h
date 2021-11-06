@@ -15,9 +15,6 @@ class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
-    string filename     = "Untitled";
-    string filetext     = "";
-    string currentDir   = "";
     string currentDirectory = fs::current_path();
     vector<QString> clipboard;
 
@@ -40,9 +37,7 @@ public:
 
     void UpdateTitle();
     void saveLastFile();
-    void loadLastFile();
     void updateShortcuts();
-    bool isFileOld();
 
 public slots:
     void newFile();
@@ -51,13 +46,10 @@ public slots:
     void updateCurrentFile(File *file);
     void closeCurrentFile();
 
-    void NewFile();
     void openUpFile();
     void openDownFile();
     void insertFindCommand();
     void insertSaveCommand(bool saveas=false);
-    void SaveFile(QString name=nullptr);
-    void OpenFile(QString path=nullptr);
     void OpenFolder(QString path=nullptr);
     void changeFocus();
     void aboutScreen();

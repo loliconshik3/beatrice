@@ -74,7 +74,7 @@ void MainWindow::CommandLine::launchCommand() {
             root->aboutScreen();
         }
         else if (commandText == "new"){
-            root->NewFile();
+            root->newFile();
         }
         else {
             return;
