@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "filelistwidget.h"
 #include "filelistsearch.h"
+#include "filelistinfo.h"
 #include "commandline.h"
 #include "infopanel.h"
 #include "fileslist.h"
@@ -129,6 +130,7 @@ int main(int argc, char *argv[])
     MainWindow::FileListWidget flwidget(&window);
     MainWindow::FileListWidget::FilesList fileslist(&flwidget);
     MainWindow::FileListWidget::FileListSearch flsearch(&flwidget);
+    MainWindow::FileListWidget::FileListInfo flinfo(&flwidget);
 
     MainWindow::Textbox textbox(&window);
     MainWindow::CommandLine commandline(&window);
@@ -139,6 +141,7 @@ int main(int argc, char *argv[])
     window.flwidget     = &flwidget;
     flwidget.fileslist  = &fileslist;
     flwidget.flsearch   = &flsearch;
+    flwidget.flinfo     = &flinfo;
     window.commandline  = &commandline;
     window.infopanel    = &infopanel;
     window.textbox      = &textbox;

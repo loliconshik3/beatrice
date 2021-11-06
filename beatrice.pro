@@ -12,6 +12,7 @@ SOURCES += \
     src/commandline.cpp \
     src/config.cpp \
     src/file.cpp \
+    src/filelistinfo.cpp \
     src/filelistsearch.cpp \
     src/filelistwidget.cpp \
     src/fileslist.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     src/commandline.h \
     src/config.h \
     src/file.h \
+    src/filelistinfo.h \
     src/filelistsearch.h \
     src/filelistwidget.h \
     src/fileslist.h \

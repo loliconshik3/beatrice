@@ -2,6 +2,7 @@
 #define FILELISTWIDGET_H
 
 #include "mainwindow.h"
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -16,8 +17,10 @@ public:
 
     class FilesList;
     class FileListSearch;
+    class FileListInfo;
     FileListSearch *flsearch    = NULL;
     FilesList *fileslist        = NULL;
+    FileListInfo *flinfo        = NULL;
 
     explicit FileListWidget(MainWindow *parent = nullptr);
 

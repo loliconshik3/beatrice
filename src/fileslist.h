@@ -1,8 +1,11 @@
 #ifndef FILESLIST_H
 #define FILESLIST_H
 
-#include <QListWidget>
+#include "utils.h"
 #include "filelistwidget.h"
+#include "filelistinfo.h"
+
+#include <QListWidget>
 #include <string>
 
 using namespace std;
@@ -29,6 +32,7 @@ public slots:
     void redrawFiles();
 
 private slots:
+    void currentItemChanged();
     void openFile();
     void deleteFile();
 };

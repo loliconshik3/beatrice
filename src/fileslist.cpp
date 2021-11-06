@@ -38,6 +38,16 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_listDeleteFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(deleteFile()));
+
+    connect(this, &FilesList::itemSelectionChanged, this, &FilesList::currentItemChanged);
+}
+
+void MainWindow::FileListWidget::FilesList::currentItemChanged() {
+    if (count() > 0) {
+        QString text = currentItem()->text();
+        string path = files[text.toStdString()];
+        rootParent->flinfo->setText(path.c_str());
+    }
 }
 
 void MainWindow::FileListWidget::FilesList::loadLastFiles() {
