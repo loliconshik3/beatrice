@@ -175,6 +175,10 @@ void MainWindow::openFile(QString path) {
             fisNew = false;
         }
 
+        if (files.size() == 1 && files[0]->name == "Untitled" && files[0]->text == "") {
+            files[0]->removeFileFromList(files);
+        }
+
         File *file = new File(fname, ftext, fpath, fdir, fisNew);
         files.insert(files.begin(), file);
         updateCurrentFile(file);
