@@ -48,6 +48,9 @@ void MainWindow::FileListWidget::FilesList::currentItemChanged() {
         string path = files[text.toStdString()];
         rootParent->flinfo->setText(path.c_str());
     }
+    else {
+        rootParent->flinfo->setText("");
+    }
 }
 
 void MainWindow::FileListWidget::FilesList::loadLastFiles() {
@@ -218,4 +221,5 @@ void MainWindow::FileListWidget::FilesList::redrawFiles() {
 
     sortItems();
     setCurrentItem(item(0));
+    currentItemChanged();
 }
