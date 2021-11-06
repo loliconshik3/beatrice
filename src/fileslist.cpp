@@ -50,6 +50,9 @@ void MainWindow::FileListWidget::FilesList::currentItemChanged() {
             string path = files[text.toStdString()];
             rootParent->flinfo->setText(path.c_str());
         }
+        else {
+            rootParent->flinfo->setText("");
+        }
     }
     else {
         rootParent->flinfo->setText("");
@@ -223,10 +226,10 @@ void MainWindow::FileListWidget::FilesList::redrawFiles() {
     clear();
 
     for (const auto & file : files) {
-        std::string fileName    = QString(file.first.c_str()).toLower().toUtf8().constData();
-        std::string searchQuery = rootParent->flsearch->text().toLower().toUtf8().constData();
+        string fileName    = QString(file.first.c_str()).toLower().toUtf8().constData();
+        string searchQuery = rootParent->flsearch->text().toLower().toUtf8().constData();
 
-        if ( fileName.find(searchQuery) != std::string::npos ) {
+        if ( fileName.find(searchQuery) != string::npos ) {
             addItem(QString(file.first.c_str()));
         }
     }
