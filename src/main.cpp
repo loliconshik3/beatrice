@@ -174,6 +174,9 @@ int main(int argc, char *argv[])
         // на текущую дерикторию + файлнейм
         window.openFile(argv[1]);
     }
+    else {
+        window.newFile();
+    }
     system("clear");
 
     return app.exec();
