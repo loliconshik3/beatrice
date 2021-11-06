@@ -222,6 +222,8 @@ void MainWindow::saveFile(QString path) {
                 currentFile->name       = fname;
                 currentFile->savedText  = fsavedText;
                 currentFile->isNew      = false;
+                currentFile->path       = fpath;
+                currentFile->directory  = fdir;
                 UpdateTitle();
                 infopanel->updateText();
             }
