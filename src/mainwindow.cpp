@@ -323,6 +323,7 @@ void MainWindow::OpenFile(QString path) {
 
 void MainWindow::insertSaveCommand(bool saveas) {
     if (currentFile->isNew or saveas) { //FILE | textbox->isNew or saveas
+        log("Insert save command in to cmd");
         commandline->clear();
         commandline->insert("save ");
         commandline->setFocus();
@@ -333,6 +334,7 @@ void MainWindow::insertSaveCommand(bool saveas) {
 }
 
 void MainWindow::insertFindCommand() {
+    log("Insert find command in to cmd");
     commandline->clear();
     commandline->insert("find ");
     commandline->setFocus();

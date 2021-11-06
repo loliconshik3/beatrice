@@ -44,9 +44,12 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
 
 void MainWindow::FileListWidget::FilesList::currentItemChanged() {
     if (count() > 0) {
-        QString text = currentItem()->text();
-        string path = files[text.toStdString()];
-        rootParent->flinfo->setText(path.c_str());
+        QListWidgetItem *item = currentItem();
+        if (item != NULL) {
+            QString text = item->text();
+            string path = files[text.toStdString()];
+            rootParent->flinfo->setText(path.c_str());
+        }
     }
     else {
         rootParent->flinfo->setText("");
@@ -190,15 +193,24 @@ void MainWindow::FileListWidget::FilesList::deleteFile() {
             return;
         }
 
-        if (path == root->filename) {
-            root->currentFile->text = ""; //FILE | root->filetext = "";
-            root->infopanel->updateText();
+        if (path == root->currentFile->path) {
+            log("Close current file: '" + path + "'");
+
+            root->currentFile->removeFileFromList(root->files);
+            if (root->files.size() > 0) {
+                root->openFile(root->files[0]->path.c_str());
+            }
+            else {
+                root->newFile();
+            }
         }
 
         if (filename.contains("[")) {
+            log("Remove directory: '" + path + "'");
             system(("rmdir '" + path + "'").c_str());
         }
         else {
+            log("Remove file: '" + path + "'");
             system(("rm '" + path + "'").c_str());
         }
     }

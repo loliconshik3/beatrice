@@ -1,7 +1,17 @@
 #include "utils.h"
 
+#include <chrono>
+#include <ctime>
+
 void log(string text) {
-    cout << "Log: " << text << endl;
+    auto end = chrono::system_clock::now();
+    time_t end_time = chrono::system_clock::to_time_t(end);
+
+    char buff[20];
+    strftime(buff, 20, "%H:%M:%S %d.%m.%Y", localtime(&end_time));
+    string time = buff;
+
+    cout << time + ": " << text << endl;
 }
 
 int getSelectedLines(QTextCursor &cursor) {
