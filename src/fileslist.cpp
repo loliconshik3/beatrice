@@ -1,5 +1,6 @@
 #include "fileslist.h"
 #include "filelistsearch.h"
+#include "filelisttext.h"
 #include "infopanel.h"
 #include "textbox.h"
 #include "utils.h"
@@ -49,13 +50,28 @@ void MainWindow::FileListWidget::FilesList::currentItemChanged() {
             QString text = item->text();
             string path = files[text.toStdString()];
             rootParent->flinfo->setText(path.c_str());
+
+            rootParent->fltext->setText(filesText[text.toStdString()].c_str());
         }
         else {
             rootParent->flinfo->setText("");
+            rootParent->fltext->setText("");
         }
     }
     else {
         rootParent->flinfo->setText("");
+        rootParent->fltext->setText("");
+    }
+}
+
+void MainWindow::FileListWidget::FilesList::setFileText(string name, QFile &file) {
+    QTextStream in(&file);
+    int count = 15;
+    while (count > 0 and !in.atEnd())
+    {
+       QString line = in.readLine();
+       filesText[name] += line.toStdString() + "\n";
+       --count;
     }
 }
 
@@ -63,6 +79,7 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
     QString homedir = getHomeDir().c_str();
     QString path    = homedir + "/.beatrice/cache/lastfile";
 
+    filesText.clear();
     files.clear();
     clear();
 
@@ -75,17 +92,22 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
 
            QFile loadedFile(line);
            if (loadedFile.exists()) {
-               string name = line.toStdString();
+                string name = line.toStdString();
 
-               if (name == root->currentFile->path) {
-                   name += " (Current)";
-               }
+                if (name == root->currentFile->path) {
+                    name += " (Current)";
+                }
 
-               replaceStr(name, homedir.toStdString(), "~");
+                replaceStr(name, homedir.toStdString(), "~");
 
-               files[name] = line.toStdString();
-               addItem(name.c_str());
-           }
+                files[name] = line.toStdString();
+                addItem(name.c_str());
+
+                if (loadedFile.open(QIODevice::ReadOnly)) {
+                   setFileText(name, loadedFile);
+                   loadedFile.close();
+                }
+            }
         }
         file.close();
     }
@@ -100,13 +122,16 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
     ifstream myfile;
     string fileName;
 
+    filesText.clear();
     files.clear();
     clear();
 
     for (const auto & entry : fs::directory_iterator(path)){
-        myfile.open(entry.path());
+        string path = entry.path();
+        QFile file(path.c_str());
+        //myfile.open(entry.path());
 
-        if ( myfile.is_open()) { // always check whether the file is open
+        if ( file.exists() ) { //if ( myfile.is_open()) { // always check whether the file is open
             fileName = entry.path().filename();
 
             if (entry.is_directory()) {
@@ -119,9 +144,13 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
 
             files[fileName] = entry.path();
             addItem(fileName.c_str());
+
+            if ( file.open(QIODevice::ReadOnly) ) {
+                setFileText(fileName, file);
+            }
         }
 
-        myfile.close();
+        file.close(); //myfile.close();
     }
     fileName        = BACK_NAME;
     files[fileName] = getPathDir(path);
@@ -137,6 +166,8 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
 void MainWindow::FileListWidget::FilesList::loadTabFiles() {
     string homedir = getHomeDir();
     string fileName = "";
+
+    filesText.clear();
     files.clear();
     clear();
 
@@ -155,6 +186,8 @@ void MainWindow::FileListWidget::FilesList::loadTabFiles() {
 
         files[fileName] = file->path;
         addItem(fileName.c_str());
+
+        filesText[fileName] = file->text;
     }
 
     sortItems();

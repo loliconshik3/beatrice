@@ -18,9 +18,11 @@ public:
     class FilesList;
     class FileListSearch;
     class FileListInfo;
+    class FileListText;
     FileListSearch *flsearch    = NULL;
     FilesList *fileslist        = NULL;
     FileListInfo *flinfo        = NULL;
+    FileListText *fltext        = NULL;
 
     explicit FileListWidget(MainWindow *parent = nullptr);
 

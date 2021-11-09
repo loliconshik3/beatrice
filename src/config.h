@@ -17,21 +17,29 @@ public:
     int windowMinWidth  = 1000;
     int windowMinHeight = 600;
 
-    int fileListWidgetWidth     = rect.width() / 2;
-    int fileListWidgetHeight    = rect.height() / 3;
+    int width = rect.width() / 2;
+    int height = rect.height() / 3;
+
+    int fileListWidgetWidth     = width; //+ (rect.width() / 2 / 3);
+    int fileListWidgetHeight    = height + (height / 2);
     int fileListWidgetX         = ( rect.width() - fileListWidgetWidth ) / 2;
     int fileListWidgetY         = ( rect.height() - fileListWidgetHeight ) / 2;
 
     int fileListSearchWidth     = fileListWidgetWidth;
     int fileListSearchHeight    = 25;
 
+    int fileListTextWidth       = fileListWidgetWidth;
+    int fileListTextHeight      = height / 2;
+    int fileListTextLeftPadding = 0;//fileListWidgetWidth - fileListTextWidth;
+    int fileListTextTopPadding  = fileListWidgetHeight - fileListTextHeight;
+
     int fileListInfoWidth       = fileListWidgetWidth;
     int fileListInfoHeight      = 20;
-    int fileListInfoTopPadding  = fileListWidgetHeight - fileListInfoHeight;
+    int fileListInfoTopPadding  = height - fileListInfoHeight;
 
     int fileListTopPadding  = 25;
     int fileListWidth       = fileListWidgetWidth;
-    int fileListHeight      = fileListWidgetHeight - fileListTopPadding - fileListInfoHeight - 10;
+    int fileListHeight      = height - fileListTopPadding - 10 - fileListInfoHeight;
 
     string infoPanelSeparator = " | ";
 

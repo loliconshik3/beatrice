@@ -19,6 +19,8 @@ private:
 
 public:
     map<string, string> files;
+    map<string, string> filesText;
+
     MainWindow *root;
     FileListWidget *rootParent = NULL;
 
@@ -35,6 +37,7 @@ private slots:
     void currentItemChanged();
     void openFile();
     void deleteFile();
+    void setFileText(string name, QFile &file);
 };
 
 #endif // FILESLIST_H
