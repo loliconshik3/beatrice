@@ -8,6 +8,6 @@ MainWindow::FileListWidget::FileListInfo::FileListInfo(FileListWidget *parent) :
 
     setAlignment(Qt::AlignLeft);
     setContentsMargins(2, 0, 0, 0);
-    setStyleSheet("QLabel { font-size: 13px; color: #ffffff; border: none; background: #2a2b2e; font-family: Source Code Pro;}");
+    setStyleSheet("QLabel { font-size: 13px; color: #1f222d; border: none; background: lightGray; font-family: Source Code Pro;}");
     setGeometry(0, root->cfg->fileListInfoTopPadding, root->cfg->fileListInfoWidth, root->cfg->fileListInfoHeight);
 }
