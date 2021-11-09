@@ -114,7 +114,7 @@ void MainWindow::openFile(QString path) {
                 createNewFile = true;
             }
             else {
-                string dir = fs::current_path();
+                string dir = currentDirectory;
                 filePath = dir.c_str() + QString("/") + path;
                 QFile pathFile(filePath);
                 if (!pathFile.exists()) {
@@ -172,6 +172,7 @@ void MainWindow::saveFile(QString path) {
             string fpath = fileName.toStdString();
             string fdir = getFilename(getPathDir(fpath));
             string fsavedText = currentFile->text;
+            string fext = getFileExt(fname);
 
             auto text = textbox->toPlainText().toUtf8();
             out << text;
@@ -188,6 +189,7 @@ void MainWindow::saveFile(QString path) {
                 currentFile->isNew      = false;
                 currentFile->path       = fpath;
                 currentFile->directory  = fdir;
+                currentFile->extension  = fext;
                 UpdateTitle();
                 infopanel->updateText();
             }
