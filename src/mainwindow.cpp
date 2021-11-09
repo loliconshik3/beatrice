@@ -133,10 +133,10 @@ void MainWindow::openFile(QString path) {
         string ftext = fileText.toStdString();
         string fname = getFilename(fpath);
         string fdir  = getFilename(getPathDir(fpath));
-        bool fisNew  = createNewFile;
+        bool fisNew  = false;
 
         if (fname.find("Untitled") != string::npos) {
-            fisNew = false;
+            fisNew = true;
         }
 
         if (files.size() == 1 && files[0]->name.find("Untitled") != string::npos && files[0]->text == "") {
