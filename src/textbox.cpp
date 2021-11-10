@@ -26,37 +26,9 @@ Textbox::Textbox(MainWindow *parent) :
     highlighter = new SyntaxHighlighter(this, parent);
     highlighter->setDocument(this->document());
 
-    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeLine), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(removeLine()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_duplicateLine), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(duplicateLine()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_scalePlus), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(scalePlus()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_scaleMinus), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(scaleMinus()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_insertTabAtLine), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(insertTabAtLine()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeTabAtLine), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(removeTabAtLine()));
-
-    connect(this, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
-
-    // Line numbers
-    lineNumberArea = new LineNumberArea(this);
-    ///
-    connect(this->document(), SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
-    connect(this->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateLineNumberArea/*_2*/(int)));
-    connect(this, SIGNAL(textChanged()), this, SLOT(updateLineNumberArea()));
-    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateLineNumberArea()));
-    ///
+    updateShortcuts();
     updateLineNumberAreaWidth(0);
 }
-
 
 int Textbox::countOfTabs(string str) {
     int tabs = 0;
@@ -658,4 +630,36 @@ void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
         ++blockNumber;
     }
 
+}
+
+void Textbox::updateShortcuts() {
+
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeLine), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(removeLine()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_duplicateLine), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(duplicateLine()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_scalePlus), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(scalePlus()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_scaleMinus), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(scaleMinus()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_insertTabAtLine), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(insertTabAtLine()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeTabAtLine), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(removeTabAtLine()));
+
+    connect(this, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
+
+    // Line numbers
+    lineNumberArea = new LineNumberArea(this);
+    ///
+    connect(this->document(), SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
+    connect(this->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateLineNumberArea/*_2*/(int)));
+    connect(this, SIGNAL(textChanged()), this, SLOT(updateLineNumberArea()));
+    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateLineNumberArea()));
+    ///
 }

@@ -15,13 +15,7 @@ FileListSearch::FileListSearch(FileListWidget *parent) :
 
     setGeometry(0, 0, root->cfg->fileListSearchWidth, root->cfg->fileListSearchHeight);
 
-    connect(this, &FileListSearch::textChanged, this, &FileListSearch::filterList);
-
-    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveDown), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(Down()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveUp), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(Up()));
+    updateShortcuts();
 }
 
 void FileListSearch::filterList() {
@@ -56,4 +50,14 @@ void FileListSearch::Down() {
             flist->setCurrentItem(flist->item(0));
         }
     }
+}
+
+void FileListSearch::updateShortcuts() {
+    connect(this, &FileListSearch::textChanged, this, &FileListSearch::filterList);
+
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveDown), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(Down()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveUp), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(Up()));
 }

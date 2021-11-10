@@ -7,8 +7,10 @@
 class FileListSearch : public QLineEdit
 {
     Q_OBJECT
-public:
+private:
+    void updateShortcuts();
 
+public:
     MainWindow *root;
     FileListWidget *rootParent = NULL;
 

@@ -29,18 +29,7 @@ FileList::FileList(FileListWidget *parent) :
 
     setGeometry(0, root->cfg->fileListTopPadding, root->cfg->fileListWidth, root->cfg->fileListHeight);
 
-    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile1), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile2), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
-
-    connect(this, &FileList::doubleClicked, this, &FileList::openFile);
-
-    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listDeleteFile), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(deleteFile()));
-
-    connect(this, &FileList::itemSelectionChanged, this, &FileList::currentItemChanged);
+    updateShortcuts();
 }
 
 void FileList::currentItemChanged() {
@@ -270,4 +259,19 @@ void FileList::redrawFiles() {
     sortItems();
     setCurrentItem(item(0));
     currentItemChanged();
+}
+
+void FileList::updateShortcuts() {
+    QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile1), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile2), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
+
+    connect(this, &FileList::doubleClicked, this, &FileList::openFile);
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_listDeleteFile), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(deleteFile()));
+
+    connect(this, &FileList::itemSelectionChanged, this, &FileList::currentItemChanged);
 }

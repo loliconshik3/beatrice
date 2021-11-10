@@ -16,6 +16,8 @@ using namespace std;
 class Textbox : public QTextEdit
 {
     Q_OBJECT
+private:
+    void updateShortcuts();
 
 public:
     int tabSize         = 4;

@@ -7,6 +7,8 @@
 class CommandLine : public QLineEdit
 {
     Q_OBJECT
+private:
+    void updateShortcuts();
 
 public:
     vector<string> commandList = {

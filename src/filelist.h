@@ -17,6 +17,8 @@ private:
     const string BACK_NAME = ">> BACK <<";
     const string PICK_NAME = ">> PICK DIRECTORY <<";
 
+    void updateShortcuts();
+
 public:
     map<string, string> files;
     map<string, string> filesText;
