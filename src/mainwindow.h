@@ -35,7 +35,7 @@ public:
 
     MainWindow(QWidget *parent = nullptr);
 
-    void UpdateTitle();
+    void updateTitle();
     void saveLastFile();
     void updateShortcuts();
 
@@ -50,7 +50,7 @@ public slots:
     void openDownFile();
     void insertFindCommand();
     void insertSaveCommand(bool saveas=false);
-    void OpenFolder(QString path=nullptr);
+    void openFolder(QString path=nullptr);
     void changeFocus();
     void aboutScreen();
     void showCurrentDirFiles();

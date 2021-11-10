@@ -1,5 +1,5 @@
 #include "filelistsearch.h"
-#include "fileslist.h"
+#include "filelist.h"
 
 #include <QDesktopWidget>
 #include <QShortcut>
@@ -25,35 +25,35 @@ FileListSearch::FileListSearch(FileListWidget *parent) :
 }
 
 void FileListSearch::filterList() {
-    rootParent->fileslist->redrawFiles();
+    rootParent->filelist->redrawFiles();
 }
 
 void FileListSearch::Up() {
-    if (not rootParent->fileslist->isHidden()) {
-        int itemIndex   = rootParent->fileslist->currentIndex().row();
-        auto flist      = rootParent->fileslist;
+    if (not rootParent->filelist->isHidden()) {
+        int itemIndex   = rootParent->filelist->currentIndex().row();
+        auto flist      = rootParent->filelist;
         int maxIndex    = 0;
 
         if (itemIndex > maxIndex) {
-           flist->setCurrentItem(flist->item(itemIndex-1));
+            flist->setCurrentItem(flist->item(itemIndex-1));
         }
         else {
-            rootParent->fileslist->setCurrentItem(flist->item(flist->count()-1));
+            flist->setCurrentItem(flist->item(flist->count()-1));
         }
     }
 }
 
 void FileListSearch::Down() {
-    if (not rootParent->fileslist->isHidden()) {
-        int itemIndex   = rootParent->fileslist->currentIndex().row();
-        int maxIndex    = rootParent->fileslist->count()-1;
-        auto flist      = rootParent->fileslist;
+    if (not rootParent->filelist->isHidden()) {
+        int itemIndex   = rootParent->filelist->currentIndex().row();
+        int maxIndex    = rootParent->filelist->count()-1;
+        auto flist      = rootParent->filelist;
 
         if (itemIndex < maxIndex) {
            flist->setCurrentItem(flist->item(itemIndex+1));
         }
         else {
-            rootParent->fileslist->setCurrentItem(flist->item(0));
+            flist->setCurrentItem(flist->item(0));
         }
     }
 }

@@ -2,7 +2,7 @@
 #include "commandline.h"
 #include "mainwindow.h"
 #include "infopanel.h"
-#include "fileslist.h"
+#include "filelist.h"
 #include "textbox.h"
 #include "utils.h"
 
@@ -30,14 +30,14 @@ MainWindow::MainWindow(QWidget *parent)
     string path = fs::current_path();
     currentFile = new File("Untitled", "", path+"/Untitled", getFilename(path), true);
     setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
-    UpdateTitle();
+    updateTitle();
 
     setStyleSheet("QWidget { background: #1f222d}");//#262728 }");//#2e2f30
 
     updateShortcuts();
 }
 
-void MainWindow::UpdateTitle() {
+void MainWindow::updateTitle() {
     string fname = currentFile->name;
     if (!currentFile->isSaved()) {
         fname += "*";
@@ -47,14 +47,8 @@ void MainWindow::UpdateTitle() {
     setWindowTitle(windowName.c_str());
 }
 
-void MainWindow::OpenFolder(QString path) {
+void MainWindow::openFolder(QString path) {
     QString fileName = path;
-
-    if (path.isEmpty()) {
-        path = fs::current_path().c_str();
-        fileName = QFileDialog::getExistingDirectory(this,
-            tr("Open File"), path);
-    }
 
     if (fileName.isEmpty())
         return;
@@ -62,7 +56,7 @@ void MainWindow::OpenFolder(QString path) {
         currentDirectory = fileName.toStdString();
     }
     infopanel->updateText();
-    UpdateTitle();
+    updateTitle();
 }
 
 void MainWindow::newFile() {
@@ -79,7 +73,7 @@ void MainWindow::newFile() {
 void MainWindow::updateCurrentFile(File *file) {
     currentFile = file;
     textbox->setText(currentFile->text.c_str());
-    UpdateTitle();
+    updateTitle();
     infopanel->updateText();
 }
 
@@ -190,7 +184,7 @@ void MainWindow::saveFile(QString path) {
                 currentFile->path       = fpath;
                 currentFile->directory  = fdir;
                 currentFile->extension  = fext;
-                UpdateTitle();
+                updateTitle();
                 infopanel->updateText();
             }
 
@@ -298,19 +292,19 @@ void MainWindow::openDownFile() {
 }
 
 void MainWindow::showCurrentDirFiles() {
-    flwidget->fileslist->loadDirectoryFiles(currentDirectory);
+    flwidget->filelist->loadDirectoryFiles(currentDirectory);
     flwidget->flsearch->setFocus();
     flwidget->show();
 }
 
 void MainWindow::showLastFiles() {
-    flwidget->fileslist->loadLastFiles();
+    flwidget->filelist->loadLastFiles();
     flwidget->flsearch->setFocus();
     flwidget->show();
 }
 
 void MainWindow::showTabFiles() {
-    flwidget->fileslist->loadTabFiles();
+    flwidget->filelist->loadTabFiles();
     flwidget->flsearch->setFocus();
     flwidget->show();
 }

@@ -5,18 +5,11 @@
 #include "filelistinfo.h"
 #include "commandline.h"
 #include "infopanel.h"
-#include "fileslist.h"
+#include "filelist.h"
 #include "textbox.h"
 #include "utils.h"
 
 #include <QApplication>
-#include <QMessageBox>
-
-#include <QObject>
-#include <QJsonObject>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QDebug>
 
 /*
  Готовые горячие клавиши
@@ -42,27 +35,12 @@
 */
 
 /*
- Функции
- ! - не устраивает
- + - устраивает
- ? - не уверен
-
- +* Сохранение файла
- +* Открытие файла
- +* Перемещение между папками
- !* Открытие папки
- *
- *
- *
-*/
-
-/*
   Идеи для редактора.
 
   +• Dobavit pri napisanii " v "" - peremeshenie cursora vleva
   +• Dobavit na ctrl+p otkritie spiska filov, kotorie otkriti shyas
 
-  • Можно добавить в файл листе доп окно, которое будет отображать текст из файла
+  +• Можно добавить в файл листе доп окно, которое будет отображать текст из файла
     Иего, если что, можно будет выделить и скопировать (мб)
   • При копировании текста записывать скопированный текст в список
     А при вставке через Ctrl+Shift+v - Показывать список всех скопированных строк
@@ -131,7 +109,7 @@ int main(int argc, char *argv[])
     MainWindow window;
 
     FileListWidget flwidget(&window);
-    FilesList fileslist(&flwidget);
+    FileList filelist(&flwidget);
     FileListSearch flsearch(&flwidget);
     FileListInfo flinfo(&flwidget);
     FileListText fltext(&flwidget);
@@ -143,7 +121,7 @@ int main(int argc, char *argv[])
     QGridLayout *layout = new QGridLayout;
 
     window.flwidget     = &flwidget;
-    flwidget.fileslist  = &fileslist;
+    flwidget.filelist   = &filelist;
     flwidget.flsearch   = &flsearch;
     flwidget.flinfo     = &flinfo;
     flwidget.fltext     = &fltext;
@@ -165,12 +143,6 @@ int main(int argc, char *argv[])
     window.commandline->show();
     flwidget.hide();
     window.infopanel->updateText();
-
-    //QMessageBox::StandardButton reply;
-    //reply = QMessageBox::question(&window, "Loader", "Load last file?",
-    //                              QMessageBox::No|QMessageBox::Yes);
-    //if (reply == QMessageBox::Yes) {
-    //}
 
     if (argc > 1) {
         //std::string test = argv[1];

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class FilesList : public QListWidget
+class FileList : public QListWidget
 {
     Q_OBJECT
 private:
@@ -24,7 +24,7 @@ public:
     MainWindow *root;
     FileListWidget *rootParent = NULL;
 
-    FilesList(FileListWidget *parent=nullptr);
+    FileList(FileListWidget *parent=nullptr);
 
     void loadDirectoryFiles(string path);
     void loadLastFiles();

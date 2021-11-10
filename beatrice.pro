@@ -12,11 +12,11 @@ SOURCES += \
     src/commandline.cpp \
     src/config.cpp \
     src/file.cpp \
+    src/filelist.cpp \
     src/filelistinfo.cpp \
     src/filelistsearch.cpp \
     src/filelisttext.cpp \
     src/filelistwidget.cpp \
-    src/fileslist.cpp \
     src/infopanel.cpp \
     src/linenumberarea.cpp \
     src/main.cpp \
@@ -29,11 +29,11 @@ HEADERS += \
     src/commandline.h \
     src/config.h \
     src/file.h \
+    src/filelist.h \
     src/filelistinfo.h \
     src/filelistsearch.h \
     src/filelisttext.h \
     src/filelistwidget.h \
-    src/fileslist.h \
     src/infopanel.h \
     src/linenumberarea.h \
     src/mainwindow.h \

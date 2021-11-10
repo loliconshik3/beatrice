@@ -493,7 +493,7 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
 
 void Textbox::onTextChanged() {
     root->currentFile->text = toPlainText().toStdString();
-    root->UpdateTitle();
+    root->updateTitle();
     root->infopanel->updateText();
 }
 

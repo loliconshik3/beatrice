@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class FilesList;
+class FileList;
 class FileListSearch;
 class FileListInfo;
 class FileListText;
@@ -21,7 +21,7 @@ public:
     MainWindow *root = NULL;
 
     FileListSearch *flsearch    = NULL;
-    FilesList *fileslist        = NULL;
+    FileList *filelist          = NULL;
     FileListInfo *flinfo        = NULL;
     FileListText *fltext        = NULL;
 

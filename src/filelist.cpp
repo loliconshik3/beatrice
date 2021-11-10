@@ -1,4 +1,4 @@
-#include "fileslist.h"
+#include "filelist.h"
 #include "filelistsearch.h"
 #include "filelisttext.h"
 #include "infopanel.h"
@@ -16,7 +16,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-FilesList::FilesList(FileListWidget *parent) :
+FileList::FileList(FileListWidget *parent) :
     QListWidget(parent)
 {
     root = parent->root;
@@ -35,15 +35,15 @@ FilesList::FilesList(FileListWidget *parent) :
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_listOpenFile2), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(openFile()));
 
-    connect(this, &FilesList::doubleClicked, this, &FilesList::openFile);
+    connect(this, &FileList::doubleClicked, this, &FileList::openFile);
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_listDeleteFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(deleteFile()));
 
-    connect(this, &FilesList::itemSelectionChanged, this, &FilesList::currentItemChanged);
+    connect(this, &FileList::itemSelectionChanged, this, &FileList::currentItemChanged);
 }
 
-void FilesList::currentItemChanged() {
+void FileList::currentItemChanged() {
     if (count() > 0) {
         QListWidgetItem *item = currentItem();
         if (item != NULL) {
@@ -64,7 +64,7 @@ void FilesList::currentItemChanged() {
     }
 }
 
-void FilesList::setFileText(string name, QFile &file) {
+void FileList::setFileText(string name, QFile &file) {
     QTextStream in(&file);
     int count = 15;
     while (count > 0 and !in.atEnd())
@@ -75,7 +75,7 @@ void FilesList::setFileText(string name, QFile &file) {
     }
 }
 
-void FilesList::loadLastFiles() {
+void FileList::loadLastFiles() {
     QString homedir = getHomeDir().c_str();
     QString path    = homedir + "/.beatrice/cache/lastfile";
 
@@ -118,7 +118,7 @@ void FilesList::loadLastFiles() {
     }
 }
 
-void FilesList::loadDirectoryFiles(string path) {
+void FileList::loadDirectoryFiles(string path) {
     ifstream myfile;
     string fileName;
 
@@ -163,7 +163,7 @@ void FilesList::loadDirectoryFiles(string path) {
     setCurrentItem(item(0));
 }
 
-void FilesList::loadTabFiles() {
+void FileList::loadTabFiles() {
     string homedir = getHomeDir();
     string fileName = "";
 
@@ -194,7 +194,7 @@ void FilesList::loadTabFiles() {
     setCurrentItem(item(0));	
 }
 
-void FilesList::openFile() {
+void FileList::openFile() {
     if (count() > 0) {
         QString curItem = currentItem()->text();
         string path = files[curItem.toStdString()];
@@ -205,7 +205,7 @@ void FilesList::openFile() {
             loadDirectoryFiles(path);
         }
         else if (curItem == PICK_NAME.c_str()) {
-            root->OpenFolder(path.c_str());
+            root->openFolder(path.c_str());
             rootParent->hide();
         }
         else {
@@ -218,7 +218,7 @@ void FilesList::openFile() {
     }
 }
 
-void FilesList::deleteFile() {
+void FileList::deleteFile() {
     if (count() > 0) {
         QString filename = currentItem()->text();
         string path      = files[filename.toStdString()];
@@ -255,7 +255,7 @@ void FilesList::deleteFile() {
     }
 }
 
-void FilesList::redrawFiles() {
+void FileList::redrawFiles() {
     clear();
 
     for (const auto & file : files) {
