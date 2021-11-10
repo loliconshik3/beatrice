@@ -5,7 +5,7 @@
 #include <QDesktopWidget>
 #include <QHideEvent>
 
-MainWindow::FileListWidget::FileListWidget(MainWindow *parent) : QWidget(parent)
+FileListWidget::FileListWidget(MainWindow *parent) : QWidget(parent)
 {
     root = parent;
     setStyleSheet("QWidget { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
@@ -16,10 +16,10 @@ MainWindow::FileListWidget::FileListWidget(MainWindow *parent) : QWidget(parent)
     move(root->cfg->fileListWidgetX, root->cfg->fileListWidgetY);
 }
 
-void MainWindow::FileListWidget::closeEvent(QCloseEvent *e) {
+void FileListWidget::closeEvent(QCloseEvent *e) {
     flsearch->clear();
 }
 
-void MainWindow::FileListWidget::hideEvent(QHideEvent *event) {
+void FileListWidget::hideEvent(QHideEvent *event) {
     flsearch->clear();
 }

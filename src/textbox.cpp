@@ -10,7 +10,7 @@
 #include <QShortcut>
 #include <QtWidgets>
 
-MainWindow::Textbox::Textbox(MainWindow *parent) :
+Textbox::Textbox(MainWindow *parent) :
     QTextEdit(parent)
 {
     root = parent; //font-size: 17px; font-family: Source Code Pro;
@@ -58,7 +58,7 @@ MainWindow::Textbox::Textbox(MainWindow *parent) :
 }
 
 
-int MainWindow::Textbox::countOfTabs(string str) {
+int Textbox::countOfTabs(string str) {
     int tabs = 0;
     int symb = 0;
     int spaces = 0;
@@ -79,7 +79,7 @@ int MainWindow::Textbox::countOfTabs(string str) {
 }
 
 
-void MainWindow::Textbox::tabulation() {
+void Textbox::tabulation() {
     QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
 
@@ -107,7 +107,7 @@ void MainWindow::Textbox::tabulation() {
     }
 }
 
-void MainWindow::Textbox::removeTabAtLine() {
+void Textbox::removeTabAtLine() {
     QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
     int lineNumer       = cursor.block().blockNumber();
@@ -152,7 +152,7 @@ void MainWindow::Textbox::removeTabAtLine() {
     }
 }
 
-void MainWindow::Textbox::insertTabAtLine() {
+void Textbox::insertTabAtLine() {
     QTextCursor cursor  = textCursor();
     int lineNumer       = cursor.block().blockNumber();
     int columnNumer     = cursor.columnNumber();
@@ -165,7 +165,7 @@ void MainWindow::Textbox::insertTabAtLine() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::scalePlus() {
+void Textbox::scalePlus() {
     QFont fnt = font();
     int size  = fnt.pixelSize();
     if (size < 30) {
@@ -175,7 +175,7 @@ void MainWindow::Textbox::scalePlus() {
     root->infopanel->updateText();
 }
 
-void MainWindow::Textbox::scaleMinus() {
+void Textbox::scaleMinus() {
     QFont fnt = font();
     int size  = fnt.pixelSize();
     if (size > 15) {
@@ -185,7 +185,7 @@ void MainWindow::Textbox::scaleMinus() {
     root->infopanel->updateText();
 }
 
-void MainWindow::Textbox::duplicateLine() {
+void Textbox::duplicateLine() {
     QTextCursor cursor = textCursor();
     int lineNumer = cursor.block().blockNumber();
 
@@ -201,7 +201,7 @@ void MainWindow::Textbox::duplicateLine() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::removeLine() {
+void Textbox::removeLine() {
     QTextCursor cursor = textCursor();
     int lineNumer = cursor.block().blockNumber();
 
@@ -214,7 +214,7 @@ void MainWindow::Textbox::removeLine() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::setTabSize(int size) {
+void Textbox::setTabSize(int size) {
     tabSize     = size;
     tabString   = "";
 
@@ -226,11 +226,11 @@ void MainWindow::Textbox::setTabSize(int size) {
     root->infopanel->updateText();
 }
 
-string MainWindow::Textbox::getCursorPos() {
+string Textbox::getCursorPos() {
     return to_string(textCursor().block().blockNumber()+1) + "," + to_string(textCursor().columnNumber()+1);
 }
 
-void MainWindow::Textbox::enterKey() {
+void Textbox::enterKey() {
     QTextCursor cursor = textCursor();
 
     if (cursor.selectedText() != "") {    
@@ -284,7 +284,7 @@ void MainWindow::Textbox::enterKey() {
     }
 }
 
-string MainWindow::Textbox::getAroundChars() {
+string Textbox::getAroundChars() {
     QTextCursor cursor = textCursor();
 	string aroundChars = "";
 
@@ -295,7 +295,7 @@ string MainWindow::Textbox::getAroundChars() {
 	return aroundChars;
 }
 
-void MainWindow::Textbox::backspace() {
+void Textbox::backspace() {
     QTextCursor cursor = textCursor();
 
     if (cursor.selectedText() != "") {
@@ -344,7 +344,7 @@ void MainWindow::Textbox::backspace() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::moveCursorBack() {
+void Textbox::moveCursorBack() {
     QTextCursor cursor = textCursor();
 
     cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 1);
@@ -352,7 +352,7 @@ void MainWindow::Textbox::moveCursorBack() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::moveCursorForward() {
+void Textbox::moveCursorForward() {
 	QTextCursor cursor = textCursor();
 
     cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1);
@@ -360,7 +360,7 @@ void MainWindow::Textbox::moveCursorForward() {
 	setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::moveCursorRight() {
+void Textbox::moveCursorRight() {
     QTextCursor cursor = textCursor();
     auto anchorState = QTextCursor::MoveAnchor;
 
@@ -400,7 +400,7 @@ void MainWindow::Textbox::moveCursorRight() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::moveCursorLeft() {
+void Textbox::moveCursorLeft() {
     QTextCursor cursor = textCursor();
     auto anchorState = QTextCursor::MoveAnchor;
 
@@ -435,7 +435,7 @@ void MainWindow::Textbox::moveCursorLeft() {
     setTextCursor(cursor);
 }
 
-void MainWindow::Textbox::completeQuotes(string quote) {
+void Textbox::completeQuotes(string quote) {
     string totalQuote   = quote + quote;
     string achars       = getAroundChars();
 
@@ -453,7 +453,7 @@ void MainWindow::Textbox::completeQuotes(string quote) {
     }
 }
 
-void MainWindow::Textbox::completeBrackets(string bracket, bool isNew) {
+void Textbox::completeBrackets(string bracket, bool isNew) {
     map<string, string> bracketsList = {
         {"(", ")"},
         {"{", "}"},
@@ -491,13 +491,13 @@ void MainWindow::Textbox::completeBrackets(string bracket, bool isNew) {
 }
 
 
-void MainWindow::Textbox::onTextChanged() {
+void Textbox::onTextChanged() {
     root->currentFile->text = toPlainText().toStdString();
     root->UpdateTitle();
     root->infopanel->updateText();
 }
 
-int MainWindow::Textbox::lineNumberAreaWidth()
+int Textbox::lineNumberAreaWidth()
 {
     int digits = 1;
     int max = qMax(1, this->document()->blockCount());
@@ -512,21 +512,21 @@ int MainWindow::Textbox::lineNumberAreaWidth()
     return space;
 }
 
-void MainWindow::Textbox::updateLineNumberAreaWidth(int /* newBlockCount */)
+void Textbox::updateLineNumberAreaWidth(int /* newBlockCount */)
 {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
 
-void MainWindow::Textbox::updateLineNumberArea(QRectF /*rect_f*/)
+void Textbox::updateLineNumberArea(QRectF /*rect_f*/)
 {
-    MainWindow::Textbox::updateLineNumberArea();
+    Textbox::updateLineNumberArea();
 }
-void MainWindow::Textbox::updateLineNumberArea(int /*slider_pos*/)
+void Textbox::updateLineNumberArea(int /*slider_pos*/)
 {
-    MainWindow::Textbox::updateLineNumberArea();
+    Textbox::updateLineNumberArea();
 }
-void MainWindow::Textbox::updateLineNumberArea()
+void Textbox::updateLineNumberArea()
 {
     root->currentFile->cursorPosition = textCursor().position();
     root->infopanel->updateText();
@@ -571,7 +571,7 @@ void MainWindow::Textbox::updateLineNumberArea()
 }
 
 
-void MainWindow::Textbox::resizeEvent(QResizeEvent *e)
+void Textbox::resizeEvent(QResizeEvent *e)
 {
     QTextEdit::resizeEvent(e);
 
@@ -580,7 +580,7 @@ void MainWindow::Textbox::resizeEvent(QResizeEvent *e)
 }
 
 
-int MainWindow::Textbox::getFirstVisibleBlockId()
+int Textbox::getFirstVisibleBlockId()
 {
     // Detect the first block for which bounding rect - once translated
     // in absolute coordinated - is contained by the editor's text area
@@ -608,7 +608,7 @@ int MainWindow::Textbox::getFirstVisibleBlockId()
     return 0;
 }
 
-void MainWindow::Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
+void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
     this->verticalScrollBar()->setSliderPosition(this->verticalScrollBar()->sliderPosition());
 

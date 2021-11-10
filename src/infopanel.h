@@ -4,7 +4,7 @@
 #include <QLabel>
 #include "mainwindow.h"
 
-class MainWindow::InfoPanel : public QLabel
+class InfoPanel : public QLabel
 {
     Q_OBJECT
 

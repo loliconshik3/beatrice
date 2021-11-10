@@ -9,16 +9,17 @@
 
 using namespace std;
 
-class MainWindow::FileListWidget : public QWidget
+class FilesList;
+class FileListSearch;
+class FileListInfo;
+class FileListText;
+
+class FileListWidget : public QWidget
 {
     Q_OBJECT
 public:
     MainWindow *root = NULL;
 
-    class FilesList;
-    class FileListSearch;
-    class FileListInfo;
-    class FileListText;
     FileListSearch *flsearch    = NULL;
     FilesList *fileslist        = NULL;
     FileListInfo *flinfo        = NULL;

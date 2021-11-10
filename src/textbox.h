@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class MainWindow::Textbox : public QTextEdit
+class Textbox : public QTextEdit
 {
     Q_OBJECT
 
@@ -33,9 +33,6 @@ public:
     void moveCursorForward();
     string getCursorPos();
     string getAroundChars();
-
-signals:
-
 
 public slots:
 

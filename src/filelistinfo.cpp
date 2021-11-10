@@ -1,6 +1,6 @@
 #include "filelistinfo.h"
 
-MainWindow::FileListWidget::FileListInfo::FileListInfo(FileListWidget *parent) :
+FileListInfo::FileListInfo(FileListWidget *parent) :
     QLabel(parent)
 {
     root = parent->root;

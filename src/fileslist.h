@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class MainWindow::FileListWidget::FilesList : public QListWidget
+class FilesList : public QListWidget
 {
     Q_OBJECT
 private:

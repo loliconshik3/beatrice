@@ -4,7 +4,7 @@
 #include <QDesktopWidget>
 #include <QShortcut>
 
-MainWindow::FileListWidget::FileListSearch::FileListSearch(FileListWidget *parent) :
+FileListSearch::FileListSearch(FileListWidget *parent) :
     QLineEdit(parent)
 {
     root = parent->root;
@@ -24,11 +24,11 @@ MainWindow::FileListWidget::FileListSearch::FileListSearch(FileListWidget *paren
     connect(shortcut, SIGNAL(activated()), this, SLOT(Up()));
 }
 
-void MainWindow::FileListWidget::FileListSearch::filterList() {
+void FileListSearch::filterList() {
     rootParent->fileslist->redrawFiles();
 }
 
-void MainWindow::FileListWidget::FileListSearch::Up() {
+void FileListSearch::Up() {
     if (not rootParent->fileslist->isHidden()) {
         int itemIndex   = rootParent->fileslist->currentIndex().row();
         auto flist      = rootParent->fileslist;
@@ -43,7 +43,7 @@ void MainWindow::FileListWidget::FileListSearch::Up() {
     }
 }
 
-void MainWindow::FileListWidget::FileListSearch::Down() {
+void FileListSearch::Down() {
     if (not rootParent->fileslist->isHidden()) {
         int itemIndex   = rootParent->fileslist->currentIndex().row();
         int maxIndex    = rootParent->fileslist->count()-1;

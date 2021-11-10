@@ -130,15 +130,15 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     MainWindow window;
 
-    MainWindow::FileListWidget flwidget(&window);
-    MainWindow::FileListWidget::FilesList fileslist(&flwidget);
-    MainWindow::FileListWidget::FileListSearch flsearch(&flwidget);
-    MainWindow::FileListWidget::FileListInfo flinfo(&flwidget);
-    MainWindow::FileListWidget::FileListText fltext(&flwidget);
+    FileListWidget flwidget(&window);
+    FilesList fileslist(&flwidget);
+    FileListSearch flsearch(&flwidget);
+    FileListInfo flinfo(&flwidget);
+    FileListText fltext(&flwidget);
 
-    MainWindow::Textbox textbox(&window);
-    MainWindow::CommandLine commandline(&window);
-    MainWindow::InfoPanel infopanel(&window);
+    Textbox textbox(&window);
+    CommandLine commandline(&window);
+    InfoPanel infopanel(&window);
 
     QGridLayout *layout = new QGridLayout;
 

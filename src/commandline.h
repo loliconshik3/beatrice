@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include "mainwindow.h"
 
-class MainWindow::CommandLine : public QLineEdit
+class CommandLine : public QLineEdit
 {
     Q_OBJECT
 

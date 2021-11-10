@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include "filelistwidget.h"
 
-class MainWindow::FileListWidget::FileListSearch : public QLineEdit
+class FileListSearch : public QLineEdit
 {
     Q_OBJECT
 public:

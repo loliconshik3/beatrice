@@ -16,7 +16,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
+FilesList::FilesList(FileListWidget *parent) :
     QListWidget(parent)
 {
     root = parent->root;
@@ -43,7 +43,7 @@ MainWindow::FileListWidget::FilesList::FilesList(FileListWidget *parent) :
     connect(this, &FilesList::itemSelectionChanged, this, &FilesList::currentItemChanged);
 }
 
-void MainWindow::FileListWidget::FilesList::currentItemChanged() {
+void FilesList::currentItemChanged() {
     if (count() > 0) {
         QListWidgetItem *item = currentItem();
         if (item != NULL) {
@@ -64,7 +64,7 @@ void MainWindow::FileListWidget::FilesList::currentItemChanged() {
     }
 }
 
-void MainWindow::FileListWidget::FilesList::setFileText(string name, QFile &file) {
+void FilesList::setFileText(string name, QFile &file) {
     QTextStream in(&file);
     int count = 15;
     while (count > 0 and !in.atEnd())
@@ -75,7 +75,7 @@ void MainWindow::FileListWidget::FilesList::setFileText(string name, QFile &file
     }
 }
 
-void MainWindow::FileListWidget::FilesList::loadLastFiles() {
+void FilesList::loadLastFiles() {
     QString homedir = getHomeDir().c_str();
     QString path    = homedir + "/.beatrice/cache/lastfile";
 
@@ -118,7 +118,7 @@ void MainWindow::FileListWidget::FilesList::loadLastFiles() {
     }
 }
 
-void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
+void FilesList::loadDirectoryFiles(string path) {
     ifstream myfile;
     string fileName;
 
@@ -163,7 +163,7 @@ void MainWindow::FileListWidget::FilesList::loadDirectoryFiles(string path) {
     setCurrentItem(item(0));
 }
 
-void MainWindow::FileListWidget::FilesList::loadTabFiles() {
+void FilesList::loadTabFiles() {
     string homedir = getHomeDir();
     string fileName = "";
 
@@ -194,7 +194,7 @@ void MainWindow::FileListWidget::FilesList::loadTabFiles() {
     setCurrentItem(item(0));	
 }
 
-void MainWindow::FileListWidget::FilesList::openFile() {
+void FilesList::openFile() {
     if (count() > 0) {
         QString curItem = currentItem()->text();
         string path = files[curItem.toStdString()];
@@ -218,7 +218,7 @@ void MainWindow::FileListWidget::FilesList::openFile() {
     }
 }
 
-void MainWindow::FileListWidget::FilesList::deleteFile() {
+void FilesList::deleteFile() {
     if (count() > 0) {
         QString filename = currentItem()->text();
         string path      = files[filename.toStdString()];
@@ -255,7 +255,7 @@ void MainWindow::FileListWidget::FilesList::deleteFile() {
     }
 }
 
-void MainWindow::FileListWidget::FilesList::redrawFiles() {
+void FilesList::redrawFiles() {
     clear();
 
     for (const auto & file : files) {

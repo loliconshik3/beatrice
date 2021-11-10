@@ -8,6 +8,11 @@
 #include <QGridLayout>
 #include <string>
 
+class Textbox;
+class FileListWidget;
+class CommandLine;
+class InfoPanel;
+
 using namespace std;
 namespace fs = std::filesystem;
 
@@ -22,11 +27,6 @@ public:
     File *currentFile = NULL;
 
     Config *cfg = new Config();
-
-    class FileListWidget;
-    class Textbox;
-    class InfoPanel;
-    class CommandLine;
 
     Textbox *textbox            = NULL;
     InfoPanel *infopanel        = NULL;

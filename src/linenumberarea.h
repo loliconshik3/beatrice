@@ -9,7 +9,7 @@ class LineNumberArea : public QWidget
     Q_OBJECT
 
 public:
-    LineNumberArea(MainWindow::Textbox *editor);
+    LineNumberArea(Textbox *editor);
 
     QSize sizeHint() const;
 
@@ -17,7 +17,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 private:
-    MainWindow::Textbox *codeEditor;
+    Textbox *codeEditor;
 };
 
 

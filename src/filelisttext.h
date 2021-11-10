@@ -5,7 +5,7 @@
 
 #include <QTextEdit>
 
-class MainWindow::FileListWidget::FileListText : public QTextEdit
+class FileListText : public QTextEdit
 {
     Q_OBJECT
 public:

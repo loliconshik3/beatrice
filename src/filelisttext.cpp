@@ -1,6 +1,6 @@
 #include "filelisttext.h"
 
-MainWindow::FileListWidget::FileListText::FileListText(FileListWidget *parent)
+FileListText::FileListText(FileListWidget *parent)
     : QTextEdit(parent)
 {
     root = parent->root;

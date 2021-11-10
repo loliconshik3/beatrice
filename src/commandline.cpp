@@ -1,11 +1,10 @@
 #include "commandline.h"
-#include "mainwindow.h"
 #include "textbox.h"
 #include "utils.h"
 
 #include <QtWidgets>
 
-MainWindow::CommandLine::CommandLine(MainWindow *parent) :
+CommandLine::CommandLine(MainWindow *parent) :
     QLineEdit(parent)
 {
     root = parent; //#1f1f1f //2e2f30
@@ -24,14 +23,14 @@ MainWindow::CommandLine::CommandLine(MainWindow *parent) :
     connect(shortcut, SIGNAL(activated()), this, SLOT(escape()));
 }
 
-void MainWindow::CommandLine::escape() {
+void CommandLine::escape() {
     if (root->focusWidget() == this) {
         root->textbox->setFocus();
         clear();
     }
 }
 
-void MainWindow::CommandLine::launchCommand() {
+void CommandLine::launchCommand() {
     std::string commandText = text().toStdString();
 
     clear();
@@ -84,7 +83,7 @@ void MainWindow::CommandLine::launchCommand() {
     setPlaceholderText(commandText.c_str());
 }
 
-void MainWindow::CommandLine::completeCommand() {
+void CommandLine::completeCommand() {
     clear();
     insert(placeholderText());
 }

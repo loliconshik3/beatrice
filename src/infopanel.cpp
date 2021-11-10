@@ -12,7 +12,7 @@
 
 using namespace std;
 
-MainWindow::InfoPanel::InfoPanel(MainWindow *parent) :
+InfoPanel::InfoPanel(MainWindow *parent) :
     QLabel(parent)
 {
     root = parent;
@@ -21,7 +21,7 @@ MainWindow::InfoPanel::InfoPanel(MainWindow *parent) :
     setStyleSheet("QLabel { font-size: 17px; color: #1f222d; border: none; background: lightGray; font-family: Source Code Pro;}");
 }
 
-void MainWindow::InfoPanel::updateText() {
+void InfoPanel::updateText() {
     string totalText    = "";
     string fname        = root->currentFile->name;
     string cursorPos    = root->textbox->getCursorPos();
@@ -34,17 +34,6 @@ void MainWindow::InfoPanel::updateText() {
     if (!root->currentFile->isSaved()) {
         fname += "*";
     }
-
-    /*FILE | string fname        = getFilename(root->filename);
-    string cursorPos    = root->textbox->getCursorPos();
-    string tabSize      = to_string(root->textbox->tabSize);
-    string fontSize     = to_string(root->textbox->font().pixelSize());
-    string directory    = getFilename(root->currentDir);
-    string extension    = getFileExt(fname);
-
-    if (root->isFileOld()) {
-        fname += "*";
-    }*/
 
     list <string> args = {
         fname + " @ " + directory + " (" + cursorPos + ")",

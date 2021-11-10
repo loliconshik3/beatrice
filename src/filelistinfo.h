@@ -5,7 +5,7 @@
 
 #include "filelistwidget.h"
 
-class MainWindow::FileListWidget::FileListInfo : public QLabel
+class FileListInfo : public QLabel
 {
     Q_OBJECT
 public:
