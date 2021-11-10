@@ -18,6 +18,9 @@ void CommandLine::escape() {
         root->textbox->setFocus();
         clear();
     }
+    else {
+        root->textbox->clearSelection();
+    }
 }
 
 void CommandLine::launchCommand() {

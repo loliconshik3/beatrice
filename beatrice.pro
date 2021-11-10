@@ -9,6 +9,7 @@ CONFIG += c++17 g++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/clipboard.cpp \
     src/commandline.cpp \
     src/config.cpp \
     src/file.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
     src/utils.cpp
 
 HEADERS += \
+    src/clipboard.h \
     src/commandline.h \
     src/config.h \
     src/file.h \

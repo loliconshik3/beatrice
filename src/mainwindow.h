@@ -4,6 +4,7 @@
 #include "config.h"
 #include "file.h"
 
+#include <QApplication>
 #include <QMainWindow>
 #include <QGridLayout>
 #include <string>
@@ -12,6 +13,7 @@ class Textbox;
 class FileListWidget;
 class CommandLine;
 class InfoPanel;
+class Clipboard;
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -21,13 +23,11 @@ class MainWindow : public QWidget
     Q_OBJECT
 public:
     string currentDirectory = fs::current_path();
-    vector<QString> clipboard;
+    File *currentFile       = NULL;
+    vector<File*> files     = {};
 
-    vector<File*> files = {};
-    File *currentFile = NULL;
-
-    Config *cfg = new Config();
-
+    Config *cfg                 = new Config();
+    Clipboard *clip             = NULL;
     Textbox *textbox            = NULL;
     InfoPanel *infopanel        = NULL;
     CommandLine *commandline    = NULL;

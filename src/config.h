@@ -14,11 +14,18 @@ public:
 
     QRect rect = QDesktopWidget().availableGeometry();
 
+    int clipboardMaxSize = 10;
+
     int windowMinWidth  = 1000;
     int windowMinHeight = 600;
 
     int width = rect.width() / 2;
     int height = rect.height() / 3;
+
+    int clipboardWidth          = rect.width() / 3;
+    int clipboardHeight         = rect.height() / 4;
+    int clipboardX              = ( rect.width() - clipboardWidth ) / 2;
+    int clipboardY              = ( rect.height() - clipboardHeight ) / 2;
 
     int fileListWidgetWidth     = width; //+ (rect.width() / 2 / 3);
     int fileListWidgetHeight    = height + (height / 2);
@@ -56,6 +63,8 @@ public:
     QString sct_openFolder      = "Ctrl+k";
     QString sct_new             = "Ctrl+n";
     QString sct_find            = "Ctrl+f";
+    QString sct_pasteAs         = "Ctrl+Shift+v";
+    QString sct_clearSelection  = "Escape";     //Clear selection in textbox
     QString sct_changeFocus     = "Alt+e";      //Change focus from textbox to commandline and conversely
     QString sct_about           = "Ctrl+i";     //Show about window
     QString sct_showLastFiles   = "Alt+s";      //Show last opened files

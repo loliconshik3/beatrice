@@ -632,6 +632,12 @@ void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
 
 }
 
+void Textbox::clearSelection() {
+    QTextCursor cur = textCursor();
+    cur.clearSelection();
+    setTextCursor(cur);
+}
+
 void Textbox::updateShortcuts() {
 
     QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeLine), this);

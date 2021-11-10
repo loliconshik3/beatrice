@@ -1,5 +1,6 @@
 #include "filelistsearch.h"
 #include "commandline.h"
+#include "clipboard.h"
 #include "mainwindow.h"
 #include "infopanel.h"
 #include "filelist.h"
@@ -354,4 +355,7 @@ void MainWindow::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_find), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(insertFindCommand()));
+
+    shortcut = new QShortcut(QKeySequence(cfg->sct_pasteAs), this);
+    connect(shortcut, &QShortcut::activated, this, [this]{ clip->loadClipboardList(); });
 }

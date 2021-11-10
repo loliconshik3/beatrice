@@ -38,6 +38,7 @@ public:
 
 public slots:
 
+    void clearSelection();
     void setTabSize(int size);
     void resizeEvent(QResizeEvent *e);
 

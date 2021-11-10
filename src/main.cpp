@@ -4,6 +4,7 @@
 #include "filelisttext.h"
 #include "filelistinfo.h"
 #include "commandline.h"
+#include "clipboard.h"
 #include "infopanel.h"
 #include "filelist.h"
 #include "textbox.h"
@@ -42,7 +43,8 @@
 
   +• Можно добавить в файл листе доп окно, которое будет отображать текст из файла
     Иего, если что, можно будет выделить и скопировать (мб)
-  • При копировании текста записывать скопированный текст в список
+  • При нажатии Escape в текстбоксе - должно сбрасываться выделение текста
+  +• При копировании текста записывать скопированный текст в список
     А при вставке через Ctrl+Shift+v - Показывать список всех скопированных строк
     и давать выбор какую вставить
   • При вводе команды, нажимая ктрл+таб - пусть появляется на месте инфопанели
@@ -117,6 +119,7 @@ int main(int argc, char *argv[])
     Textbox textbox(&window);
     CommandLine commandline(&window);
     InfoPanel infopanel(&window);
+    Clipboard clipboard(&window);
 
     QGridLayout *layout = new QGridLayout;
 
@@ -128,6 +131,7 @@ int main(int argc, char *argv[])
     window.commandline  = &commandline;
     window.infopanel    = &infopanel;
     window.textbox      = &textbox;
+    window.clip         = &clipboard;
 
     layout->addWidget(window.textbox, 0, 0);
     layout->addWidget(window.commandline, 2, 0);
