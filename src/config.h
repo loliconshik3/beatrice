@@ -9,8 +9,10 @@
 using namespace std;
 
 class Config
-{
+{   
 public:
+    const string MICRO_THEME = "Micro";
+    const string DRACULA_THEME = "Dracula";
 
     QRect rect = QDesktopWidget().availableGeometry();
 
@@ -53,7 +55,20 @@ public:
     string textboxFontFamily    = "Source Code Pro";
     int textboxFontSize         = 17;
 
-    string theme = "Micro";
+    string filelistFontFamily   = "Source Code Pro";
+    int filelistFontSize        = 16;
+
+    string infopanelFontFamily  = "Source Code Pro";
+    int infopanelFontSize       = 15;
+
+    string clipboardFontFamily  = "Source Code Pro";
+    int clipboardFontSize       = 16;
+
+    string commandlineFontFamily= "Source Code Pro";
+    int commandlineFontSize     = 15;
+
+    string theme = MICRO_THEME;
+    map<string, string> themeColors;
 
     int newFileCount = 0;
 
@@ -97,6 +112,10 @@ public:
 private:
     void loadConfigFile();
     void addConfigFile();
+    void setThemeColors();
+
+    map<string, string> loadTheme_Micro();
+    map<string, string> loadTheme_Dracula();
 };
 
 #endif // CONFIG_H

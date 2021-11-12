@@ -15,7 +15,16 @@ Clipboard::Clipboard(MainWindow *parent)
     setGeometry(0, 0, root->cfg->clipboardWidth, root->cfg->clipboardHeight);
     move(root->cfg->clipboardX, root->cfg->clipboardY);
 
-    setStyleSheet("QListWidget { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
+    QString style = QString("QListWidget { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["clipboardFontColor"].c_str(),
+                         root->theme["clipboardBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->clipboardFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->clipboardFontSize);
+    setFont(fnt);
+
+    //setStyleSheet("QListWidget { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
 
     QShortcut *shortcut = new QShortcut(QKeySequence("Escape"), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(hide()));

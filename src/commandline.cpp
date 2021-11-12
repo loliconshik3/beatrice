@@ -7,8 +7,19 @@
 CommandLine::CommandLine(MainWindow *parent) :
     QLineEdit(parent)
 {
-    root = parent; //#1f1f1f //2e2f30
-    setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
+    root = parent;
+
+    QString style = QString("QLineEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["commandlineFontColor"].c_str(),
+                         root->theme["commandlineBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->commandlineFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->commandlineFontSize);
+    setFont(fnt);
+
+    //#1f1f1f //2e2f30
+    //setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
 
     updateShortcuts();
 }

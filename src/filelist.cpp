@@ -22,7 +22,16 @@ FileList::FileList(FileListWidget *parent) :
     root = parent->root;
     rootParent = parent;
 
-    setStyleSheet("QListWidget { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
+    QString style = QString("QListWidget { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["flistwidgetFontColor"].c_str(),
+                         root->theme["flistwidgetBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt("Source Code Pro");
+    fnt.setPixelSize(16);
+    setFont(fnt);
+
+    //setStyleSheet("QListWidget { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

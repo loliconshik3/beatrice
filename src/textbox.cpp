@@ -14,7 +14,12 @@ Textbox::Textbox(MainWindow *parent) :
     QTextEdit(parent)
 {
     root = parent; //font-size: 17px; font-family: Source Code Pro;
-    setStyleSheet("QTextEdit { color: lightGray; border: none; background: #1f222d; }");
+
+    QString style = QString("QTextEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["textboxFontColor"].c_str(),
+                         root->theme["textboxBackground"].c_str());
+    setStyleSheet(style);
+    //setStyleSheet("QTextEdit { color: lightGray; border: none; background: #1f222d; }");
 
     QFont fnt(root->cfg->textboxFontFamily.c_str());
     fnt.setPixelSize(root->cfg->textboxFontSize);
@@ -585,7 +590,7 @@ void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
     this->verticalScrollBar()->setSliderPosition(this->verticalScrollBar()->sliderPosition());
 
     QPainter painter(lineNumberArea);
-    painter.fillRect(event->rect(), *new QColor("#1f222d"));//*new QColor("#404244")); //
+    painter.fillRect(event->rect(), *new QColor(root->theme["linenumBackground"].c_str()));//*new QColor("#404244")); //
     int blockNumber = this->getFirstVisibleBlockId();
 
     QTextBlock block = this->document()->findBlockByNumber(blockNumber);
@@ -610,8 +615,8 @@ void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
 
     int bottom = top + (int) this->document()->documentLayout()->blockBoundingRect(block).height();
 
-    QColor col_1(90, 255, 30);      // Current line (custom green)
-    QColor col_0(Qt::gray);         // Other lines  (custom darkgrey)
+    QColor col_1(root->theme["linenumCurrentLineColor"].c_str());//(90, 255, 30);      // Current line (custom green)
+    QColor col_0(root->theme["linenumFontColor"].c_str());//(Qt::gray);         // // Other lines  (custom darkgrey)
 
     // Draw the numbers (displaying the current line number in green)
     while (block.isValid() && top <= event->rect().bottom()) {

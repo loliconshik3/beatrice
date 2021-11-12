@@ -10,7 +10,16 @@ FileListSearch::FileListSearch(FileListWidget *parent) :
     root = parent->root;
     rootParent = parent;
 
-    setStyleSheet("QLineEdit { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
+    QString style = QString("QLineEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["flsearchFontColor"].c_str(),
+                         root->theme["flsearchBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt("Source Code Pro");
+    fnt.setPixelSize(16);
+    setFont(fnt);
+
+    //setStyleSheet("QLineEdit { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
     setPlaceholderText("Type to filter...");
 
     setGeometry(0, 0, root->cfg->fileListSearchWidth, root->cfg->fileListSearchHeight);

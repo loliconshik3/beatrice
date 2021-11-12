@@ -27,6 +27,8 @@ public:
     vector<File*> files     = {};
 
     Config *cfg                 = new Config();
+    map<string, string> theme   = cfg->themeColors;
+
     Clipboard *clip             = NULL;
     Textbox *textbox            = NULL;
     InfoPanel *infopanel        = NULL;

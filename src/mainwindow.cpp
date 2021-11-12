@@ -33,7 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
     setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
     updateTitle();
 
-    setStyleSheet("QWidget { background: #1f222d}");//#262728 }");//#2e2f30
+    QString style = QString("QWidget { background: %1 }").arg(theme["mainwindowBackground"].c_str());
+
+    setStyleSheet(style);
+    //setStyleSheet("QWidget { background: #1f222d }");//#262728 }");//#2e2f30
 
     updateShortcuts();
 }
