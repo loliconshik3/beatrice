@@ -27,6 +27,8 @@ public:
 
     explicit FileListWidget(MainWindow *parent = nullptr);
 
+    void updateWidgetStyle();
+
 protected:
     void closeEvent(QCloseEvent *e);
     void hideEvent(QHideEvent *e);

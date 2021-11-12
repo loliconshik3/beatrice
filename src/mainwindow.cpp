@@ -1,4 +1,5 @@
 #include "filelistsearch.h"
+#include "filelisttext.h"
 #include "commandline.h"
 #include "clipboard.h"
 #include "mainwindow.h"
@@ -30,14 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     string path = fs::current_path();
     currentFile = new File("Untitled", "", path+"/Untitled", getFilename(path), true);
-    setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
-    updateTitle();
-
-    QString style = QString("QWidget { background: %1 }").arg(theme["mainwindowBackground"].c_str());
-
-    setStyleSheet(style);
     //setStyleSheet("QWidget { background: #1f222d }");//#262728 }");//#2e2f30
 
+    updateTitle();
+    updateWidgetStyle();
     updateShortcuts();
 }
 
@@ -192,10 +189,34 @@ void MainWindow::saveFile(QString path) {
                 infopanel->updateText();
             }
 
+            if (currentFile->path == getConfigPath()) {
+                reloadConfig();
+            }
+
             log("Save file '" + currentFile->path + "'");
             saveLastFile();
         }
     }
+}
+
+void MainWindow::reloadConfig() {
+    cfg->loadConfigFile(); //reload config file
+    theme = cfg->themeColors;
+
+    /*   Update style of all widgets   */
+    updateWidgetStyle();
+    clip->updateWidgetStyle();
+    textbox->updateWidgetStyle();
+    infopanel->updateWidgetStyle();
+    commandline->updateWidgetStyle();
+
+    flwidget->updateWidgetStyle();
+    flwidget->flinfo->updateWidgetStyle();
+    flwidget->fltext->updateWidgetStyle();
+    flwidget->flsearch->updateWidgetStyle();
+    flwidget->filelist->updateWidgetStyle();
+
+    infopanel->updateText();
 }
 
 void MainWindow::insertSaveCommand(bool saveas) {
@@ -311,6 +332,13 @@ void MainWindow::showTabFiles() {
     flwidget->filelist->loadTabFiles();
     flwidget->flsearch->setFocus();
     flwidget->show();
+}
+
+void MainWindow::updateWidgetStyle() {
+    QString style = QString("QWidget { background: %1 }").arg(theme["mainwindowBackground"].c_str());
+
+    setMinimumSize(QSize(cfg->windowMinWidth, cfg->windowMinHeight));
+    setStyleSheet(style);
 }
 
 void MainWindow::updateShortcuts() {

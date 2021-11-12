@@ -12,6 +12,8 @@ public:
     MainWindow *root = NULL;
 
     FileListText(FileListWidget *parent=nullptr);
+
+    void updateWidgetStyle();
 };
 
 #endif // FILELISTTEXT_H

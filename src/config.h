@@ -108,9 +108,9 @@ public:
     //=============================
 
     Config();
+    void loadConfigFile();
 
 private:
-    void loadConfigFile();
     void addConfigFile();
     void setThemeColors();
 

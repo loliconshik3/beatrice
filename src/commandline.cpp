@@ -9,18 +9,10 @@ CommandLine::CommandLine(MainWindow *parent) :
 {
     root = parent;
 
-    QString style = QString("QLineEdit { color: %1; border: none; background: %2; }")
-                    .arg(root->theme["commandlineFontColor"].c_str(),
-                         root->theme["commandlineBackground"].c_str());
-    setStyleSheet(style);
-
-    QFont fnt(root->cfg->commandlineFontFamily.c_str());
-    fnt.setPixelSize(root->cfg->commandlineFontSize);
-    setFont(fnt);
-
     //#1f1f1f //2e2f30
     //setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
 
+    updateWidgetStyle();
     updateShortcuts();
 }
 
@@ -70,7 +62,7 @@ void CommandLine::launchCommand() {
         }
     }
     else {
-        if (commandText == "quit") {
+        if (commandText == "quit" or commandText == "exit") {
             std::exit(0);
         }
         else if (commandText == "about"){
@@ -79,17 +71,33 @@ void CommandLine::launchCommand() {
         else if (commandText == "new"){
             root->newFile();
         }
+        else if (commandText == "cfg" or commandText == "config") {
+            QString homedir = getHomeDir().c_str();
+            root->openFile(homedir + "/.config/beatrice/config.ini");
+        }
         else {
             return;
         }
     }
 
     setPlaceholderText(commandText.c_str());
+    root->changeFocus();
 }
 
 void CommandLine::completeCommand() {
     clear();
     insert(placeholderText());
+}
+
+void CommandLine::updateWidgetStyle() {
+    QString style = QString("QLineEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["commandlineFontColor"].c_str(),
+                         root->theme["commandlineBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->commandlineFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->commandlineFontSize);
+    setFont(fnt);
 }
 
 void CommandLine::updateShortcuts() {

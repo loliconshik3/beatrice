@@ -36,6 +36,8 @@ public:
     string getCursorPos();
     string getAroundChars();
 
+    void updateWidgetStyle();
+
 public slots:
 
     void clearSelection();

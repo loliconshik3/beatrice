@@ -30,6 +30,7 @@ string replaceHomeDir(string path);
 string getPathDir(string path);
 string getFilename(string path);
 string getFileExt(string path);
+string getConfigPath();
 string getHomeDir();
 void log(string text);
 

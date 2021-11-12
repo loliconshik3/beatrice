@@ -16,6 +16,8 @@ public:
 
     FileListSearch(FileListWidget *parent=nullptr);
 
+    void updateWidgetStyle();
+
 public slots:
     void filterList();
     void Up();

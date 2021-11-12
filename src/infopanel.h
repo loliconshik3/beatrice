@@ -12,6 +12,8 @@ public:
     MainWindow *root;
 
     InfoPanel(MainWindow *parent=nullptr);
+
+    void updateWidgetStyle();
     void updateText();
 };
 

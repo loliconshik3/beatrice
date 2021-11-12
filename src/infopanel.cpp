@@ -18,17 +18,10 @@ InfoPanel::InfoPanel(MainWindow *parent) :
     root = parent;
     setContentsMargins(2, 0, 0, 0);
 
-    QString style = QString("QLabel { color: %1; border: none; background: %2; }")
-                    .arg(root->theme["infopanelFontColor"].c_str(),
-                         root->theme["infopanelBackground"].c_str());
-    setStyleSheet(style);
-
-    QFont fnt(root->cfg->infopanelFontFamily.c_str());
-    fnt.setPixelSize(root->cfg->infopanelFontSize);
-    setFont(fnt);
-
     //#2e2f30
     //setStyleSheet("QLabel { font-size: 17px; color: #1f222d; border: none; background: lightGray; font-family: Source Code Pro;}");
+
+    updateWidgetStyle();
 }
 
 void InfoPanel::updateText() {
@@ -59,4 +52,15 @@ void InfoPanel::updateText() {
     totalText = totalText.substr(0, totalText.length()-root->cfg->infoPanelSeparator.length());
 
     setText(totalText.c_str());
+}
+
+void InfoPanel::updateWidgetStyle() {
+    QString style = QString("QLabel { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["infopanelFontColor"].c_str(),
+                         root->theme["infopanelBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->infopanelFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->infopanelFontSize);
+    setFont(fnt);
 }

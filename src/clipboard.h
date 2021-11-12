@@ -25,6 +25,7 @@ private slots:
 
 public:
     Clipboard(MainWindow *parent=nullptr);
+    void updateWidgetStyle();
 
 public slots:
     void loadClipboardList();

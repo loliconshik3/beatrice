@@ -15,16 +15,6 @@ Textbox::Textbox(MainWindow *parent) :
 {
     root = parent; //font-size: 17px; font-family: Source Code Pro;
 
-    QString style = QString("QTextEdit { color: %1; border: none; background: %2; }")
-                    .arg(root->theme["textboxFontColor"].c_str(),
-                         root->theme["textboxBackground"].c_str());
-    setStyleSheet(style);
-    //setStyleSheet("QTextEdit { color: lightGray; border: none; background: #1f222d; }");
-
-    QFont fnt(root->cfg->textboxFontFamily.c_str());
-    fnt.setPixelSize(root->cfg->textboxFontSize);
-    setFont(fnt);
-
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -32,6 +22,7 @@ Textbox::Textbox(MainWindow *parent) :
     highlighter->setDocument(this->document());
 
     updateShortcuts();
+    updateWidgetStyle();
     updateLineNumberAreaWidth(0);
 }
 
@@ -641,6 +632,18 @@ void Textbox::clearSelection() {
     QTextCursor cur = textCursor();
     cur.clearSelection();
     setTextCursor(cur);
+}
+
+void Textbox::updateWidgetStyle() {
+    QString style = QString("QTextEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["textboxFontColor"].c_str(),
+                         root->theme["textboxBackground"].c_str());
+    setStyleSheet(style);
+    //setStyleSheet("QTextEdit { color: lightGray; border: none; background: #1f222d; }");
+
+    QFont fnt(root->cfg->textboxFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->textboxFontSize);
+    setFont(fnt);
 }
 
 void Textbox::updateShortcuts() {

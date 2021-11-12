@@ -40,6 +40,7 @@ public:
     void updateTitle();
     void saveLastFile();
     void updateShortcuts();
+    void updateWidgetStyle();
 
 public slots:
     void newFile();
@@ -62,6 +63,9 @@ public slots:
     void Exit() {
         exit(0);
     }
+
+private:
+    void reloadConfig();
 
 };
 #endif // MAINWINDOW_H

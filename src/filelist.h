@@ -28,6 +28,8 @@ public:
 
     FileList(FileListWidget *parent=nullptr);
 
+    void updateWidgetStyle();
+
     void loadDirectoryFiles(string path);
     void loadLastFiles();
     void loadTabFiles();

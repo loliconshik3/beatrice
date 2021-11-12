@@ -11,6 +11,10 @@ FileListInfo::FileListInfo(FileListWidget *parent) :
     //setStyleSheet("QLabel { font-size: 13px; color: #1f222d; border: none; background: lightGray; font-family: Source Code Pro;}");
     setGeometry(0, root->cfg->fileListInfoTopPadding, root->cfg->fileListInfoWidth, root->cfg->fileListInfoHeight);
 
+    updateWidgetStyle();
+}
+
+void FileListInfo::updateWidgetStyle() {
     QString style = QString("QLabel { color: %1; border: none; background: %2; }")
                     .arg(root->theme["flinfoFontColor"].c_str(),
                          root->theme["flinfoBackground"].c_str());

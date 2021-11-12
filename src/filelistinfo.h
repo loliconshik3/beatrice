@@ -13,6 +13,8 @@ public:
     FileListWidget *rootParent = NULL;
 
     FileListInfo(FileListWidget *parent=nullptr);
+
+    void updateWidgetStyle();
 };
 
 #endif // FILELISTINFO_H

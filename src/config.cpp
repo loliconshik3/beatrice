@@ -7,7 +7,6 @@ Config::Config()
 {
     addConfigFile();
     loadConfigFile();
-    setThemeColors();
 }
 
 void Config::addConfigFile() {
@@ -55,6 +54,8 @@ void Config::loadConfigFile() {
     clipboardFontFamily     = settings.value("UI/filelist/fontFamily",      filelistFontFamily.c_str()).toString().toStdString();
     clipboardFontSize       = settings.value("UI/filelist/fontSize",        filelistFontSize).toInt();
     theme                   = settings.value("UI/theme",                    theme.c_str()).toString().toStdString();
+
+    setThemeColors();
 }
 
 void Config::setThemeColors() {

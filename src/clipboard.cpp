@@ -15,14 +15,7 @@ Clipboard::Clipboard(MainWindow *parent)
     setGeometry(0, 0, root->cfg->clipboardWidth, root->cfg->clipboardHeight);
     move(root->cfg->clipboardX, root->cfg->clipboardY);
 
-    QString style = QString("QListWidget { color: %1; border: none; background: %2; }")
-                    .arg(root->theme["clipboardFontColor"].c_str(),
-                         root->theme["clipboardBackground"].c_str());
-    setStyleSheet(style);
-
-    QFont fnt(root->cfg->clipboardFontFamily.c_str());
-    fnt.setPixelSize(root->cfg->clipboardFontSize);
-    setFont(fnt);
+    updateWidgetStyle();
 
     //setStyleSheet("QListWidget { font-size: 16px; font-family: Source Code Pro; color: lightGray; border: none; background: #2a2b2e; }");
 
@@ -62,4 +55,15 @@ void Clipboard::insertClipboardText() {
         root->textbox->insertPlainText(item->text());
     }
     hide();
+}
+
+void Clipboard::updateWidgetStyle() {
+    QString style = QString("QListWidget { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["clipboardFontColor"].c_str(),
+                         root->theme["clipboardBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->clipboardFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->clipboardFontSize);
+    setFont(fnt);
 }

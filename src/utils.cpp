@@ -107,3 +107,10 @@ bool replaceStr(string &str, const string &from, const string &to) {
     str.replace(start_pos, from.length(), to);
     return true;
 }
+
+string getConfigPath() {
+    string homedir = getHomeDir();
+    string path = homedir + "/.config/beatrice/config.ini";
+
+    return path;
+}

@@ -23,6 +23,7 @@ public:
     MainWindow *root;
 
     CommandLine(MainWindow *parent=nullptr);
+    void updateWidgetStyle();
 
 private slots:
     void launchCommand();
