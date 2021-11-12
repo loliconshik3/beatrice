@@ -104,8 +104,8 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    system("mkdir ~/.beatrice");
-    system("mkdir ~/.beatrice/cache");
+    system("mkdir ~/.config/beatrice");
+    system("mkdir ~/.config/beatrice/cache");
 
     QApplication app(argc, argv);
     MainWindow window;

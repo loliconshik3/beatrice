@@ -244,7 +244,7 @@ void MainWindow::closeCurrentFile() {
 
 void MainWindow::saveLastFile() {
     string homedir = getHomeDir();
-    string path = homedir + "/.beatrice/cache/lastfile";
+    string path = homedir + "/.config/beatrice/cache/lastfile";
 
     QFile file(path.c_str());
     if (file.open(QIODevice::ReadWrite)) {

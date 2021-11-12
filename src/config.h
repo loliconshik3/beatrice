@@ -53,6 +53,8 @@ public:
     string textboxFontFamily    = "Source Code Pro";
     int textboxFontSize         = 17;
 
+    string theme = "Micro";
+
     int newFileCount = 0;
 
     //==========Shortcuts==========
@@ -91,6 +93,10 @@ public:
     //=============================
 
     Config();
+
+private:
+    void loadConfigFile();
+    void addConfigFile();
 };
 
 #endif // CONFIG_H

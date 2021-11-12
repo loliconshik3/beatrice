@@ -66,7 +66,7 @@ void FileList::setFileText(string name, QFile &file) {
 
 void FileList::loadLastFiles() {
     QString homedir = getHomeDir().c_str();
-    QString path    = homedir + "/.beatrice/cache/lastfile";
+    QString path    = homedir + "/.config/beatrice/cache/lastfile";
 
     filesText.clear();
     files.clear();
