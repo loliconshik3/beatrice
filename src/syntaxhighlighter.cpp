@@ -57,6 +57,16 @@ map<string, string> SyntaxHighlighter::generateSharp() {
     return patterns;
 }
 
+map<string, string> SyntaxHighlighter::generateINI() {
+    map<string, string> patterns = {
+        {"\\[.*\\]", "#c95b8e"},
+        {".*=", "#d097a3"},
+        {"=.*", "#71c919"}
+    };
+
+    return patterns;
+}
+
 map<string, string> SyntaxHighlighter::generateCPP() {
     map<string, string> patterns = {
         //{"/*.**/", "#8a8d93"},
@@ -84,6 +94,9 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     }
     else if (ext == "cpp" || ext == "h") {
         patterns = generateCPP();
+    }
+    else if (ext == "ini") {
+        patterns = generateINI();
     }
 
     return patterns;

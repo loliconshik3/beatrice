@@ -16,6 +16,7 @@ public:
     map<string, string> generateJASS();
     map<string, string> generateSharp();
     map<string, string> generatePython();
+    map<string, string> generateINI();
     map<string, string> generateCPP();
     map<string, string> loadSyntax(const string &ext);
 };
