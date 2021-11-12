@@ -14,26 +14,16 @@ void Config::addConfigFile() {
     QFile fl(homedir + "/.config/beatrice/config.ini");
     bool exists = fl.exists();
 
-    system("mkdir ~/.config/beatrice");
-    system("touch ~/.config/beatrice/config.ini");
-
-    QString config =
-    "[UI]\n"
-    "window/minWidth=1000;\n"
-    "window/minHeight=600;\n"
-    "clipboard/maxSize=10;\n"
-    "infoPanel/separator=\" | \";\n"
-    "textbox/fontFamily=\"Source Code Pro\";\n"
-    "textbox/fontSize=17;\n"
-    "theme=\"Micro\";\n";
-
     if (!exists) {
-        QFile file(homedir + "/.config/beatrice/config.ini");
-        if (file.open(QIODevice::WriteOnly)) {
-            QTextStream out(&file);
-            out << config;
-            file.close();
-        }
+        QSettings* settings = new QSettings(homedir + "/.config/beatrice/config.ini", QSettings::IniFormat);
+        settings->setValue("UI/window/minWidth", 1000);
+        settings->setValue("UI/window/minHeight", 600);
+        settings->setValue("UI/clipboard/maxSize", 10);
+        settings->setValue("UI/infoPanel/separator", " | ");
+        settings->setValue("UI/textbox/fontFamily", "Source Code Pro");
+        settings->setValue("UI/textbox/fontSize", 17);
+        settings->setValue("UI/theme", "Micro");
+        settings->sync();
     }
 }
 
