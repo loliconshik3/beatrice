@@ -105,7 +105,7 @@ public:
     QString sct_listMoveDown    = "Down";       //Move to down item in files list
     QString sct_listOpenFile1   = "Return";     //Open current file in files list
     QString sct_listOpenFile2   = "Enter";      //Open current file in files list
-    QString sct_listDeleteFile  = "Delete";//Delete current file in file list
+    QString sct_listDeleteFile  = "Ctrl+Delete";//Delete current file in file list
     //=============================
 
     Config();
