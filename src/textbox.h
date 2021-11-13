@@ -58,10 +58,12 @@ private slots:
     void removeLine();
     void duplicateLine();
     int countOfTabs(string str);
+
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(QRectF /*rect_f*/);
     void updateLineNumberArea(int /*slider_pos*/);
     void updateLineNumberArea();
+
     void onTextChanged();
     void completeQuotes(string quote);
     void completeBrackets(string bracket, bool isNew = true);

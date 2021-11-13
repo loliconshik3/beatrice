@@ -404,14 +404,39 @@ void Textbox::moveCursorLeft() {
 }
 
 void Textbox::completeQuotes(string quote) {
+    QTextCursor cursor  = textCursor();
     string totalQuote   = quote + quote;
     string achars       = getAroundChars();
 
+    // insert quotes around selected text
+    if (cursor.selectedText().length() > 0) {
+        int selectionStart  = cursor.selectionStart();
+        int selectionEnd    = cursor.selectionEnd();
+
+        cursor.setPosition(selectionStart);
+        setTextCursor(cursor);
+
+        insertPlainText(quote.c_str());
+
+        cursor.setPosition(selectionEnd+1);
+        setTextCursor(cursor);
+
+        insertPlainText(quote.c_str());
+
+        cursor.setPosition(selectionStart+1);
+        cursor.setPosition(selectionEnd+1, QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+
+        return;
+    }
+
+    // if quote insert in "", but not in "'
     if (achars.length() > 1 && (achars.substr(0) != quote && achars.substr(1) == quote)) {
         moveCursorForward();
         return;
     }
 
+    // if chars around cursor != "" or ''
     if (achars != totalQuote) {
         insertPlainText(totalQuote.c_str());
         moveCursorBack();
@@ -432,17 +457,43 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
         {"}", "{"},
         {"]", "["}
     };
+    QTextCursor cursor = textCursor();
+    string oppositeBracket = "";
     string totalBrackets = "";
 
+    // if it - first bracket ( or [ or { - beatrice concatinate bracket + opposite bracket
     if (isNew) {
-        string oppositeBracket = bracketsList[bracket];
-        totalBrackets = bracket + oppositeBracket;
+        oppositeBracket = bracketsList[bracket];
+        totalBrackets   = bracket + oppositeBracket;
     }
     else {
-        string oppositeBracket = oppositeBracketsList[bracket];
-        totalBrackets = oppositeBracket + bracket;
+        oppositeBracket = oppositeBracketsList[bracket];
+        totalBrackets   = oppositeBracket + bracket;
     }
 
+    // insert quotes around selected text
+    if (cursor.selectedText().length() > 0) {
+        int selectionStart  = cursor.selectionStart();
+        int selectionEnd    = cursor.selectionEnd();
+
+        cursor.setPosition(selectionStart);
+        setTextCursor(cursor);
+
+        insertPlainText(QString(totalBrackets.c_str()).at(0));
+
+        cursor.setPosition(selectionEnd+1);
+        setTextCursor(cursor);
+
+        insertPlainText(QString(totalBrackets.c_str()).at(1));
+
+        cursor.setPosition(selectionStart+1);
+        cursor.setPosition(selectionEnd+1, QTextCursor::KeepAnchor);
+        setTextCursor(cursor);
+
+        return;
+    }
+
+    // if chars around cursor != () or [] or {} - input total brackets or just bracket
     if (getAroundChars() != totalBrackets) {
         if (isNew) {
             insertPlainText(totalBrackets.c_str());
@@ -452,8 +503,14 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
             insertPlainText(bracket.c_str());
         }
     }
-    else {
-        moveCursorForward();
+    else { // if chars == () or [] or {} - move cursor out of brackets or input total brackets
+        if (!isNew) {
+            moveCursorForward();
+        }
+        else {
+            insertPlainText(totalBrackets.c_str());
+            moveCursorBack();
+        }
     }
 
 }
