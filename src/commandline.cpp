@@ -55,7 +55,6 @@ void CommandLine::launchCommand() {
             QString pattern = out[1].c_str();
             QRegExp rx = QRegExp(pattern);
             root->textbox->find(rx);
-            root->changeFocus();
         }
         else {
             return;
