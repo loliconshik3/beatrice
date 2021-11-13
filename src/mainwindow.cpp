@@ -150,7 +150,12 @@ void MainWindow::saveFile(QString path) {
     QString fileName;
 
     if (!path.isEmpty()) {
-        fileName = getPathDir(currentFile->path).c_str() + QString("/") + path;
+        if (fileName.contains("~/")) {
+            fileName.replace("~", homedir.c_str());
+        }
+        else {
+            fileName = getPathDir(currentFile->path).c_str() + QString("/") + path;
+        }
     }
     else {
         fileName = currentFile->path.c_str();
@@ -194,6 +199,8 @@ void MainWindow::saveFile(QString path) {
 
             log("Save file '" + currentFile->path + "'");
             saveLastFile();
+
+            openFile(currentFile->path.c_str());
         }
     }
 }
