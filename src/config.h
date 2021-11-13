@@ -11,8 +11,9 @@ using namespace std;
 class Config
 {   
 public:
-    const string MICRO_THEME = "Micro";
-    const string DRACULA_THEME = "Dracula";
+    const string MICRO_THEME    = "Micro";
+    const string DIABLO_THEME   = "Diablo";
+    const string DRACULA_THEME  = "Dracula";
 
     QRect rect = QDesktopWidget().availableGeometry();
 
@@ -116,6 +117,7 @@ private:
 
     map<string, string> loadTheme_Micro();
     map<string, string> loadTheme_Dracula();
+    map<string, string> loadTheme_Diablo();
 };
 
 #endif // CONFIG_H

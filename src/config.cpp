@@ -65,6 +65,9 @@ void Config::setThemeColors() {
     else if (theme == DRACULA_THEME) {
         themeColors = loadTheme_Dracula();
     }
+    else if (theme == DIABLO_THEME) {
+        themeColors = loadTheme_Diablo();
+    }
     else {
         themeColors = {};
     }
@@ -131,6 +134,39 @@ map<string, string> Config::loadTheme_Dracula() {
 
     theme["linenumCurrentLineColor"]= "#f1fa8c";
     theme["linenumBackground"]      = "#282a36";
+    theme["linenumFontColor"]       = "#808080";
+
+    return theme;
+}
+
+map<string, string> Config::loadTheme_Diablo() {
+    map<string, string> theme;
+
+    theme["flistBackground"]        = "#303030";
+    theme["flinfoBackground"]       = "#ff0024";
+    theme["fltextBackground"]       = "#303030";
+    theme["flwidgetBackground"]     = "#303030";
+    theme["flsearchBackground"]     = "#303030";
+
+    theme["flistFontColor"]         = "#d3d3d3";
+    theme["flinfoFontColor"]        = "#303030";
+    theme["fltextFontColor"]        = "#d3d3d3";
+    theme["flwidgetFontColor"]      = "#d3d3d3";
+    theme["flsearchFontColor"]      = "#d3d3d3";
+
+    theme["textboxBackground"]      = "#303030";
+    theme["infopanelBackground"]    = "#ff0024";
+    theme["clipboardBackground"]    = "#382a36";
+    theme["mainwindowBackground"]   = "#303030";
+    theme["commandlineBackground"]  = "#303030";
+
+    theme["textboxFontColor"]       = "#d3d3d3";
+    theme["infopanelFontColor"]     = "#303030";
+    theme["clipboardFontColor"]     = "#d3d3d3";
+    theme["commandlineFontColor"]   = "#d3d3d3";
+
+    theme["linenumCurrentLineColor"]= "#ff2424";
+    theme["linenumBackground"]      = "#303030";
     theme["linenumFontColor"]       = "#808080";
 
     return theme;
