@@ -149,7 +149,6 @@ void MainWindow::saveFile(QString path) {
     string homedir = getHomeDir();
     QString fileName;
 
-    log(currentFile->path);
     if (!path.isEmpty()) {
         fileName = getPathDir(currentFile->path).c_str() + QString("/") + path;
     }

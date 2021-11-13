@@ -65,6 +65,9 @@ void Config::setThemeColors() {
     else if (theme == DRACULA_THEME) {
         themeColors = loadTheme_Dracula();
     }
+    else {
+        themeColors = {};
+    }
 }
 
 map<string, string> Config::loadTheme_Micro() {
