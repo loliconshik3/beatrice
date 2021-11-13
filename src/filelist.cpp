@@ -109,7 +109,6 @@ void FileList::loadLastFiles() {
 }
 
 void FileList::loadDirectoryFiles(string path) {
-    ifstream myfile;
     string fileName;
 
     filesText.clear();
@@ -119,9 +118,8 @@ void FileList::loadDirectoryFiles(string path) {
     for (const auto & entry : fs::directory_iterator(path)){
         string path = entry.path();
         QFile file(path.c_str());
-        //myfile.open(entry.path());
 
-        if ( file.exists() ) { //if ( myfile.is_open()) { // always check whether the file is open
+        if ( file.exists() ) { // always check whether the file is open
             fileName = entry.path().filename();
 
             if (entry.is_directory()) {
@@ -140,14 +138,15 @@ void FileList::loadDirectoryFiles(string path) {
             }
         }
 
-        file.close(); //myfile.close();
+        file.close();
     }
     fileName        = BACK_NAME;
     files[fileName] = getPathDir(path);
     addItem(fileName.c_str());
-    fileName        = PICK_NAME;
-    files[fileName] = path;
-    addItem(fileName.c_str());
+
+    //fileName        = PICK_NAME;
+    //files[fileName] = path;
+    //addItem(fileName.c_str());
 
     sortItems();
     setCurrentItem(item(0));

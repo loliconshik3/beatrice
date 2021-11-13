@@ -78,7 +78,7 @@ public:
     QString sct_save            = "Ctrl+s";
     QString sct_saveAs          = "Ctrl+Shift+s";
     QString sct_open            = "Ctrl+o";
-    QString sct_openFolder      = "Ctrl+k";
+    QString sct_openFolder      = "Ctrl+k";     //Deprecated. Now work like sct_open
     QString sct_new             = "Ctrl+n";
     QString sct_find            = "Ctrl+f";
     QString sct_pasteAs         = "Ctrl+Shift+v";
@@ -87,7 +87,7 @@ public:
     QString sct_about           = "Ctrl+i";     //Show about window
     QString sct_showLastFiles   = "Alt+s";      //Show last opened files
     QString sct_showCurrentDir  = "Ctrl+`";     //Show list of files in current dir (like sct_open)
-    QString sct_showTabFiles    = "Ctrl+p";     //Show list of opened files
+    QString sct_showTabFiles    = "Alt+o";      //Show list of opened files
     QString sct_openTopFile     = "Alt+Up";     //Move to top opened file
     QString sct_openBottomFile  = "Alt+Down";   //Move to bottom opened file
     QString sct_removeLine      = "Alt+r";      //Remove line under text cursor
@@ -105,7 +105,7 @@ public:
     QString sct_listMoveDown    = "Down";       //Move to down item in files list
     QString sct_listOpenFile1   = "Return";     //Open current file in files list
     QString sct_listOpenFile2   = "Enter";      //Open current file in files list
-    QString sct_listDeleteFile  = "Ctrl+Delete";//Delete current file in file list
+    QString sct_listDeleteFile  = "Delete";//Delete current file in file list
     //=============================
 
     Config();

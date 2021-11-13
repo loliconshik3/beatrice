@@ -62,7 +62,7 @@ void MainWindow::openFolder(QString path) {
 
 void MainWindow::newFile() {
     log("Create new file");
-    string fdir = currentDirectory;
+    string fdir = getPathDir(currentFile->path); //CURDIR currentDirectory;
     string name = "Untitled" + to_string(cfg->newFileCount);
     ++cfg->newFileCount;
 
@@ -109,7 +109,7 @@ void MainWindow::openFile(QString path) {
                 createNewFile = true;
             }
             else {
-                string dir = currentDirectory;
+                string dir = getPathDir(currentFile->path);//CURDIR currentDirectory;
                 filePath = dir.c_str() + QString("/") + path;
                 QFile pathFile(filePath);
                 if (!pathFile.exists()) {
@@ -316,7 +316,7 @@ void MainWindow::openDownFile() {
 }
 
 void MainWindow::showCurrentDirFiles() {
-    flwidget->filelist->loadDirectoryFiles(currentDirectory);
+    flwidget->filelist->loadDirectoryFiles(getPathDir(currentFile->path));//CURDIR currentDirectory);
     flwidget->flsearch->setFocus();
     flwidget->show();
 }

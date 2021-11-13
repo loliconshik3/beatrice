@@ -32,7 +32,7 @@ void InfoPanel::updateText() {
     string fontSize     = to_string(root->textbox->font().pixelSize());
     string directory    = root->currentFile->directory;
     string extension    = root->currentFile->extension;
-    string currentdir   = replaceHomeDir(root->currentDirectory);
+    string currentdir   = replaceHomeDir(getPathDir(root->currentFile->path));//CURDIR replaceHomeDir(root->currentDirectory);
 
     if (!root->currentFile->isSaved()) {
         fname += "*";
