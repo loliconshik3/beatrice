@@ -17,6 +17,7 @@ Textbox::Textbox(MainWindow *parent) :
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setAutoFormatting(QTextEdit::AutoNone);
 
     highlighter = new SyntaxHighlighter(this, parent);
     highlighter->setDocument(this->document());
