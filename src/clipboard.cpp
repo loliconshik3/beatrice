@@ -52,7 +52,12 @@ void Clipboard::loadClipboardList() {
 void Clipboard::insertClipboardText() {
     if (count() > 0) {
         QListWidgetItem *item = currentItem();
+        QTextCursor cursor    = root->textbox->textCursor();
+
         root->textbox->insertPlainText(item->text());
+
+        cursor.setVerticalMovementX(cursor.blockNumber());
+        root->textbox->setTextCursor(cursor);
     }
     hide();
 }
