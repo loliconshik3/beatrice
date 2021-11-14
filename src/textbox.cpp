@@ -216,8 +216,9 @@ void Textbox::enterKey() {
         cursor.removeSelectedText();
     }
 
-    int lineNumer = getCursorX();
+    int lineNumer   = getCursorX();
     int columnNumer = getCursorY();
+    int position    = textCursor().position();
 
     cursor.select(QTextCursor::LineUnderCursor);
     QString selectedText = cursor.selectedText();
@@ -235,12 +236,7 @@ void Textbox::enterKey() {
 
     int tabs = countOfTabs(selectedText.toStdString());
 
-    cursor.movePosition(QTextCursor::Start);
-    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer-1);
-    if (columnNumer > 1) {
-        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer-1);
-    }
-
+    cursor.setPosition(position);
     insertPlainText("\n");
 
     cursor.setVerticalMovementX(lineNumer);
