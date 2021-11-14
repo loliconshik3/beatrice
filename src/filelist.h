@@ -16,6 +16,7 @@ class FileList : public QListWidget
 private:
     const string BACK_NAME = ">> BACK <<";
     const string PICK_NAME = ">> PICK DIRECTORY <<";
+    string currentDirectory;
 
     void updateShortcuts();
 

@@ -101,6 +101,7 @@ void FileList::loadLastFiles() {
         }
         file.close();
     }
+    currentDirectory = "";
 
     sortItems();
     if (count() > 0) {
@@ -143,6 +144,7 @@ void FileList::loadDirectoryFiles(string path) {
     fileName        = BACK_NAME;
     files[fileName] = getPathDir(path);
     addItem(fileName.c_str());
+    currentDirectory = path;
 
     //fileName        = PICK_NAME;
     //files[fileName] = path;
@@ -178,6 +180,7 @@ void FileList::loadTabFiles() {
 
         filesText[fileName] = file->text;
     }
+    currentDirectory = "";
 
     sortItems();
     setCurrentItem(item(0));	
@@ -203,7 +206,36 @@ void FileList::openFile() {
         }
     }
     else {
-        rootParent->hide();
+        if (currentDirectory == "") {
+            rootParent->hide();
+            return;
+        }
+
+        QString name     = rootParent->flsearch->text();
+        string dir       = currentDirectory;
+
+        string totalName = name.toStdString();
+        replaceStr(totalName, "!", "");
+        replaceStr(totalName, "@", "");
+
+        string path      = dir + "/" + totalName;
+
+        rootParent->flsearch->clear();
+
+        if (name.at(0) == "!") {
+            string touch = "touch " + path;
+            system(touch.c_str());
+            root->openFile(path.c_str());
+            rootParent->hide();
+        }
+        else if (name.at(0) == "@") {
+            string mkdir = "mkdir " + path;
+            system(mkdir.c_str());
+            loadDirectoryFiles(path);
+        }
+        else {
+            rootParent->hide();
+        }
     }
 }
 
