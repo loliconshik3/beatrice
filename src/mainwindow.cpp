@@ -201,7 +201,7 @@ void MainWindow::saveFile(QString path) {
             log("Save file '" + currentFile->path + "'");
             saveLastFile();
 
-            openFile(currentFile->path.c_str());
+            //openFile(currentFile->path.c_str());
         }
     }
 }

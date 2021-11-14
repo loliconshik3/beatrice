@@ -34,6 +34,8 @@ public:
     void moveCursorBack();
     void moveCursorForward();
     string getCursorPos();
+    int getCursorX();
+    int getCursorY();
     string getAroundChars();
 
     void updateWidgetStyle();

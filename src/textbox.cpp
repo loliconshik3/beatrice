@@ -197,8 +197,16 @@ void Textbox::setTabSize(int size) {
     root->infopanel->updateText();
 }
 
+int Textbox::getCursorX() {
+    return textCursor().block().blockNumber()+1;
+}
+
+int Textbox::getCursorY() {
+    return textCursor().columnNumber()+1;
+}
+
 string Textbox::getCursorPos() {
-    return to_string(textCursor().block().blockNumber()+1) + "," + to_string(textCursor().columnNumber()+1);
+    return to_string(getCursorX()) + "," + to_string(getCursorY());
 }
 
 void Textbox::enterKey() {
@@ -208,13 +216,8 @@ void Textbox::enterKey() {
         cursor.removeSelectedText();
     }
 
-    string cursorPos = getCursorPos();
-
-    char sep = ',';
-    vector<string> out;
-    split(cursorPos, sep, out);
-    int lineNumer = stoi(out[0]);
-    int columnNumer = stoi(out[1]);
+    int lineNumer = getCursorX();
+    int columnNumer = getCursorY();
 
     cursor.select(QTextCursor::LineUnderCursor);
     QString selectedText = cursor.selectedText();
@@ -222,8 +225,9 @@ void Textbox::enterKey() {
 
     cursor.movePosition(QTextCursor::Start);
     cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer-1);
-    if (columnNumer > 1)
+    if (columnNumer > 1) {
         cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer-1);
+    }
 
     cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
     QString befChar = cursor.selectedText();
@@ -233,8 +237,9 @@ void Textbox::enterKey() {
 
     cursor.movePosition(QTextCursor::Start);
     cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer-1);
-    if (columnNumer > 1)
+    if (columnNumer > 1) {
         cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer-1);
+    }
 
     insertPlainText("\n");
 

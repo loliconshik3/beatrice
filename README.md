@@ -27,3 +27,7 @@
 * Simple syntax highlight support. 
 
 * And something else...
+
+# Documentation
+
+* [Key-bindings](./docs/KEYBINDS.md)
