@@ -73,7 +73,8 @@ void MainWindow::newFile() {
 
 void MainWindow::updateCurrentFile(File *file) {
     currentFile = file;
-    textbox->setText(currentFile->text.c_str());
+    QString text = currentFile->text.c_str();
+    textbox->setPlainText(text);
     updateTitle();
     infopanel->updateText();
 }
