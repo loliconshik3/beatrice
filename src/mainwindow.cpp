@@ -3,6 +3,7 @@
 #include "commandline.h"
 #include "clipboard.h"
 #include "mainwindow.h"
+#include "findwidget.h"
 #include "infopanel.h"
 #include "filelist.h"
 #include "textbox.h"
@@ -239,10 +240,11 @@ void MainWindow::insertSaveCommand(bool saveas) {
 }
 
 void MainWindow::insertFindCommand() {
-    log("Insert find command in to cmd");
+    findwidget->updateSize();
+    /*log("Insert find command in to cmd");
     commandline->clear();
     commandline->insert("find ");
-    commandline->setFocus();
+    commandline->setFocus();*/
 }
 
 void MainWindow::aboutScreen() {

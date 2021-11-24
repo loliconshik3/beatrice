@@ -4,9 +4,11 @@
 #include "filelisttext.h"
 #include "filelistinfo.h"
 #include "commandline.h"
+#include "findwidget.h"
 #include "clipboard.h"
 #include "infopanel.h"
 #include "filelist.h"
+#include "findtext.h"
 #include "textbox.h"
 #include "utils.h"
 
@@ -128,6 +130,9 @@ int main(int argc, char *argv[])
     InfoPanel infopanel(&window);
     Clipboard clipboard(&window);
 
+    FindWidget findwidget(&window);
+    FindText findtext(&findwidget);
+
     QGridLayout *layout = new QGridLayout;
 
     window.flwidget     = &flwidget;
@@ -136,9 +141,11 @@ int main(int argc, char *argv[])
     flwidget.flinfo     = &flinfo;
     flwidget.fltext     = &fltext;
     window.commandline  = &commandline;
+    window.findwidget   = &findwidget;
     window.infopanel    = &infopanel;
     window.textbox      = &textbox;
     window.clip         = &clipboard;
+    findwidget.findtext = &findtext;
 
     layout->addWidget(window.textbox, 0, 0);
     layout->addWidget(window.commandline, 2, 0);
@@ -153,6 +160,7 @@ int main(int argc, char *argv[])
     window.infopanel->show();
     window.commandline->show();
     flwidget.hide();
+    findwidget.hide();
     window.infopanel->updateText();
 
     if (argc > 1) {

@@ -40,6 +40,8 @@ public:
 
     void updateWidgetStyle();
 
+    void moveToSelectionStart();
+
 public slots:
 
     void clearSelection();

@@ -9,11 +9,12 @@
 #include <QGridLayout>
 #include <string>
 
-class Textbox;
 class FileListWidget;
 class CommandLine;
+class FindWidget;
 class InfoPanel;
 class Clipboard;
+class Textbox;
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -32,8 +33,10 @@ public:
     Clipboard *clip             = NULL;
     Textbox *textbox            = NULL;
     InfoPanel *infopanel        = NULL;
+    FindWidget *findwidget      = NULL;
     CommandLine *commandline    = NULL;
     FileListWidget *flwidget    = NULL;
+
 
     MainWindow(QWidget *parent = nullptr);
 

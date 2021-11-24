@@ -18,6 +18,8 @@ SOURCES += \
     src/filelistsearch.cpp \
     src/filelisttext.cpp \
     src/filelistwidget.cpp \
+    src/findtext.cpp \
+    src/findwidget.cpp \
     src/infopanel.cpp \
     src/linenumberarea.cpp \
     src/main.cpp \
@@ -36,6 +38,8 @@ HEADERS += \
     src/filelistsearch.h \
     src/filelisttext.h \
     src/filelistwidget.h \
+    src/findtext.h \
+    src/findwidget.h \
     src/infopanel.h \
     src/linenumberarea.h \
     src/mainwindow.h \

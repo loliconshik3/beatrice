@@ -57,6 +57,16 @@ map<string, string> SyntaxHighlighter::generateSharp() {
     return patterns;
 }
 
+map<string, string> SyntaxHighlighter::generateHTML() {
+    map<string, string> patterns = {
+        //{"<(.*)>", "#c95b8e"},
+        {"\".*\"", "#71c919"},
+        {"(>).*(<)", "#109010"}
+    };
+
+    return patterns;
+}
+
 map<string, string> SyntaxHighlighter::generateINI() {
     map<string, string> patterns = {
         {"\\[.*\\]", "#c95b8e"},
@@ -97,6 +107,9 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     }
     else if (ext == "ini") {
         patterns = generateINI();
+    }
+    else if (ext == "html") {
+        patterns = generateHTML();
     }
 
     return patterns;
