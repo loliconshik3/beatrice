@@ -689,6 +689,11 @@ void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
 
 }
 
+QString Textbox::getSelectionText() {
+    QTextCursor cur = textCursor();
+    return cur.selectedText();
+}
+
 void Textbox::moveToSelectionStart() {
     QTextCursor cur = textCursor();
     int start       = cur.selectionStart();

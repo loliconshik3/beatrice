@@ -41,6 +41,7 @@ public:
     void updateWidgetStyle();
 
     void moveToSelectionStart();
+    QString getSelectionText();
 
 public slots:
 

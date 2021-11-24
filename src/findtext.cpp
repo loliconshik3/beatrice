@@ -14,24 +14,23 @@ FindText::FindText(FindWidget *parent) : QLineEdit(parent)
 }
 
 void FindText::search() {
+    QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
     root->textbox->moveToSelectionStart();
-    QString pattern = text();
-    QRegExp rx = QRegExp(pattern);
-    root->textbox->find(rx);
+    QRegExp rx = QRegExp(text());
+    root->textbox->find(rx, flags);
 }
 
 void FindText::searchNext() {
+    QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
     root->textbox->clearSelection();
-    QString pattern = text();
-    QRegExp rx = QRegExp(pattern);
-    root->textbox->find(rx);
+    QRegExp rx = QRegExp(text());
+    root->textbox->find(rx, flags);
 }
 
 void FindText::searchPrevious() {
-    root->textbox->moveToSelectionStart();
-    QString pattern = text();
-    QRegExp rx = QRegExp(pattern);
     QTextDocument::FindFlags flags = QTextDocument::FindBackward;
+    root->textbox->moveToSelectionStart();
+    QRegExp rx = QRegExp(text());
     root->textbox->find(rx, flags);
 }
 

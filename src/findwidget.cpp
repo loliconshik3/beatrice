@@ -1,5 +1,6 @@
 #include "findwidget.h"
 #include "findtext.h"
+#include "textbox.h"
 #include "utils.h"
 
 FindWidget::FindWidget(MainWindow *parent) : QWidget(parent)
@@ -25,6 +26,12 @@ void FindWidget::updateSize() {
     move(findX, findY);
 
     show();
-    findtext->clear();
+    QString text = root->textbox->getSelectionText();
+    if (!text.isEmpty()) {
+        findtext->setText(text);
+    }
+    else {
+        findtext->clear();
+    }
     findtext->setFocus();
 }
