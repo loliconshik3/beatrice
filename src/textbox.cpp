@@ -137,22 +137,36 @@ void Textbox::insertTabAtLine() {
 }
 
 void Textbox::scalePlus() {
-    QFont fnt = font();
-    int size  = fnt.pixelSize();
+    QFont lnfnt = lineNumberArea->font();
+    int lnSize  = lnfnt.pixelSize();
+    QFont fnt   = font();
+    int size    = fnt.pixelSize();
     if (size < 30) {
         fnt.setPixelSize(fnt.pixelSize()+1);
+
+        if (lnSize < 28) {
+            lnfnt.setPixelSize(lnSize+1);
+        }
     }
     setFont(fnt);
+    lineNumberArea->setFont(lnfnt);
     root->infopanel->updateText();
 }
 
 void Textbox::scaleMinus() {
+    QFont lnfnt = lineNumberArea->font();
+    int lnSize  = lnfnt.pixelSize();
     QFont fnt = font();
     int size  = fnt.pixelSize();
     if (size > 1) {
         fnt.setPixelSize(fnt.pixelSize()-1);
+
+        if (lnSize > 1) {
+            lnfnt.setPixelSize(lnSize-1);
+        }
     }
     setFont(fnt);
+    lineNumberArea->setFont(lnfnt);
     root->infopanel->updateText();
 }
 
