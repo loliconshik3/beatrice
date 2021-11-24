@@ -41,7 +41,7 @@ void FileList::currentItemChanged() {
             string path = files[text.toStdString()];
             rootParent->flinfo->setText(path.c_str());
 
-            rootParent->fltext->setText(filesText[text.toStdString()].c_str());
+            rootParent->fltext->setPlainText(filesText[text.toStdString()].c_str());
         }
         else {
             rootParent->flinfo->setText("");
