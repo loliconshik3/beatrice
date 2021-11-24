@@ -3,6 +3,7 @@
 #include "filelistsearch.h"
 #include "filelisttext.h"
 #include "filelistinfo.h"
+#include "replacetext.h"
 #include "commandline.h"
 #include "findwidget.h"
 #include "clipboard.h"
@@ -132,6 +133,7 @@ int main(int argc, char *argv[])
 
     FindWidget findwidget(&window);
     FindText findtext(&findwidget);
+    ReplaceText replacetext(&findwidget);
 
     QGridLayout *layout = new QGridLayout;
 
@@ -146,6 +148,7 @@ int main(int argc, char *argv[])
     window.textbox      = &textbox;
     window.clip         = &clipboard;
     findwidget.findtext = &findtext;
+    findwidget.replacetext = &replacetext;
 
     layout->addWidget(window.textbox, 0, 0);
     layout->addWidget(window.commandline, 2, 0);

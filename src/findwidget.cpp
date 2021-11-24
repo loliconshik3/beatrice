@@ -1,3 +1,4 @@
+#include "replacetext.h"
 #include "findwidget.h"
 #include "findtext.h"
 #include "textbox.h"
@@ -21,7 +22,8 @@ void FindWidget::updateSize() {
     int findX       = (x + width) - findWidth - 25;
     int findY       = (y + height) - findHeight;
 
-    findtext->setGeometry(0, 0, findWidth, findHeight);
+    replacetext->setGeometry(findWidth/2, 0, findWidth/2 - 10, findHeight);
+    findtext->setGeometry(0, 0, findWidth/2 - 10, findHeight);
     setGeometry(0, 0, findWidth, findHeight);
     move(findX, findY);
 

@@ -6,6 +6,7 @@
 #include <QWidget>
 
 class FindText;
+class ReplaceText;
 
 class FindWidget : public QWidget
 {
@@ -13,6 +14,7 @@ class FindWidget : public QWidget
 public:
     MainWindow *root    = NULL;
     FindText *findtext  = NULL;
+    ReplaceText *replacetext = NULL;
 
     explicit FindWidget(MainWindow *parent = nullptr);
 

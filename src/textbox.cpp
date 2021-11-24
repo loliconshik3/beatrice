@@ -149,7 +149,7 @@ void Textbox::scalePlus() {
 void Textbox::scaleMinus() {
     QFont fnt = font();
     int size  = fnt.pixelSize();
-    if (size > 15) {
+    if (size > 1) {
         fnt.setPixelSize(fnt.pixelSize()-1);
     }
     setFont(fnt);

@@ -18,7 +18,7 @@ public:
 
     FindText(FindWidget *parent=nullptr);
 
-private slots:
+public slots:
     void search();
     void searchNext();
     void searchPrevious();
