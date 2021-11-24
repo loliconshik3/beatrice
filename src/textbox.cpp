@@ -513,6 +513,12 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
 
     // if chars around cursor != () or [] or {} - input total brackets or just bracket
     if (getAroundChars() != totalBrackets) {
+        string achars = getAroundChars();
+        if (achars.substr(1) == totalBrackets.substr(1)) {
+            moveCursorForward();
+            return;
+        }
+
         if (isNew) {
             insertPlainText(totalBrackets.c_str());
             moveCursorBack();
