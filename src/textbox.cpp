@@ -171,12 +171,11 @@ void Textbox::scaleMinus() {
 }
 
 void Textbox::duplicateLine() {
-    QTextCursor cursor = textCursor();
-    int lineNumer = cursor.block().blockNumber();
+    QTextCursor cursor  = textCursor();
+    int cursorPosition  = cursor.position();
 
-    if (cursor.selectedText() == "") {
-        cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
+    if (cursor.selectedText() == "") {;
+        cursor.setPosition(cursorPosition);
         cursor.select(QTextCursor::LineUnderCursor);
     }
     QString selectedText = cursor.selectedText();
@@ -188,10 +187,7 @@ void Textbox::duplicateLine() {
 
 void Textbox::removeLine() {
     QTextCursor cursor = textCursor();
-    int lineNumer = cursor.block().blockNumber();
 
-    cursor.movePosition(QTextCursor::Start);
-    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
     cursor.select(QTextCursor::LineUnderCursor);
     cursor.removeSelectedText();
     cursor.deleteChar(); // clean up new line
@@ -230,27 +226,19 @@ void Textbox::enterKey() {
         cursor.removeSelectedText();
     }
 
-    int lineNumer   = getCursorX();
-    int columnNumer = getCursorY();
+    int lineNumer   = getCursorY();
     int position    = textCursor().position();
 
     cursor.select(QTextCursor::LineUnderCursor);
     QString selectedText = cursor.selectedText();
     cursor.clearSelection();
 
-    cursor.movePosition(QTextCursor::Start);
-    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer-1);
-    if (columnNumer > 1) {
-        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer-1);
-    }
-
+    cursor.setPosition(position);
     cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
     QString befChar = cursor.selectedText();
-    cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, 1);
+    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1);
 
     int tabs = countOfTabs(selectedText.toStdString());
-
-    cursor.setPosition(position);
     insertPlainText("\n");
 
     cursor.setVerticalMovementX(lineNumer);
