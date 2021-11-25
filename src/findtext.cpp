@@ -16,22 +16,19 @@ FindText::FindText(FindWidget *parent) : QLineEdit(parent)
 void FindText::search() {
     QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
     root->textbox->moveToSelectionStart();
-    QRegExp rx = QRegExp(text());
-    root->textbox->find(rx, flags);
+    root->textbox->find(text(), flags);
 }
 
 void FindText::searchNext() {
     QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
     root->textbox->clearSelection();
-    QRegExp rx = QRegExp(text());
-    root->textbox->find(rx, flags);
+    root->textbox->find(text(), flags);
 }
 
 void FindText::searchPrevious() {
     QTextDocument::FindFlags flags = QTextDocument::FindBackward;
     root->textbox->moveToSelectionStart();
-    QRegExp rx = QRegExp(text());
-    root->textbox->find(rx, flags);
+    root->textbox->find(text(), flags);
 }
 
 void FindText::updateShortcuts() {
