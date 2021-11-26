@@ -91,6 +91,8 @@ void MainWindow::openFile(QString path) {
     QString filePath    = "";
     QString fileText    = "";
 
+    log("Open file '" + path.toStdString() + "'");
+
     if (file->inList(files)) {
         File *fl = file->getFileInList(files);
         int pos = fl->cursorPosition;
@@ -227,6 +229,8 @@ void MainWindow::reloadConfig() {
     flwidget->filelist->updateWidgetStyle();
 
     infopanel->updateText();
+
+    log("Reload config");
 }
 
 void MainWindow::insertSaveCommand(bool saveas) {
@@ -243,10 +247,7 @@ void MainWindow::insertSaveCommand(bool saveas) {
 
 void MainWindow::insertFindCommand() {
     findwidget->updateSize();
-    /*log("Insert find command in to cmd");
-    commandline->clear();
-    commandline->insert("find ");
-    commandline->setFocus();*/
+    log("Show find widget");
 }
 
 void MainWindow::runLastCommand() {
@@ -273,6 +274,7 @@ void MainWindow::changeFocus() {
 
 void MainWindow::closeCurrentFile() {
     currentFile->removeFileFromList(files);
+    log("Close file '" + currentFile->path + "'");
     if (files.size() > 0) {
         openFile(files[0]->path.c_str());
     }

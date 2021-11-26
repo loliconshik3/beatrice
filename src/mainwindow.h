@@ -2,11 +2,13 @@
 #define MAINWINDOW_H
 
 #include "config.h"
+#include "utils.h"
 #include "file.h"
 
 #include <QApplication>
 #include <QMainWindow>
 #include <QGridLayout>
+#include <QCloseEvent>
 #include <string>
 
 class FileListWidget;
@@ -36,7 +38,6 @@ public:
     FindWidget *findwidget      = NULL;
     CommandLine *commandline    = NULL;
     FileListWidget *flwidget    = NULL;
-
 
     MainWindow(QWidget *parent = nullptr);
 
