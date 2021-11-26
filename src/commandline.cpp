@@ -30,7 +30,6 @@ void CommandLine::escape() {
 void CommandLine::runLastCommand() {
     setText(placeholderText());
     launchCommand();
-    root->changeFocus();
 }
 
 void CommandLine::launchCommand() {
@@ -91,7 +90,6 @@ void CommandLine::launchCommand() {
     }
 
     setPlaceholderText(commandText.c_str());
-    root->changeFocus();
     saveToHistory();
 }
 
