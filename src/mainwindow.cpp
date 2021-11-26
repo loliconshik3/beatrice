@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     currentFile = new File("Untitled", "", path+"/Untitled", getFilename(path), true);
     //setStyleSheet("QWidget { background: #1f222d }");//#262728 }");//#2e2f30
 
+    log("Editor has been started...");
+
     updateTitle();
     updateWidgetStyle();
     updateShortcuts();

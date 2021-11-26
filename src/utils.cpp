@@ -4,14 +4,31 @@
 #include <ctime>
 
 void log(string text) {
-    auto end = chrono::system_clock::now();
+    auto end        = chrono::system_clock::now();
     time_t end_time = chrono::system_clock::to_time_t(end);
 
     char buff[20];
     strftime(buff, 20, "%H:%M:%S %d.%m.%Y", localtime(&end_time));
     string time = buff;
 
-    cout << time + ": " << text << endl;
+    string log = time + ": " + text;
+
+    cout << log << endl;
+
+    //=====Save log into log file=====
+    string homedir  = getHomeDir();
+    string path     = homedir + "/.config/beatrice/cache/log";
+
+    QFile file(path.c_str());
+    if (file.open(QIODevice::ReadWrite)) {
+        QString text = file.readAll();
+        QTextStream out(&file);
+
+        out << log.c_str() + QString("\n");
+
+        file.close();
+    }
+    //================================
 }
 
 int getSelectedLines(QTextCursor &cursor) {
