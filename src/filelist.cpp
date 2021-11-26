@@ -38,10 +38,13 @@ void FileList::currentItemChanged() {
         QListWidgetItem *item = currentItem();
         if (item != NULL) {
             QString text = item->text();
-            string path = files[text.toStdString()];
-            rootParent->flinfo->setText(path.c_str());
 
-            rootParent->fltext->setPlainText(filesText[text.toStdString()].c_str());
+            if (files.find(text.toStdString()) != files.end()) {
+                string path  = files[text.toStdString()];
+
+                rootParent->flinfo->setText(path.c_str());
+                rootParent->fltext->setPlainText(filesText[text.toStdString()].c_str());
+            }
         }
         else {
             rootParent->flinfo->setText("");
@@ -155,34 +158,35 @@ void FileList::loadDirectoryFiles(string path) {
 }
 
 void FileList::loadTabFiles() {
-    string homedir = getHomeDir();
-    string fileName = "";
+    string homedir  = getHomeDir();
+    string name     = "";
 
     filesText.clear();
     files.clear();
     clear();
 
     for (const auto & file : root->files) {
-        fileName = file->path;
+        name = file->path;
 
-        replaceStr(fileName, homedir, "~");
+        replaceStr(name, homedir, "~");
 
         if (!file->isSaved()) {
-            fileName += "*";
+            name += "*";
         }
 
         if (file->path == root->currentFile->path) {
-            fileName += " (Current)";
+            name += " (Current)";
         }
 
-        files[fileName] = file->path;
-        addItem(fileName.c_str());
+        log(name);
 
-        filesText[fileName] = file->text;
+        filesText[name] = file->text;
+        files[name]     = file->path;
+        addItem(name.c_str());
     }
     currentDirectory = "";
 
-    sortItems();
+    //sortItems();
     setCurrentItem(item(0));	
 }
 
@@ -280,15 +284,17 @@ void FileList::redrawFiles() {
     clear();
 
     for (const auto & file : files) {
-        string fileName    = QString(file.first.c_str()).toLower().toUtf8().constData();
-        string searchQuery = rootParent->flsearch->text().toLower().toUtf8().constData();
+        string fileName    = QString(file.first.c_str()).toLower().toStdString();
+        string searchQuery = rootParent->flsearch->text().toLower().toStdString();
 
         if ( fileName.find(searchQuery) != string::npos ) {
-            addItem(QString(file.first.c_str()));
+            QString name = file.first.c_str();
+            log(name.toStdString());
+            addItem(name);
         }
     }
 
-    sortItems();
+    //sortItems();
     setCurrentItem(item(0));
     currentItemChanged();
 }
