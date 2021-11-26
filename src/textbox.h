@@ -63,6 +63,7 @@ private slots:
     void removeLine();
     void duplicateLine();
     int countOfTabs(string str);
+    bool nextSymbIsTab(QTextCursor::MoveOperation side);
 
     void updateLineNumberAreaWidth(int newBlockCount);
     void updateLineNumberArea(QRectF /*rect_f*/);
@@ -127,12 +128,12 @@ protected:
             enterKey();
         }
 
-        /*else if (e->key() == Qt::Key_Left) {
+        else if (e->key() == Qt::Key_Left) {
             moveCursorLeft();
         }
         else if (e->key() == Qt::Key_Right) {
             moveCursorRight();
-        }*/
+        }
 
         else {
             QTextEdit::keyPressEvent(e);

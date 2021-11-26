@@ -349,41 +349,31 @@ void Textbox::moveCursorForward() {
 	setTextCursor(cursor);
 }
 
+bool Textbox::nextSymbIsTab(QTextCursor::MoveOperation side) {
+    QTextCursor cursor  = textCursor();
+
+    cursor.clearSelection();
+    cursor.movePosition(side, QTextCursor::KeepAnchor, tabSize);
+    if (cursor.selectedText() == tabString) {
+        return true;
+    }
+
+    return false;
+}
+
 void Textbox::moveCursorRight() {
-    QTextCursor cursor = textCursor();
-    auto anchorState = QTextCursor::MoveAnchor;
+    QTextCursor cursor  = textCursor();
+    auto anchorState    = QTextCursor::MoveAnchor;
 
     if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
         anchorState = QTextCursor::KeepAnchor;
     }
 
-    QString selectedText = cursor.selectedText();
-    int selectedSize = selectedText.length();
-
-    cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, tabSize);
-
-    string checkTabText = cursor.selectedText().toStdString();
-    int length = checkTabText.length();
-    int selTabSize = length - selectedSize;
-
-    if (selTabSize >= 0) {
-        if (length > (selTabSize+1)) {
-            checkTabText = checkTabText.substr(length-1-selTabSize, length-1);
-        }
-    }
-    /*else {
-        selTabSize = tabSize;
-    }*/
-
-    //cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, tabSize);
-    //int selTabSize = cursor.selectedText().length() - selectedSize;
-    if (checkTabText.c_str() != tabString) {
-        cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, selTabSize);
+    if (!nextSymbIsTab(QTextCursor::Right)) {
         cursor.movePosition(QTextCursor::Right, anchorState, 1);
     }
     else {
-        cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, selTabSize);
-        cursor.movePosition(QTextCursor::Right, anchorState, selTabSize);
+        cursor.movePosition(QTextCursor::Right, anchorState, tabSize);
     }
 
     setTextCursor(cursor);
@@ -397,28 +387,11 @@ void Textbox::moveCursorLeft() {
         anchorState = QTextCursor::KeepAnchor;
     }
 
-    QString selectedText = cursor.selectedText();
-    int selectedSize = selectedText.length();
-
-    cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, tabSize);
-
-    string checkTabText = cursor.selectedText().toStdString();
-    int length = checkTabText.length();
-    int selTabSize = length - selectedSize;
-
-    if (selTabSize >= 0) {
-        if (length > (selTabSize+1)) {
-            checkTabText = checkTabText.substr(length-1-selTabSize, length-1);
-        }
-    }
-
-    if (checkTabText.c_str() != tabString) {
-        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, selTabSize);
+    if (!nextSymbIsTab(QTextCursor::Left)) {
         cursor.movePosition(QTextCursor::Left, anchorState, 1);
     }
     else {
-        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, selTabSize);
-        cursor.movePosition(QTextCursor::Left, anchorState, selTabSize);
+        cursor.movePosition(QTextCursor::Left, anchorState, tabSize);
     }
 
     setTextCursor(cursor);
