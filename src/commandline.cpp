@@ -154,6 +154,7 @@ string CommandLine::outToCommand(vector<string> out) {
     QString newCommand  = command.c_str();
     newCommand          = newCommand.replace("~/", (homedir+"/").c_str());
     newCommand          = newCommand.replace("./", (getPathDir(root->currentFile->path) + "/").c_str());
+    newCommand          = newCommand.replace("$dir$", (getPathDir(root->currentFile->path) + "/").c_str());
 
     command = newCommand.toStdString();
 
