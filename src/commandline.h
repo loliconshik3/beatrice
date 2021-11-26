@@ -29,6 +29,7 @@ public slots:
     void runLastCommand();
 
 private slots:
+    string outToCommand(vector<string> out);
     void launchCommand();
     void completeCommand();
     void escape();

@@ -71,7 +71,7 @@ public:
     string theme = MICRO_THEME;
     map<string, string> themeColors;
 
-    string terminalCommand = "gnome-terminal --";
+    string terminalCommand = "gnome-terminal -- ";
 
     int newFileCount = 0;
 

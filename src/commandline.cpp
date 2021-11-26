@@ -29,6 +29,7 @@ void CommandLine::escape() {
 void CommandLine::runLastCommand() {
     setText(placeholderText());
     launchCommand();
+    root->changeFocus();
 }
 
 void CommandLine::launchCommand() {
@@ -62,14 +63,7 @@ void CommandLine::launchCommand() {
             root->textbox->find(rx);
         }
         else if (out[0] == "cmd") {
-            string command = "gnome-terminal -- ";
-            int length = out.size() - 1;
-            int index = 1;
-            while (index <= length) {
-                command += out[index] + " ";
-                ++index;
-            }
-            log(command);
+            string command = outToCommand(out);
             system(command.c_str());
         }
         else {
@@ -97,6 +91,28 @@ void CommandLine::launchCommand() {
 
     setPlaceholderText(commandText.c_str());
     root->changeFocus();
+}
+
+string CommandLine::outToCommand(vector<string> out) {
+    string command  = root->cfg->terminalCommand;
+    int length      = out.size() - 1;
+    int index       = 1;
+
+    while (index <= length) {
+        command += out[index] + " ";
+        ++index;
+    }
+
+    string homedir      = getHomeDir();
+    QString newCommand  = command.c_str();
+    newCommand          = newCommand.replace("~/", (homedir+"/").c_str());
+    newCommand          = newCommand.replace("./", (getPathDir(root->currentFile->path) + "/").c_str());
+
+    command = newCommand.toStdString();
+
+    log(command);
+
+    return command;
 }
 
 void CommandLine::completeCommand() {
