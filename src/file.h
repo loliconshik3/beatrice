@@ -26,6 +26,7 @@ public:
 
     bool isSaved();
     bool inList(vector<File*> &fls);
+    int getFileIndexInList(vector<File*> &fls);
     File *getFileInList(vector<File*> &fls);
     bool removeFileFromList(vector<File*> &fls);
 

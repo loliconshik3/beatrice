@@ -68,7 +68,7 @@ void MainWindow::newFile() {
     ++cfg->newFileCount;
 
     File *file = new File(name, "", fdir+"/"+name, getFilename(fdir), true);
-    files.insert(files.begin(), file);
+    files.insert(files.end(), file);
     updateCurrentFile(file);
 }
 
@@ -141,7 +141,7 @@ void MainWindow::openFile(QString path) {
         }
 
         File *file = new File(fname, ftext, fpath, fdir, fisNew);
-        files.insert(files.begin(), file);
+        files.insert(files.end(), file);
         updateCurrentFile(file);
         saveLastFile();
     }

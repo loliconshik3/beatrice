@@ -20,6 +20,9 @@ public:
         "new"
     };
 
+    vector<string> history;
+    int historyIndex = 0;
+
     MainWindow *root;
 
     CommandLine(MainWindow *parent=nullptr);
@@ -32,7 +35,12 @@ private slots:
     string outToCommand(vector<string> out);
     void launchCommand();
     void completeCommand();
+    void saveToHistory();
+    void loadHistory();
     void escape();
+
+    void previousCommand();
+    void nextCommand();
 };
 
 #endif // COMMANDLINE_H

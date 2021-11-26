@@ -12,6 +12,7 @@ CommandLine::CommandLine(MainWindow *parent) :
     //#1f1f1f //2e2f30
     //setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
 
+    loadHistory();
     updateWidgetStyle();
     updateShortcuts();
 }
@@ -91,6 +92,52 @@ void CommandLine::launchCommand() {
 
     setPlaceholderText(commandText.c_str());
     root->changeFocus();
+    saveToHistory();
+}
+
+void CommandLine::loadHistory() {
+    QString homedir = getHomeDir().c_str();
+    QString path    = homedir + "/.config/beatrice/cache/commandHistory";
+
+    history.clear();
+
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly)) {
+        QTextStream in(&file);
+        while (!in.atEnd())
+        {
+           QString line = in.readLine();
+           if (line != "" && !line.isEmpty()) {
+               history.insert(history.end(), line.toStdString());
+           }
+        }
+        file.close();
+    }
+
+    if (history.size() > 0) {
+        historyIndex = history.size() - 1;
+        setPlaceholderText(history[historyIndex].c_str());
+        ++historyIndex;
+    }
+}
+
+void CommandLine::saveToHistory() {
+    string homedir  = getHomeDir();
+    string path     = homedir + "/.config/beatrice/cache/commandHistory";
+
+    QFile file(path.c_str());
+    if (file.open(QIODevice::ReadWrite)) {
+        QString text = file.readAll();
+        QString name = placeholderText();
+        QTextStream out(&file);
+
+        out << name + QString("\n");
+
+        file.close();
+    }
+
+    history.insert(history.end(), placeholderText().toStdString());
+    historyIndex = history.size();
 }
 
 string CommandLine::outToCommand(vector<string> out) {
@@ -115,6 +162,30 @@ string CommandLine::outToCommand(vector<string> out) {
     return command;
 }
 
+void CommandLine::previousCommand() {
+    int maxIndex = 0;
+
+    if (historyIndex > maxIndex) {
+        --historyIndex;
+        clear();
+        insert(history[historyIndex].c_str());
+    }
+}
+
+void CommandLine::nextCommand() {
+    int maxIndex = history.size() - 1;
+
+    if (historyIndex < maxIndex) {
+        ++historyIndex;
+        clear();
+        insert(history[historyIndex].c_str());
+    }
+    else {
+        historyIndex = maxIndex + 1;
+        clear();
+    }
+}
+
 void CommandLine::completeCommand() {
     clear();
     insert(placeholderText());
@@ -137,6 +208,12 @@ void CommandLine::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_completeCommand), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(completeCommand()));
+
+    shortcut = new QShortcut(QKeySequence("Up"), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(previousCommand()));
+
+    shortcut = new QShortcut(QKeySequence("Down"), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(nextCommand()));
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand2), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));

@@ -21,6 +21,19 @@ bool File::isSaved() {
     return false;
 }
 
+int File::getFileIndexInList(vector<File *> &fls) {
+    int index = 0;
+
+    for (const auto &fl : fls) {
+        if (fl->path == this->path) {
+            return index;
+        }
+        ++index;
+    }
+
+    return -1;
+}
+
 bool File::inList(vector<File*> &fls) {
     for (const auto &fl : fls) {
         if (fl->path == this->path) {

@@ -34,16 +34,19 @@ void InfoPanel::updateText() {
     string extension    = root->currentFile->extension;
     string currentdir   = replaceHomeDir(getPathDir(root->currentFile->path));//CURDIR replaceHomeDir(root->currentDirectory);
 
+    string fileIndex    = to_string(root->currentFile->getFileIndexInList(root->files) + 1);
+    string maxFiles     = to_string(root->files.size());
+
     if (!root->currentFile->isSaved()) {
         fname += "*";
     }
 
     list <string> args = {
-        fname + " @ " + directory + " (" + cursorPos + ")",
-        "ext: " + extension,
-        "tab: " + tabSize,
+        "["+fileIndex+"/"+maxFiles+"] " + fname + " @ " + directory + " (" + cursorPos + ")",
+        "ext: "  + extension,
+        "tab: "  + tabSize,
         "font: " + fontSize + "px",
-        "dir: " + currentdir
+        "dir: "  + currentdir
     };
 
     for (const string &arg : args) {
