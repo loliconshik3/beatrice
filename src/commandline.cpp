@@ -26,6 +26,11 @@ void CommandLine::escape() {
     }
 }
 
+void CommandLine::runLastCommand() {
+    setText(placeholderText());
+    launchCommand();
+}
+
 void CommandLine::launchCommand() {
     std::string commandText = text().toStdString();
 

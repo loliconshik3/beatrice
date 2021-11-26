@@ -52,6 +52,7 @@ public slots:
     void updateCurrentFile(File *file);
     void closeCurrentFile();
 
+    void runLastCommand();
     void openUpFile();
     void openDownFile();
     void insertFindCommand();

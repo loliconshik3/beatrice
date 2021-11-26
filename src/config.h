@@ -83,6 +83,7 @@ public:
     QString sct_openFolder      = "Ctrl+k";     //Deprecated. Now work like sct_open
     QString sct_new             = "Ctrl+n";
     QString sct_find            = "Ctrl+f";
+    QString sct_run             = "Ctrl+r";     //Run last command in cmd
     QString sct_pasteAs         = "Ctrl+Shift+v";
     QString sct_clearSelection  = "Escape";     //Clear selection in textbox
     QString sct_changeFocus     = "Alt+e";      //Change focus from textbox to commandline and conversely

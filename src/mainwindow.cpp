@@ -247,6 +247,10 @@ void MainWindow::insertFindCommand() {
     commandline->setFocus();*/
 }
 
+void MainWindow::runLastCommand() {
+    commandline->runLastCommand();
+}
+
 void MainWindow::aboutScreen() {
     QMessageBox::information(this, tr("About"),
         tr("beatrice - simple, minimalist code editor written on qt and c++.\n\nby loliconshik3"));
@@ -395,6 +399,9 @@ void MainWindow::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_find), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(insertFindCommand()));
+
+    shortcut = new QShortcut(QKeySequence(cfg->sct_run), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(runLastCommand()));
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_pasteAs), this);
     connect(shortcut, &QShortcut::activated, this, [this]{ clip->loadClipboardList(); });

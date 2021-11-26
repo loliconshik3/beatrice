@@ -25,6 +25,9 @@ public:
     CommandLine(MainWindow *parent=nullptr);
     void updateWidgetStyle();
 
+public slots:
+    void runLastCommand();
+
 private slots:
     void launchCommand();
     void completeCommand();
