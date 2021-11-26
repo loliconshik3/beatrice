@@ -55,7 +55,18 @@ void Textbox::tabulation() {
     int lines           = getSelectedLines(cursor);
 
     if (lines == 0) {
+        int columns = getCursorY()-1;
+        int remaind = columns % tabSize;
+        int tSize   = tabSize;
+        int size    = tabSize;
+
+        if (remaind > 0) {
+            size = tabSize - remaind;
+        }
+
+        setTabSize(size);
         insertPlainText(tabString);
+        setTabSize(tSize);
     }
     else {
         int start   = cursor.selectionStart();
