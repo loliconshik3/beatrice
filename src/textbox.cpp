@@ -203,6 +203,10 @@ void Textbox::removeLine() {
     cursor.removeSelectedText();
     cursor.deleteChar(); // clean up new line
 
+    if (cursor.block().text() == "") {
+        cursor.deletePreviousChar();
+    }
+
     setTextCursor(cursor);
 }
 
