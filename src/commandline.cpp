@@ -56,6 +56,17 @@ void CommandLine::launchCommand() {
             QRegExp rx = QRegExp(pattern);
             root->textbox->find(rx);
         }
+        else if (out[0] == "cmd") {
+            string command = "gnome-terminal -- ";
+            int length = out.size() - 1;
+            int index = 1;
+            while (index <= length) {
+                command += out[index] + " ";
+                ++index;
+            }
+            log(command);
+            system(command.c_str());
+        }
         else {
             return;
         }

@@ -31,6 +31,7 @@ void Config::addConfigFile() {
         settings->setValue("UI/filelist/fontFamily",    filelistFontFamily.c_str());
         settings->setValue("UI/filelist/fontSize",      filelistFontSize);
         settings->setValue("UI/theme",                  theme.c_str());
+        settings->setValue("USER/terminalCommand",      terminalCommand.c_str());
         settings->sync();
     }
 }
@@ -54,6 +55,7 @@ void Config::loadConfigFile() {
     clipboardFontFamily     = settings.value("UI/filelist/fontFamily",      filelistFontFamily.c_str()).toString().toStdString();
     clipboardFontSize       = settings.value("UI/filelist/fontSize",        filelistFontSize).toInt();
     theme                   = settings.value("UI/theme",                    theme.c_str()).toString().toStdString();
+    terminalCommand         = settings.value("USER/terminalCommand",        terminalCommand.c_str()).toString().toStdString();
 
     setThemeColors();
 }
