@@ -33,10 +33,13 @@ map<string, string> SyntaxHighlighter::generatePython() {
         //{"/*.**/", "#8a8d93"},
         {"[0-9]|=", "#71c919"},
         {"\".*\"", "#71c919"},
+        {"'.*'", "#71c919"},
         //{"(?=def )(.*)(?=()", "#71c919"},
         {"\\b(if|for|in|while|break|try|except|pass|return)\\b", "#d097a3"},
         {"\\b(self|True|False)\\b", "#c95b8e"},
-        {"\\b(def|class|from|import)\\b", "#ff8080"}
+        {"\\b(def|class|from|import|async|as)\\b", "#ff8080"},
+        {"\\b((import) .*|(from) .*)\\b", "#d097a3"},
+        {"\\b((def) .*|(class) .*)\\b", "#71c919"},
     };
 
     return patterns;
