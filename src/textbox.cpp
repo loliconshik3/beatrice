@@ -432,8 +432,16 @@ void Textbox::completeQuotes(string quote) {
 
     // if chars around cursor != "" or ''
     if (achars != totalQuote) {
-        insertPlainText(totalQuote.c_str());
-        moveCursorBack();
+        if (achars.length() > 1 && (achars.substr(1) == " " or achars.substr(0) == " ")
+            or achars.length() == 1
+            or achars == "") {
+
+            insertPlainText(totalQuote.c_str());
+            moveCursorBack();
+        }
+        else {
+            insertPlainText(quote.c_str());
+        }
     }
     else {
         moveCursorForward();
@@ -496,8 +504,16 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
         }
 
         if (isNew) {
-            insertPlainText(totalBrackets.c_str());
-            moveCursorBack();
+            if (achars.length() > 1 && (achars.substr(1) == " " or achars.substr(0) == " ")
+                or achars.length() == 1
+                or achars == "") {
+
+                insertPlainText(totalBrackets.c_str());
+                moveCursorBack();
+            }
+            else {
+                insertPlainText(bracket.c_str());
+            }
         }
         else {
             insertPlainText(bracket.c_str());

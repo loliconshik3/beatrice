@@ -273,10 +273,16 @@ void MainWindow::changeFocus() {
 }
 
 void MainWindow::closeCurrentFile() {
+    int index = currentFile->getFileIndexInList(files)-1;
+
     currentFile->removeFileFromList(files);
     log("Close file '" + currentFile->path + "'");
+
     if (files.size() > 0) {
-        openFile(files[0]->path.c_str());
+        if (index < 0) {
+            index = 0;
+        }
+        openFile(files[index]->path.c_str());
     }
     else {
         newFile();
