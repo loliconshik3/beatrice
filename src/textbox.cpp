@@ -249,9 +249,7 @@ void Textbox::enterKey() {
     cursor.clearSelection();
 
     cursor.setPosition(position);
-    cursor.movePosition(QTextCursor::Left, QTextCursor::KeepAnchor, 1);
-    QString befChar = cursor.selectedText();
-    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1);
+    QString befChar = getAroundChars().substr(0).c_str();
 
     int tabs = countOfTabs(selectedText.toStdString());
     insertPlainText("\n");
