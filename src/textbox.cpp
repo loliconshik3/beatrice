@@ -435,9 +435,15 @@ void Textbox::completeQuotes(string quote) {
         QString ach = achars.c_str();
         ach = ach.simplified();
 
+        list<QString> checkList = {
+            "()", "[]", "{}", "\"\"", "''"
+        };
+        bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
+
         if (ach.length() > 1 && ( ach.contains(" ") )
             or ach.length() == 1
-            or ach == "") {
+            or ach == ""
+            or found) {
 
             insertPlainText(totalQuote.c_str());
             moveCursorBack();
@@ -510,9 +516,15 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
             QString ach = achars.c_str();
             ach = ach.simplified();
 
+            list<QString> checkList = {
+                "()", "[]", "{}", "\"\"", "''"
+            };
+            bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
+
             if (ach.length() > 1 && ( ach.contains(" ") )
                 or ach.length() == 1
-                or ach == "") {
+                or ach == ""
+                or found) {
 
                 insertPlainText(totalBrackets.c_str());
                 moveCursorBack();
