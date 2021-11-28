@@ -250,6 +250,8 @@ void Textbox::enterKey() {
 
     cursor.setPosition(position);
     QString befChar = getAroundChars().substr(0).c_str();
+    befChar = befChar.simplified();
+    log(befChar.toStdString());
 
     int tabs = countOfTabs(selectedText.toStdString());
     insertPlainText("\n");
@@ -313,11 +315,7 @@ void Textbox::backspace() {
         cursor.deletePreviousChar();
 
         std::list <QString> test = {
-            "()",
-            "[]",
-            "\"\"",
-            "{}",
-            "''"
+            "()", "[]", "{}", "\"\"", "''"
         };
 
         for (const QString &string : test) {
@@ -434,11 +432,12 @@ void Textbox::completeQuotes(string quote) {
         ach = ach.simplified();
 
         list<QString> checkList = {
-            "()", "[]", "{}", "\"\"", "''"
+            "()", "[]", "{}", "\"\"", "''",
+            "))", "]]", "}}", "{{", "[[", "(("
         };
         bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
 
-        if (ach.length() > 1 && ( ach.contains(" ") )
+        if ((ach.length() > 1 && ( ach.contains(" ") ))
             or ach.length() == 1
             or ach == ""
             or found) {
@@ -515,11 +514,12 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
             ach = ach.simplified();
 
             list<QString> checkList = {
-                "()", "[]", "{}", "\"\"", "''"
+                "()", "[]", "{}", "\"\"", "''",
+                "))", "]]", "}}", "{{", "[[", "(("
             };
             bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
 
-            if (ach.length() > 1 && ( ach.contains(" ") )
+            if ((ach.length() > 1 && ( ach.contains(" ") ))
                 or ach.length() == 1
                 or ach == ""
                 or found) {
