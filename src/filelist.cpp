@@ -144,9 +144,12 @@ void FileList::loadDirectoryFiles(string path) {
 
         file.close();
     }
-    fileName        = BACK_NAME;
-    files[fileName] = getPathDir(path);
-    addItem(fileName.c_str());
+    if (path != "/") {
+        string backPath = getPathDir(path);
+        fileName        = BACK_NAME;
+        files[fileName] = backPath;
+        addItem(fileName.c_str());
+    }
     currentDirectory = path;
 
     //fileName        = PICK_NAME;
@@ -289,7 +292,6 @@ void FileList::redrawFiles() {
 
         if ( fileName.find(searchQuery) != string::npos ) {
             QString name = file.first.c_str();
-            log(name.toStdString());
             addItem(name);
         }
     }

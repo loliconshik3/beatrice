@@ -70,6 +70,8 @@ string getPathDir(string path) {
         index++;
     }
 
+    if (dir == "") { dir = "/"; }
+
     return dir;
 }
 
