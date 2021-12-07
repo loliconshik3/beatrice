@@ -71,7 +71,11 @@ void Textbox::tabulation() {
     else {
         int start   = cursor.selectionStart();
         int end     = cursor.selectionEnd();
+
         cursor.setPosition(start);
+        cursor.movePosition(QTextCursor::StartOfLine);
+        start       = cursor.position();
+
         int lineNum = cursor.block().blockNumber()+1;
         setTextCursor(cursor);
 
@@ -92,16 +96,17 @@ void Textbox::tabulation() {
 void Textbox::removeTabAtLine() {
     QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
-    int lineNumer       = cursor.block().blockNumber();
+    int position        = cursor.position();
+    int cursorX         = getCursorX()-1; // X = LINES
+    int cursorY         = getCursorY()-1; // Y = COLUMNS
 
     if (lines == 0) {
-        if (countOfTabs(cursor.block().text().toStdString()) == 0) {
+        string text = cursor.block().text().toStdString();
+        if (countOfTabs(text) == 0) {
             return;
         }
 
-        cursor.movePosition(QTextCursor::Start);
-        cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
-        setTextCursor(cursor);
+        cursor.setPosition(position-cursorY);
 
         int index = tabSize;
         while (index > 0) {
@@ -109,18 +114,24 @@ void Textbox::removeTabAtLine() {
             --index;
         }
 
+        cursor.setPosition(position);
         setTextCursor(cursor);
     }
     else {
         int start   = cursor.selectionStart();
         int end     = cursor.selectionEnd();
+
         cursor.setPosition(start);
+        cursor.movePosition(QTextCursor::StartOfLine);
+        start       = cursor.position();
+
         int lineNum = cursor.block().blockNumber()+1;
         setTextCursor(cursor);
 
         int line = lineNum;
         while (line < lines+lineNum) {
-            if (countOfTabs(cursor.block().text().toStdString()) > 0) {
+            string text = cursor.block().text().toStdString();
+            if (countOfTabs(text) > 0) {
                 end -= tabSize;
                 removeTabAtLine();
             }
@@ -136,14 +147,13 @@ void Textbox::removeTabAtLine() {
 
 void Textbox::insertTabAtLine() {
     QTextCursor cursor  = textCursor();
-    int lineNumer       = cursor.block().blockNumber();
-    int columnNumer     = cursor.columnNumber();
+    int cursorX         = getCursorX()-1;
+    int cursorY         = getCursorY()-1;
+    int position        = cursor.position();
 
-    cursor.movePosition(QTextCursor::Start);
-    cursor.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, lineNumer);
-    setTextCursor(cursor);
+    cursor.setPosition(position-cursorX);
     insertPlainText(tabString);
-    cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, columnNumer);
+    cursor.setPosition(position);
     setTextCursor(cursor);
 }
 
@@ -251,7 +261,6 @@ void Textbox::enterKey() {
     cursor.setPosition(position);
     QString befChar = getAroundChars().substr(0).c_str();
     befChar = befChar.simplified();
-    log(befChar.toStdString());
 
     int tabs = countOfTabs(selectedText.toStdString());
     insertPlainText("\n");
@@ -433,14 +442,26 @@ void Textbox::completeQuotes(string quote) {
 
         list<QString> checkList = {
             "()", "[]", "{}", "\"\"", "''",
-            "))", "]]", "}}", "{{", "[[", "(("
+            "))", "]]", "}}", "{{", "[[", "((",
+        };
+        list<QString> checkSolo = {
+            "(", ")", "[", "]", "{", "}",
+            "'", "\""
         };
         bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
+        bool foundSolo = false;
+        for (const auto &check : checkSolo) {
+            if (ach.contains(check)) {
+                foundSolo = true;
+                break;
+            }
+        }
 
         if ((ach.length() > 1 && ( ach.contains(" ") ))
             or ach.length() == 1
             or ach == ""
-            or found) {
+            or found
+            or foundSolo) {
 
             insertPlainText(totalQuote.c_str());
             moveCursorBack();
@@ -517,12 +538,23 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
                 "()", "[]", "{}", "\"\"", "''",
                 "))", "]]", "}}", "{{", "[[", "(("
             };
+            list<QString> checkSolo = {
+                "(", ")", "[", "]", "{", "}",
+                "'", "\""
+            };
             bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
-
+            bool foundSolo = false;
+            for (const auto &check : checkSolo) {
+                if (ach.contains(check)) {
+                    foundSolo = true;
+                    break;
+                }
+            }
             if ((ach.length() > 1 && ( ach.contains(" ") ))
                 or ach.length() == 1
                 or ach == ""
-                or found) {
+                or found
+                or foundSolo) {
 
                 insertPlainText(totalBrackets.c_str());
                 moveCursorBack();

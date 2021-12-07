@@ -1,5 +1,6 @@
 #include "syntaxhighlighter.h"
 #include "mainwindow.h"
+#include "textbox.h"
 #include "utils.h"
 
 #include <QTextCharFormat>
