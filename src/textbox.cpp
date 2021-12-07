@@ -256,6 +256,7 @@ void Textbox::enterKey() {
 
     cursor.select(QTextCursor::LineUnderCursor);
     QString selectedText = cursor.selectedText();
+    int end = cursor.selectionEnd();
     cursor.clearSelection();
 
     cursor.setPosition(position);
@@ -263,6 +264,10 @@ void Textbox::enterKey() {
     befChar = befChar.simplified();
 
     int tabs = countOfTabs(selectedText.toStdString());
+    if (tabs * tabSize == selectedText.length()) {
+        cursor.setPosition(end);
+        setTextCursor(cursor);
+    }
     insertPlainText("\n");
 
     cursor.setVerticalMovementX(lineNumer);
