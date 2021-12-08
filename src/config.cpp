@@ -115,7 +115,7 @@ map<string, string> Config::loadTheme_Dracula() {
 
     theme["flistBackground"]        = "#382a36";
     theme["flinfoBackground"]       = "#bd93f9";
-    theme["fltextBackground"]       = "#382a36";
+    theme["fltextBackground"]       = "#483a46";
     theme["flwidgetBackground"]     = "#382a36";
     theme["flsearchBackground"]     = "#382a36";
 

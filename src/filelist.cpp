@@ -52,7 +52,21 @@ void FileList::currentItemChanged() {
         }
     }
     else {
-        rootParent->flinfo->setText("");
+        QString name = rootParent->flsearch->text();
+        QString infoText = "";
+
+        string totalName = name.toStdString();
+        replaceStr(totalName, "!", "");
+        replaceStr(totalName, "@", "");
+
+        if (name.at(0) == "!") {
+            infoText = QString("Create file: ") + totalName.c_str();
+        }
+        else if (name.at(0) == "@") {
+            infoText = QString("Create directory: ") + totalName.c_str();
+        }
+
+        rootParent->flinfo->setText(infoText);
         rootParent->fltext->setText("");
     }
 }
@@ -286,9 +300,9 @@ void FileList::deleteFile() {
 void FileList::redrawFiles() {
     clear();
 
+    string searchQuery = rootParent->flsearch->text().toLower().toStdString();
     for (const auto & file : files) {
         string fileName    = QString(file.first.c_str()).toLower().toStdString();
-        string searchQuery = rootParent->flsearch->text().toLower().toStdString();
 
         if ( fileName.find(searchQuery) != string::npos ) {
             QString name = file.first.c_str();
@@ -307,8 +321,8 @@ void FileList::updateWidgetStyle() {
                          root->theme["flistwidgetBackground"].c_str());
     setStyleSheet(style);
 
-    QFont fnt("Source Code Pro");
-    fnt.setPixelSize(16);
+    QFont fnt(root->cfg->filelistFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->filelistFontSize);
     setFont(fnt);
 }
 

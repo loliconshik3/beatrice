@@ -22,34 +22,34 @@ public:
     int windowMinWidth  = 1000;
     int windowMinHeight = 600;
 
-    int width = rect.width() / 2;
-    int height = rect.height() / 3;
+    int width = rect.width() / 1.5;
+    int height = rect.height() / 2;
 
     int clipboardWidth          = rect.width() / 3;
     int clipboardHeight         = rect.height() / 4;
     int clipboardX              = ( rect.width() - clipboardWidth ) / 2;
     int clipboardY              = ( rect.height() - clipboardHeight ) / 2;
 
-    int fileListWidgetWidth     = width; //+ (rect.width() / 2 / 3);
-    int fileListWidgetHeight    = height + (height / 2);
+    int fileListWidgetWidth     = width;
+    int fileListWidgetHeight    = height + 20; //LAST height + (height / 2);
     int fileListWidgetX         = ( rect.width() - fileListWidgetWidth ) / 2;
     int fileListWidgetY         = ( rect.height() - fileListWidgetHeight ) / 2;
 
-    int fileListSearchWidth     = fileListWidgetWidth;
+    int fileListSearchWidth     = fileListWidgetWidth / 2;//LAST fileListWidgetWidth;
     int fileListSearchHeight    = 25;
 
-    int fileListTextWidth       = fileListWidgetWidth;
-    int fileListTextHeight      = height / 2;
-    int fileListTextLeftPadding = 0;//fileListWidgetWidth - fileListTextWidth;
-    int fileListTextTopPadding  = fileListWidgetHeight - fileListTextHeight;
+    int fileListTextWidth       = width / 2;//LAST fileListWidgetWidth;
+    int fileListTextHeight      = height;//LAST height / 2;
+    int fileListTextLeftPadding = fileListWidgetWidth - fileListTextWidth;//LAST 0;
+    int fileListTextTopPadding  = 0;//LAST fileListWidgetHeight - fileListTextHeight;
 
-    int fileListInfoWidth       = fileListWidgetWidth;
+    int fileListInfoWidth       = fileListWidgetWidth; //LAST fileListWidgetWidth;
     int fileListInfoHeight      = 20;
-    int fileListInfoTopPadding  = height - fileListInfoHeight;
+    int fileListInfoTopPadding  = fileListWidgetHeight - fileListInfoHeight;//LAST height - fileListInfoHeight;
 
     int fileListTopPadding  = 25;
-    int fileListWidth       = fileListWidgetWidth;
-    int fileListHeight      = height - fileListTopPadding - 10 - fileListInfoHeight;
+    int fileListWidth       = fileListWidgetWidth / 2; //LAST fileListWidgetWidth;
+    int fileListHeight      = height - fileListTopPadding; //LAST - 10 - fileListInfoHeight;
 
     string infoPanelSeparator = " | ";
 
