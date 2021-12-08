@@ -184,7 +184,10 @@ void FileList::loadDirectoryFiles(string path) {
 
             if (entry.is_directory()) {
                 fileName = "[" + fileName + "]";
-                setDirectoryFiles(path);
+                try {
+                    setDirectoryFiles(path);
+                }
+                catch (const std::exception& e) { }
             }
 
             if (entry.path() == root->currentFile->path) {
