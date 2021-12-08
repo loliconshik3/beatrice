@@ -11,6 +11,7 @@ FindText::FindText(FindWidget *parent) : QLineEdit(parent)
     setPlaceholderText("Type to search...");
 
     updateShortcuts();
+    updateWidgetStyle();
 }
 
 void FindText::search() {
@@ -29,6 +30,17 @@ void FindText::searchPrevious() {
     QTextDocument::FindFlags flags = QTextDocument::FindBackward;
     root->textbox->moveToSelectionStart();
     root->textbox->find(text(), flags);
+}
+
+void FindText::updateWidgetStyle() {
+    QString style = QString("QLineEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["findFontColor"].c_str(),
+                         root->theme["findBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->infopanelFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->infopanelFontSize);
+    setFont(fnt);
 }
 
 void FindText::updateShortcuts() {

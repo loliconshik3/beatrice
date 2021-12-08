@@ -11,6 +11,7 @@ ReplaceText::ReplaceText(FindWidget *parent) : QLineEdit(parent)
     setPlaceholderText("Press enter to replace...");
 
     updateShortcuts();
+    updateWidgetStyle();
 }
 
 void ReplaceText::replace() {
@@ -21,6 +22,17 @@ void ReplaceText::replace() {
         root->textbox->insertPlainText(text());
         rootParent->findtext->searchNext();
     }
+}
+
+void ReplaceText::updateWidgetStyle() {
+    QString style = QString("QLineEdit { color: %1; border: none; background: %2; }")
+                    .arg(root->theme["findFontColor"].c_str(),
+                         root->theme["findBackground"].c_str());
+    setStyleSheet(style);
+
+    QFont fnt(root->cfg->infopanelFontFamily.c_str());
+    fnt.setPixelSize(root->cfg->infopanelFontSize);
+    setFont(fnt);
 }
 
 void ReplaceText::updateShortcuts() {

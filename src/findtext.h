@@ -12,6 +12,7 @@ class FindText : public QLineEdit
 
 private:
     void updateShortcuts();
+    void updateWidgetStyle();
 
 public:
     MainWindow *root = NULL;

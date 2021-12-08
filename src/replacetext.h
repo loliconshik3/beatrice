@@ -16,6 +16,7 @@ public:
     ReplaceText(FindWidget *parent=nullptr);
 
 private slots:
+    void updateWidgetStyle();
     void updateShortcuts();
     void replace();
 };

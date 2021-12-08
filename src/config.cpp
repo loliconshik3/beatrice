@@ -90,12 +90,14 @@ map<string, string> Config::loadTheme_Micro() {
     theme["flwidgetFontColor"]      = "#d3d3d3";
     theme["flsearchFontColor"]      = "#d3d3d3";
 
+    theme["findBackground"]         = "#1f221d";
     theme["textboxBackground"]      = "#1f222d";
     theme["infopanelBackground"]    = "#d3d3d3";
     theme["clipboardBackground"]    = "#2a2b2e";
     theme["mainwindowBackground"]   = "#1f222d";
     theme["commandlineBackground"]  = "#1f222d";
 
+    theme["findFontColor"]          = "#d3d3d3";
     theme["textboxFontColor"]       = "#d3d3d3";
     theme["infopanelFontColor"]     = "#1f222d";
     theme["clipboardFontColor"]     = "#d3d3d3";
@@ -123,12 +125,14 @@ map<string, string> Config::loadTheme_Dracula() {
     theme["flwidgetFontColor"]      = "#d3d3d3";
     theme["flsearchFontColor"]      = "#d3d3d3";
 
+    theme["findBackground"]         = "#282a26";
     theme["textboxBackground"]      = "#282a36";
     theme["infopanelBackground"]    = "#bd93f9";
     theme["clipboardBackground"]    = "#382a36";
     theme["mainwindowBackground"]   = "#282a36";
     theme["commandlineBackground"]  = "#282a36";
 
+    theme["findFontColor"]          = "#d3d3d3";
     theme["textboxFontColor"]       = "#d3d3d3";
     theme["infopanelFontColor"]     = "#282a36";
     theme["clipboardFontColor"]     = "#d3d3d3";
@@ -156,12 +160,14 @@ map<string, string> Config::loadTheme_Diablo() {
     theme["flwidgetFontColor"]      = "#d3d3d3";
     theme["flsearchFontColor"]      = "#d3d3d3";
 
+    theme["findBackground"]         = "#303020";
     theme["textboxBackground"]      = "#303030";
     theme["infopanelBackground"]    = "#ff0024";
     theme["clipboardBackground"]    = "#382a36";
     theme["mainwindowBackground"]   = "#303030";
     theme["commandlineBackground"]  = "#303030";
 
+    theme["findFontColor"]          = "#d3d3d3";
     theme["textboxFontColor"]       = "#d3d3d3";
     theme["infopanelFontColor"]     = "#303030";
     theme["clipboardFontColor"]     = "#d3d3d3";
