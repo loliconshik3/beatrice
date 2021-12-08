@@ -8,6 +8,9 @@ FileListText::FileListText(FileListWidget *parent)
     //setStyleSheet("QTextEdit { font-size: 14px; font-family: Source Code Pro; color: lightGray; border: none; background: #3a3b3e; }");
     setReadOnly(true);
 
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     setGeometry(root->cfg->fileListTextLeftPadding, root->cfg->fileListTextTopPadding, root->cfg->fileListTextWidth, root->cfg->fileListTextHeight);
 
     updateWidgetStyle();

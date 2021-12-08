@@ -35,13 +35,13 @@ public:
     int fileListWidgetX         = ( rect.width() - fileListWidgetWidth ) / 2;
     int fileListWidgetY         = ( rect.height() - fileListWidgetHeight ) / 2;
 
-    int fileListSearchWidth     = fileListWidgetWidth / 2;//LAST fileListWidgetWidth;
+    int fileListSearchWidth     = fileListWidgetWidth;//LAST fileListWidgetWidth;
     int fileListSearchHeight    = 25;
 
-    int fileListTextWidth       = width / 2;//LAST fileListWidgetWidth;
-    int fileListTextHeight      = height;//LAST height / 2;
+    int fileListTextWidth       = width / 2; //LAST fileListWidgetWidth;
+    int fileListTextHeight      = height - fileListSearchHeight; //LAST height / 2;
     int fileListTextLeftPadding = fileListWidgetWidth - fileListTextWidth;//LAST 0;
-    int fileListTextTopPadding  = 0;//LAST fileListWidgetHeight - fileListTextHeight;
+    int fileListTextTopPadding  = fileListSearchHeight;//LAST fileListWidgetHeight - fileListTextHeight;
 
     int fileListInfoWidth       = fileListWidgetWidth; //LAST fileListWidgetWidth;
     int fileListInfoHeight      = 20;

@@ -13,6 +13,7 @@ class FileList;
 class FileListSearch;
 class FileListInfo;
 class FileListText;
+class FileListInsideList;
 
 class FileListWidget : public QWidget
 {
@@ -20,6 +21,7 @@ class FileListWidget : public QWidget
 public:
     MainWindow *root = NULL;
 
+    FileListInsideList *flinsideList = NULL;
     FileListSearch *flsearch    = NULL;
     FileList *filelist          = NULL;
     FileListInfo *flinfo        = NULL;

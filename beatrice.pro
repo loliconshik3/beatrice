@@ -15,6 +15,7 @@ SOURCES += \
     src/file.cpp \
     src/filelist.cpp \
     src/filelistinfo.cpp \
+    src/filelistinsidelist.cpp \
     src/filelistsearch.cpp \
     src/filelisttext.cpp \
     src/filelistwidget.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     src/file.h \
     src/filelist.h \
     src/filelistinfo.h \
+    src/filelistinsidelist.h \
     src/filelistsearch.h \
     src/filelisttext.h \
     src/filelistwidget.h \

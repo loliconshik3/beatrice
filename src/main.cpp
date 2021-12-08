@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "filelistinsidelist.h"
 #include "filelistwidget.h"
 #include "filelistsearch.h"
 #include "filelisttext.h"
@@ -126,6 +127,7 @@ int main(int argc, char *argv[])
     FileListSearch flsearch(&flwidget);
     FileListInfo flinfo(&flwidget);
     FileListText fltext(&flwidget);
+    FileListInsideList flinsidelist(&flwidget);
 
     Textbox textbox(&window);
     CommandLine commandline(&window);
@@ -138,6 +140,7 @@ int main(int argc, char *argv[])
 
     QGridLayout *layout = new QGridLayout;
 
+    flwidget.flinsideList = &flinsidelist;
     window.flwidget     = &flwidget;
     flwidget.filelist   = &filelist;
     flwidget.flsearch   = &flsearch;

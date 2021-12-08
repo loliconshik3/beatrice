@@ -1,4 +1,5 @@
 #include "filelist.h"
+#include "filelistinsidelist.h"
 #include "filelistsearch.h"
 #include "filelisttext.h"
 #include "infopanel.h"
@@ -38,17 +39,29 @@ void FileList::currentItemChanged() {
         QListWidgetItem *item = currentItem();
         if (item != NULL) {
             QString text = item->text();
+            string path = "";
 
             if (files.find(text.toStdString()) != files.end()) {
-                string path  = files[text.toStdString()];
+                path  = files[text.toStdString()];
 
                 rootParent->flinfo->setText(path.c_str());
                 rootParent->fltext->setPlainText(filesText[text.toStdString()].c_str());
+
+                rootParent->flinsideList->hide();
+                rootParent->fltext->show();
+            }
+            if (path != "" && directoryFiles.find(path) != directoryFiles.end()) {
+                vector<string> flist = directoryFiles[path];
+                rootParent->flinsideList->loadDirectoryFiles(flist);
+
+                rootParent->flinsideList->show();
+                rootParent->fltext->hide();
             }
         }
         else {
             rootParent->flinfo->setText("");
             rootParent->fltext->setText("");
+            rootParent->flinsideList->clear();
         }
     }
     else {
@@ -66,8 +79,13 @@ void FileList::currentItemChanged() {
             infoText = QString("Create directory: ") + totalName.c_str();
         }
 
+        if (currentDirectory == "") {
+            infoText = "Can't create any files or directories here!";
+        }
+
         rootParent->flinfo->setText(infoText);
         rootParent->fltext->setText("");
+        rootParent->flinsideList->clear();
     }
 }
 
@@ -80,6 +98,30 @@ void FileList::setFileText(string name, QFile &file) {
        filesText[name] += line.toStdString() + "\n";
        --count;
     }
+}
+
+void FileList::setDirectoryFiles(string path) {
+    string fileName = "";
+
+    directoryFiles[path] = {};
+    vector<string> filesList = {};
+
+    for (const auto & entry : fs::directory_iterator(path)){
+        string path = entry.path();
+        QFile file(path.c_str());
+
+        if ( file.exists() ) {
+            fileName = entry.path().filename();
+
+            if (entry.is_directory()) {
+                fileName = "[" + fileName + "]";
+            }
+            filesList.insert(filesList.end(), fileName);
+        }
+
+        file.close();
+    }
+    directoryFiles[path] = filesList;
 }
 
 void FileList::loadLastFiles() {
@@ -142,6 +184,7 @@ void FileList::loadDirectoryFiles(string path) {
 
             if (entry.is_directory()) {
                 fileName = "[" + fileName + "]";
+                setDirectoryFiles(path);
             }
 
             if (entry.path() == root->currentFile->path) {
@@ -163,12 +206,9 @@ void FileList::loadDirectoryFiles(string path) {
         fileName        = BACK_NAME;
         files[fileName] = backPath;
         addItem(fileName.c_str());
+        setDirectoryFiles(backPath);
     }
     currentDirectory = path;
-
-    //fileName        = PICK_NAME;
-    //files[fileName] = path;
-    //addItem(fileName.c_str());
 
     sortItems();
     setCurrentItem(item(0));

@@ -23,6 +23,7 @@ private:
 public:
     map<string, string> files;
     map<string, string> filesText;
+    map<string, vector<string>> directoryFiles;
 
     MainWindow *root;
     FileListWidget *rootParent = NULL;
@@ -42,6 +43,7 @@ private slots:
     void currentItemChanged();
     void openFile();
     void deleteFile();
+    void setDirectoryFiles(string path);
     void setFileText(string name, QFile &file);
 };
 
