@@ -684,15 +684,26 @@ int Textbox::getFirstVisibleBlockId()
 
     QTextCursor curs = QTextCursor(this->document());
     curs.movePosition(QTextCursor::Start);
+
+    int scrollPos = this->verticalScrollBar()->sliderPosition();
+    QRect r1    = this->viewport()->geometry();
+    int viewX   = r1.x();
+    int viewY   = r1.y();
+
     for(int i=0; i < this->document()->blockCount(); ++i)
     {
         QTextBlock block = curs.block();
 
-        QRect r1 = this->viewport()->geometry();
         QRect r2 = this->document()->documentLayout()->blockBoundingRect(block).translated(
-                    this->viewport()->geometry().x(), this->viewport()->geometry().y() - (
-                        this->verticalScrollBar()->sliderPosition()
-                        ) ).toRect();
+                    viewX, viewY - scrollPos).toRect();
+
+        //int id = this->visibleRegion().begin();
+
+        //QRect r1 = this->viewport()->geometry();
+        //QRect r2 = this->document()->documentLayout()->blockBoundingRect(block).translated(
+        //            this->viewport()->geometry().x(), this->viewport()->geometry().y() - (
+        //                this->verticalScrollBar()->sliderPosition()
+        //                ) ).toRect();
 
         if (r1.contains(r2, true)) { return i; }
 
