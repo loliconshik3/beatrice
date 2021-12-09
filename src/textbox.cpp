@@ -687,10 +687,17 @@ int Textbox::getFirstVisibleBlockId()
 
     int scrollPos = this->verticalScrollBar()->sliderPosition();
     QRect r1    = this->viewport()->geometry();
+    int blockNum = this->cursorForPosition(QPoint(0, 0)).blockNumber();
     int viewX   = r1.x();
     int viewY   = r1.y();
 
-    for(int i=0; i < this->document()->blockCount(); ++i)
+    if (blockNum == 0) {
+        return 0;
+    }
+
+    return blockNum + 1;
+
+    /*for(int i=0; i < this->document()->blockCount(); ++i)
     {
         QTextBlock block = curs.block();
 
@@ -710,7 +717,7 @@ int Textbox::getFirstVisibleBlockId()
         curs.movePosition(QTextCursor::NextBlock);
     }
 
-    return 0;
+    return 0;*/
 }
 
 void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
