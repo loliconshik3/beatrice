@@ -49,7 +49,7 @@ void FindText::searchPrevious() {
         QTextCursor cur = root->textbox->textCursor();
         int position = cur.position();
 
-        cur.setPosition(root->textbox->toPlainText().length()-1);
+        cur.setPosition(root->textbox->toPlainText().length());
         root->textbox->setTextCursor(cur);
         root->textbox->find(text(), flags);
 
