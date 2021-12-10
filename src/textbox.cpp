@@ -191,11 +191,19 @@ void Textbox::scaleMinus() {
     root->infopanel->updateText();
 }
 
+void Textbox::selectCurrentLine() {
+    QTextCursor cursor  = textCursor();
+
+    cursor.select(QTextCursor::LineUnderCursor);
+
+    setTextCursor(cursor);
+}
+
 void Textbox::duplicateLine() {
     QTextCursor cursor  = textCursor();
     int cursorPosition  = cursor.position();
 
-    if (cursor.selectedText() == "") {;
+    if (cursor.selectedText() == "") {
         cursor.setPosition(cursorPosition);
         cursor.select(QTextCursor::LineUnderCursor);
     }
@@ -809,6 +817,9 @@ void Textbox::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_duplicateLine), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(duplicateLine()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_selectCurrentLine), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(selectCurrentLine()));
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_scalePlus), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(scalePlus()));

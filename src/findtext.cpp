@@ -24,12 +24,40 @@ void FindText::searchNext() {
     QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
     root->textbox->clearSelection();
     root->textbox->find(text(), flags);
+
+    if (root->textbox->getSelectionText() == "") {
+        QTextCursor cur = root->textbox->textCursor();
+        int position = cur.position();
+
+        cur.setPosition(0);
+        root->textbox->setTextCursor(cur);
+        root->textbox->find(text(), flags);
+
+        if (root->textbox->getSelectionText() == "") {
+            cur.setPosition(position);
+            root->textbox->setTextCursor(cur);
+        }
+    }
 }
 
 void FindText::searchPrevious() {
     QTextDocument::FindFlags flags = QTextDocument::FindBackward;
     root->textbox->moveToSelectionStart();
     root->textbox->find(text(), flags);
+
+    if (root->textbox->getSelectionText() == "") {
+        QTextCursor cur = root->textbox->textCursor();
+        int position = cur.position();
+
+        cur.setPosition(root->textbox->toPlainText().length()-1);
+        root->textbox->setTextCursor(cur);
+        root->textbox->find(text(), flags);
+
+        if (root->textbox->getSelectionText() == "") {
+            cur.setPosition(position);
+            root->textbox->setTextCursor(cur);
+        }
+    }
 }
 
 void FindText::updateWidgetStyle() {

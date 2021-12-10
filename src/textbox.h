@@ -62,6 +62,7 @@ private slots:
     void tabulation();
     void removeLine();
     void duplicateLine();
+    void selectCurrentLine();
     int countOfTabs(string str);
     bool nextSymbIsTab(QTextCursor::MoveOperation side);
 

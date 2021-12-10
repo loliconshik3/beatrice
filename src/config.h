@@ -109,6 +109,7 @@ public:
     QString sct_listOpenFile1   = "Return";     //Open current file in files list
     QString sct_listOpenFile2   = "Enter";      //Open current file in files list
     QString sct_listDeleteFile  = "Ctrl+Delete";//Delete current file in file list
+    QString sct_selectCurrentLine = "Alt+l";    //Select line under text cursor
     //=============================
 
     Config();
