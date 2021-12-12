@@ -49,10 +49,33 @@ int Textbox::countOfTabs(string str) {
     return tabs;
 }
 
+string Textbox::getPreviousWord() {
+    QTextCursor cursor  = textCursor();
+
+    cursor.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor, 1);
+
+    return cursor.selectedText().toStdString();
+}
+
+void Textbox::removePreviousWord() {
+    QTextCursor cursor  = textCursor();
+
+    cursor.movePosition(QTextCursor::PreviousWord, QTextCursor::KeepAnchor, 1);
+    cursor.removeSelectedText();
+    setTextCursor(cursor);
+}
 
 void Textbox::tabulation() {
     QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
+    string macros       = root->macros->getMacros(getPreviousWord());
+
+    if (macros != "") {
+        removePreviousWord();
+        cursor = textCursor();
+        insertPlainText(macros.c_str());
+        return;
+    }
 
     if (lines == 0) {
         int columns = getCursorY()-1;

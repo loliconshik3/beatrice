@@ -23,6 +23,7 @@ SOURCES += \
     src/findwidget.cpp \
     src/infopanel.cpp \
     src/linenumberarea.cpp \
+    src/macros.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/replacetext.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     src/findwidget.h \
     src/infopanel.h \
     src/linenumberarea.h \
+    src/macros.h \
     src/mainwindow.h \
     src/replacetext.h \
     src/syntaxhighlighter.h \

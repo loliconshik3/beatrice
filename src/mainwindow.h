@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "config.h"
+#include "macros.h"
 #include "utils.h"
 #include "file.h"
 
@@ -29,6 +30,7 @@ public:
     File *currentFile       = NULL;
     vector<File*> files     = {};
 
+    Macros *macros              = new Macros();
     Config *cfg                 = new Config();
     map<string, string> theme   = cfg->themeColors;
 

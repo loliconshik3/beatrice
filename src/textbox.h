@@ -43,6 +43,9 @@ public:
     void moveToSelectionStart();
     QString getSelectionText();
 
+    void removePreviousWord();
+    string getPreviousWord();
+
 public slots:
 
     void clearSelection();
