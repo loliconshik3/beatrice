@@ -143,4 +143,20 @@ void SyntaxHighlighter::highlightBlock(const QString &text) {
             }
        }
     }
+
+    if (root->macros->macrosList.size() > 0) {
+        for (const auto &[name, txt] : root->macros->macrosList) {
+            rx = QRegExp(name.c_str());
+
+            format.setForeground(QBrush(root->theme["textboxFontColor"].c_str()));
+            format.setFontUnderline(true);
+
+            int index = rx.indexIn(text);
+            while (index >= 0) {
+                int length = rx.matchedLength();
+                setFormat(index, length, format);
+                index = rx.indexIn(text, index+length);
+            }
+        }
+    }
 }
