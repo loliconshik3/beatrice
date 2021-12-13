@@ -14,12 +14,6 @@ FindText::FindText(FindWidget *parent) : QLineEdit(parent)
     updateWidgetStyle();
 }
 
-void FindText::search() {
-    QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
-    root->textbox->moveToSelectionStart();
-    root->textbox->find(text(), flags);
-}
-
 void FindText::searchNext() {
     QTextDocument::FindFlags flags = QTextDocument::FindCaseSensitively;
     root->textbox->clearSelection();
@@ -72,7 +66,7 @@ void FindText::updateWidgetStyle() {
 }
 
 void FindText::updateShortcuts() {
-    connect(this, &FindText::textChanged, this, &FindText::search);
+    connect(this, &FindText::textChanged, this, &FindText::searchNext);
 
     QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_listMoveDown), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(searchNext()));

@@ -20,7 +20,6 @@ public:
     FindText(FindWidget *parent=nullptr);
 
 public slots:
-    void search();
     void searchNext();
     void searchPrevious();
 };

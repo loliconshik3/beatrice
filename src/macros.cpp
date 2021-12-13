@@ -97,6 +97,7 @@ void Macros::loadMacros() {
             fileName = entry.path().filename();
 
             if ( file.open(QIODevice::ReadOnly) ) {
+                log("Load macros: " + fileName);
                 macrosList[fileName] = file.readAll().toStdString();
             }
             parseSettings(fileName);
