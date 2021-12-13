@@ -23,6 +23,64 @@ string Macros::getMacros(string name) {
     return macros;
 }
 
+vector<string> Macros::getMacrosExtensions(string name) {
+    vector<string> ext = {};
+
+    if (macrosExtList.find(name) != macrosExtList.end()) {
+        ext = macrosExtList[name];
+    }
+
+    return ext;
+}
+
+bool Macros::isMacrosHasExtension(string name, string extension) {
+    vector<string> ext = getMacrosExtensions(name);
+
+    if (ext.empty()) {
+        return true;
+    }
+
+    if ( std::find(ext.begin(), ext.end(), extension) != ext.end() ) {
+        return true;
+    }
+
+    return false;
+}
+
+void Macros::parseSettings(string name) {
+    string macros = getMacros(name);
+
+    if (macros != "") {
+        QRegExp rx = QRegExp("\\b((Extensions=)(.*)(\\n))\\b");
+        int index = rx.indexIn(macros.c_str());
+        int length = rx.matchedLength();
+
+        if (index == -1) {
+            return;
+        }
+
+        string ExtText = macros.substr(index, index+length);
+        string replaceMacText = ExtText;
+
+        string mcText = macros;
+        replaceStr(mcText, replaceMacText, "");
+        macrosList[name] = mcText;
+
+        replaceStr(ExtText, "Extensions=", "");
+        while (ExtText.find("\n") != string::npos) {
+            replaceStr(ExtText, "\n", "");
+        }
+        char sep = ',';
+        vector<string> out;
+        split(ExtText, sep, out);
+        vector<string> extensions = {};
+        for (const auto &ext : out) {
+            extensions.insert(extensions.end(), ext);
+        }
+        macrosExtList[name] = extensions;
+    }
+}
+
 void Macros::loadMacros() {
     string homedir = getHomeDir();
     string path = homedir + "/.config/beatrice/macros";
@@ -40,6 +98,7 @@ void Macros::loadMacros() {
             if ( file.open(QIODevice::ReadOnly) ) {
                 macrosList[fileName] = file.readAll().toStdString();
             }
+            parseSettings(fileName);
         }
 
         file.close();

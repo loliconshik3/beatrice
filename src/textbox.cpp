@@ -68,9 +68,10 @@ void Textbox::removePreviousWord() {
 void Textbox::tabulation() {
     QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
-    string macros       = root->macros->getMacros(getPreviousWord());
+    string macName      = getPreviousWord();
+    string macros       = root->macros->getMacros(macName);
 
-    if (macros != "") {
+    if (macros != "" && root->macros->isMacrosHasExtension(macName, root->currentFile->extension)) {
         removePreviousWord();
         cursor = textCursor();
         insertPlainText(macros.c_str());

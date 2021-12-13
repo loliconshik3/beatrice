@@ -148,6 +148,10 @@ void SyntaxHighlighter::highlightBlock(const QString &text) {
         for (const auto &[name, txt] : root->macros->macrosList) {
             rx = QRegExp(name.c_str());
 
+            if (!root->macros->isMacrosHasExtension(name, root->currentFile->extension)) {
+                continue;
+            }
+
             format.setForeground(QBrush(root->theme["textboxFontColor"].c_str()));
             format.setFontUnderline(true);
 
