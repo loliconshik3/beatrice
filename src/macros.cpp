@@ -51,30 +51,32 @@ void Macros::parseSettings(string name) {
     string macros = getMacros(name);
 
     if (macros != "") {
-        QRegExp rx = QRegExp("\\b((Extensions=)(.*)(\\n))\\b");
+        QRegExp rx = QRegExp("\\b(Extensions=)(.*)( )\\b");
         int index = rx.indexIn(macros.c_str());
         int length = rx.matchedLength();
 
-        if (index == -1) {
+        if (index == -1 || length == -1) {
             return;
         }
 
         string ExtText = macros.substr(index, index+length);
         string replaceMacText = ExtText;
+        char rsep = '\n';
+        vector<string> rout;
+        split(replaceMacText, rsep, rout);
+        ExtText = rout[0];
 
         string mcText = macros;
-        replaceStr(mcText, replaceMacText, "");
+        replaceStr(mcText, ExtText+"\n", "");
         macrosList[name] = mcText;
 
         replaceStr(ExtText, "Extensions=", "");
-        while (ExtText.find("\n") != string::npos) {
-            replaceStr(ExtText, "\n", "");
-        }
         char sep = ',';
         vector<string> out;
         split(ExtText, sep, out);
         vector<string> extensions = {};
         for (const auto &ext : out) {
+            log(ext);
             extensions.insert(extensions.end(), ext);
         }
         macrosExtList[name] = extensions;
