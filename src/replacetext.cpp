@@ -16,10 +16,15 @@ ReplaceText::ReplaceText(FindWidget *parent) : QLineEdit(parent)
 
 void ReplaceText::replace() {
     QTextCursor cur = root->textbox->textCursor();
-    if (!cur.selectedText().isEmpty()) {
-        cur.removeSelectedText();
-        root->textbox->setTextCursor(cur);
-        root->textbox->insertPlainText(text());
+    if (!text().isEmpty()) {
+        if (!cur.selectedText().isEmpty()) {
+            cur.removeSelectedText();
+            root->textbox->setTextCursor(cur);
+            root->textbox->insertPlainText(text());
+            rootParent->findtext->searchNext();
+        }
+    }
+    else {
         rootParent->findtext->searchNext();
     }
 }

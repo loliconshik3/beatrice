@@ -76,7 +76,6 @@ void Macros::parseSettings(string name) {
         split(ExtText, sep, out);
         vector<string> extensions = {};
         for (const auto &ext : out) {
-            log(ext);
             extensions.insert(extensions.end(), ext);
         }
         macrosExtList[name] = extensions;
