@@ -21,7 +21,7 @@ map<string, string> SyntaxHighlighter::generateJASS() {
         {"[0-9]|=", "#71c919"},
         {"\".*\"", "#71c919"},
         //{"(?=function )(.*)(?= takes)", "#71c919"},
-        {"\\b(if|then|endif|loop|exitwhen|endloop)\\b", "#d097a3"},
+        {"\\b(if|then|else|elseif|endif|loop|exitwhen|endloop)\\b", "#d097a3"},
         {"\\b(this|null|boolexpr|nothing|array|unit|string|integer|real|boolean|location|timer|group)\\b", "#c95b8e"},
         {"\\b(takes|returns|set|call|private|public|globals|endglobals|local|function|endfunction|library|endlibrary|struct|endstruct|method|endmethod)\\b", "#ff8080"}
     };
@@ -121,6 +121,7 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
 
 void SyntaxHighlighter::highlightBlock(const QString &text) {
     map<string, string> patterns = loadSyntax(root->currentFile->extension/*FILE | getFileExt(getFilename(root->filename))*/);
+    QTextCharFormat standartFormat;
     QTextCharFormat format;
     QRegExp rx;
 
@@ -130,7 +131,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text) {
 
             if (!rx.isValid() || rx.isEmpty() || rx.exactMatch("")) {
                 setFormat(0, text.length(), format);
-                return;
+                continue;
             }
 
             format.setForeground(QBrush(color.c_str()));
@@ -138,7 +139,12 @@ void SyntaxHighlighter::highlightBlock(const QString &text) {
             int index = rx.indexIn(text);
             while (index >= 0) {
                 int length = rx.matchedLength();
-                setFormat(index, length, format);
+
+                QTextCharFormat form = SyntaxHighlighter::format(index);
+                if (form == standartFormat) {
+                    setFormat(index, length, format);
+                }
+
                 index = rx.indexIn(text, index+length);
             }
        }
@@ -146,7 +152,8 @@ void SyntaxHighlighter::highlightBlock(const QString &text) {
 
     if (root->macros->macrosList.size() > 0) {
         for (const auto &[name, txt] : root->macros->macrosList) {
-            rx = QRegExp(name.c_str());
+            QString rxStr = name.c_str();
+            rx = QRegExp(rxStr);
 
             if (!root->macros->isMacrosHasExtension(name, root->currentFile->extension)) {
                 continue;

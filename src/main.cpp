@@ -156,8 +156,8 @@ int main(int argc, char *argv[])
     findwidget.replacetext = &replacetext;
 
     layout->addWidget(window.textbox, 0, 0);
-    layout->addWidget(window.commandline, 2, 0);
     layout->addWidget(window.infopanel, 1, 0);
+    layout->addWidget(window.commandline, 2, 0);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->setSpacing(0);
 
