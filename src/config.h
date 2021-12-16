@@ -11,9 +11,11 @@ using namespace std;
 class Config
 {   
 public:
+    //==========THEMES==========
     const string MICRO_THEME    = "Micro";
     const string DIABLO_THEME   = "Diablo";
     const string DRACULA_THEME  = "Dracula";
+    //==========================
 
     QRect rect = QDesktopWidget().availableGeometry();
 
@@ -25,11 +27,28 @@ public:
     int width = rect.width() / 1.5;
     int height = rect.height() / 2;
 
+    //==========CLIPBOARD==========
     int clipboardWidth          = rect.width() / 3;
     int clipboardHeight         = rect.height() / 4;
     int clipboardX              = ( rect.width() - clipboardWidth ) / 2;
     int clipboardY              = ( rect.height() - clipboardHeight ) / 2;
+    //=============================
 
+    //==========COMMAND LINE==========
+    int cmdWidgetWidth          = rect.width() / 2;
+    int cmdWidgetHeight         = rect.height() / 3;
+    int cmdWidgetX              = ( rect.width() - cmdWidgetWidth ) / 2;
+    int cmdWidgetY              = ( rect.height() - cmdWidgetHeight ) / 2;
+
+    int commandLineWidth        = cmdWidgetWidth;
+    int commandLineHeight       = 25;
+
+    int cmdListTopPadding       = commandLineHeight;
+    int cmdListWidth            = cmdWidgetWidth;
+    int cmdListHeight           = cmdWidgetHeight - cmdListTopPadding;
+    //================================
+
+    //==========FILE LIST==========
     int fileListWidgetWidth     = width;
     int fileListWidgetHeight    = height + 20; //LAST height + (height / 2);
     int fileListWidgetX         = ( rect.width() - fileListWidgetWidth ) / 2;
@@ -50,7 +69,9 @@ public:
     int fileListTopPadding  = 25;
     int fileListWidth       = fileListWidgetWidth / 2; //LAST fileListWidgetWidth;
     int fileListHeight      = height - fileListTopPadding; //LAST - 10 - fileListInfoHeight;
+    //=============================
 
+    //==========FONTS==========
     string infoPanelSeparator = " | ";
 
     string textboxFontFamily    = "Source Code Pro";
@@ -67,11 +88,12 @@ public:
 
     string commandlineFontFamily= "Source Code Pro";
     int commandlineFontSize     = 15;
+    //=========================
 
     string theme = MICRO_THEME;
     map<string, string> themeColors;
 
-    string terminalCommand = "gnome-terminal --working-directory=$dir$ -- ";
+    string terminalCommand = "alacritty --working-directory=$dir$ -e ";
 
     int newFileCount = 0;
 
@@ -86,7 +108,7 @@ public:
     QString sct_run             = "Ctrl+r";     //Run last command in cmd
     QString sct_pasteAs         = "Ctrl+Shift+v";
     QString sct_clearSelection  = "Escape";     //Clear selection in textbox
-    QString sct_changeFocus     = "Alt+e";      //Change focus from textbox to commandline and conversely
+    QString sct_openCmd         = "Alt+e";      //Open cmd window
     QString sct_about           = "Ctrl+i";     //Show about window
     QString sct_showLastFiles   = "Alt+s";      //Show last opened files
     QString sct_showCurrentDir  = "Ctrl+`";     //Show list of files in current dir (like sct_open)

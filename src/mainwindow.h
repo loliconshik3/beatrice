@@ -13,7 +13,7 @@
 #include <string>
 
 class FileListWidget;
-class CommandLine;
+class CmdWidget;
 class FindWidget;
 class InfoPanel;
 class Clipboard;
@@ -38,7 +38,7 @@ public:
     Textbox *textbox            = NULL;
     InfoPanel *infopanel        = NULL;
     FindWidget *findwidget      = NULL;
-    CommandLine *commandline    = NULL;
+    CmdWidget *commandline      = NULL;
     FileListWidget *flwidget    = NULL;
 
     MainWindow(QWidget *parent = nullptr);
@@ -61,7 +61,7 @@ public slots:
     void insertFindCommand();
     void insertSaveCommand(bool saveas=false);
     void openFolder(QString path=nullptr);
-    void changeFocus();
+    void openCmd();
     void aboutScreen();
     void showCurrentDirFiles();
     void showLastFiles();

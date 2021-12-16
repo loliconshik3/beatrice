@@ -53,6 +53,25 @@ void split(string &str, char delim, vector<string> &out)
     }
 }
 
+vector<int> betwStrToVectorInt(string str) {
+    char sep = ':';
+    vector<string> out;
+    split(str, sep, out);
+
+    vector<int> result;
+
+    int start = stoi(out[0]);
+    int end = stoi(out[1]);
+    int index = start;
+
+    while (index <= end) {
+        result.insert(result.end(), index);
+        ++index;
+    }
+
+    return result;
+}
+
 string getPathDir(string path) {
     string dir = "";
     char sep = '/';

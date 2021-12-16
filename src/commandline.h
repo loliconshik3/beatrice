@@ -2,7 +2,7 @@
 #define COMMANDLINE_H
 
 #include <QLineEdit>
-#include "mainwindow.h"
+#include "cmdwidget.h"
 
 class CommandLine : public QLineEdit
 {
@@ -11,25 +11,19 @@ private:
     void updateShortcuts();
 
 public:
-    vector<string> commandList = {
-        "tabsize",
-        "open",
-        "save",
-        "quit",
-        "about",
-        "new"
-    };
-
     vector<string> history;
     int historyIndex = 0;
 
-    MainWindow *root;
+    MainWindow *root = NULL;
+    CmdWidget *rootParent = NULL;
 
-    CommandLine(MainWindow *parent=nullptr);
+    CommandLine(CmdWidget *parent=nullptr);
     void updateWidgetStyle();
 
 public slots:
+    vector<string> splitCommand(string command);
     void runLastCommand();
+    void completeArg();
 
 private slots:
     string outToCommand(vector<string> out);
@@ -41,6 +35,29 @@ private slots:
 
     void previousCommand();
     void nextCommand();
+
+protected:
+    void keyPressEvent(QKeyEvent *e) {
+
+        switch (e->key()) {
+            case (Qt::Key_Left): {
+                this->previousCommand();
+                return;
+            }
+
+            case (Qt::Key_Right): {
+                this->nextCommand();
+                return;
+            }
+
+            case (Qt::Key_Space): {
+                this->completeArg();
+                return;
+            }
+        }
+
+        QLineEdit::keyPressEvent(e);
+    }
 };
 
 #endif // COMMANDLINE_H

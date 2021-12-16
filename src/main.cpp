@@ -8,10 +8,12 @@
 #include "commandline.h"
 #include "findwidget.h"
 #include "clipboard.h"
+#include "cmdwidget.h"
 #include "infopanel.h"
 #include "filelist.h"
 #include "findtext.h"
 #include "textbox.h"
+#include "cmdlist.h"
 #include "utils.h"
 
 #include <QApplication>
@@ -130,8 +132,12 @@ int main(int argc, char *argv[])
     FileListText fltext(&flwidget);
     FileListInsideList flinsidelist(&flwidget);
 
+    CmdWidget cmdWidget(&window);
+    CommandLine cmd(&cmdWidget);
+    CmdList cmdList(&cmdWidget);
+
     Textbox textbox(&window);
-    CommandLine commandline(&window);
+    //CommandLine commandline(&window);
     InfoPanel infopanel(&window);
     Clipboard clipboard(&window);
 
@@ -147,7 +153,9 @@ int main(int argc, char *argv[])
     flwidget.flsearch   = &flsearch;
     flwidget.flinfo     = &flinfo;
     flwidget.fltext     = &fltext;
-    window.commandline  = &commandline;
+    cmdWidget.cmd       = &cmd;
+    cmdWidget.cmdList   = &cmdList;
+    window.commandline  = &cmdWidget;
     window.findwidget   = &findwidget;
     window.infopanel    = &infopanel;
     window.textbox      = &textbox;
@@ -157,7 +165,7 @@ int main(int argc, char *argv[])
 
     layout->addWidget(window.textbox, 0, 0);
     layout->addWidget(window.infopanel, 1, 0);
-    layout->addWidget(window.commandline, 2, 0);
+    //layout->addWidget(window.commandline, 2, 0);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->setSpacing(0);
 
@@ -169,6 +177,7 @@ int main(int argc, char *argv[])
     window.commandline->show();
     flwidget.hide();
     findwidget.hide();
+    cmdWidget.hide();
     window.infopanel->updateText();
 
     if (argc > 1) {

@@ -857,6 +857,9 @@ void Textbox::updateShortcuts() {
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_removeTabAtLine), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(removeTabAtLine()));
 
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_clearSelection), this);
+    connect(shortcut, &QShortcut::activated, this, [this]{ clearSelection(); });
+
     connect(this, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
 
     // Line numbers

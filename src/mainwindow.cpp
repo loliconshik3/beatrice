@@ -1,6 +1,8 @@
 #include "filelistsearch.h"
 #include "filelisttext.h"
 #include "commandline.h"
+#include "cmdwidget.h"
+#include "cmdlist.h"
 #include "clipboard.h"
 #include "mainwindow.h"
 #include "findwidget.h"
@@ -220,7 +222,7 @@ void MainWindow::reloadConfig() {
     clip->updateWidgetStyle();
     textbox->updateWidgetStyle();
     infopanel->updateWidgetStyle();
-    commandline->updateWidgetStyle();
+    commandline->cmd->updateWidgetStyle();
 
     flwidget->updateWidgetStyle();
     flwidget->flinfo->updateWidgetStyle();
@@ -236,9 +238,10 @@ void MainWindow::reloadConfig() {
 void MainWindow::insertSaveCommand(bool saveas) {
     if (currentFile->isNew or saveas) { //FILE | textbox->isNew or saveas
         log("Insert save command in to cmd");
-        commandline->clear();
-        commandline->insert("save ");
-        commandline->setFocus();
+        commandline->show();
+        commandline->cmd->clear();
+        commandline->cmd->insert("save ");
+        commandline->cmd->setFocus();
     }
     else {
         saveFile();
@@ -251,7 +254,7 @@ void MainWindow::insertFindCommand() {
 }
 
 void MainWindow::runLastCommand() {
-    commandline->runLastCommand();
+    commandline->cmd->runLastCommand();
 }
 
 void MainWindow::aboutScreen() {
@@ -259,17 +262,9 @@ void MainWindow::aboutScreen() {
         tr("beatrice - simple, minimalist code editor written on qt and c++.\n\nby loliconshik3"));
 }
 
-void MainWindow::changeFocus() {
-    QWidget *focusedWidget = focusWidget();
-
-    if (focusedWidget == commandline) {
-        textbox->setFocus();
-        return;
-    }
-    else if (focusedWidget == textbox) {
-        commandline->setFocus();
-        return;
-    }
+void MainWindow::openCmd() {
+    commandline->show();
+    commandline->cmdList->loadCommands();
 }
 
 void MainWindow::closeCurrentFile() {
@@ -383,8 +378,8 @@ void MainWindow::updateShortcuts() {
     shortcut = new QShortcut(QKeySequence(cfg->sct_new), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(newFile())); //FILE | NewFile()
 
-    shortcut = new QShortcut(QKeySequence(cfg->sct_changeFocus), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(changeFocus()));
+    shortcut = new QShortcut(QKeySequence(cfg->sct_openCmd), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(openCmd()));
 
     shortcut = new QShortcut(QKeySequence(cfg->sct_about), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(aboutScreen()));

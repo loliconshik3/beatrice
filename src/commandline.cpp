@@ -1,13 +1,17 @@
 #include "commandline.h"
+#include "cmdlist.h"
 #include "textbox.h"
 #include "utils.h"
 
 #include <QtWidgets>
 
-CommandLine::CommandLine(MainWindow *parent) :
+using namespace std;
+
+CommandLine::CommandLine(CmdWidget *parent) :
     QLineEdit(parent)
 {
-    root = parent;
+    root = parent->root;
+    rootParent = parent;
 
     //#1f1f1f //2e2f30
     //setStyleSheet("QLineEdit { font-size: 15px; color: lightGray; border: none; background: #1f222d; font-family: Source Code Pro; }");
@@ -18,13 +22,9 @@ CommandLine::CommandLine(MainWindow *parent) :
 }
 
 void CommandLine::escape() {
-    if (root->focusWidget() == this) {
-        root->textbox->setFocus();
-        clear();
-    }
-    else {
-        root->textbox->clearSelection();
-    }
+    rootParent->hide();
+    root->textbox->setFocus();
+    clear();
 }
 
 void CommandLine::runLastCommand() {
@@ -33,13 +33,20 @@ void CommandLine::runLastCommand() {
 }
 
 void CommandLine::launchCommand() {
-    std::string commandText = text().toStdString();
+    string commandText = text().toStdString();
 
+    rootParent->hide();
     clear();
+
+    if (commandText == "") {
+        log("Empty command field!");
+        return;
+    }
 
     char sep = ' ';
     vector<string> out;
     split(commandText, sep, out);
+    log("Launch command: " + commandText);
 
     if (out.size() > 1) {
         if (out[0] == "tabsize") {
@@ -49,7 +56,7 @@ void CommandLine::launchCommand() {
                     root->textbox->setTabSize(size);
                 }
             }
-            catch (const std::exception& e) { return; }
+            catch (const std::exception& e) { log("Tabsize arg error!"); return; }
         }
         else if (out[0] == "open") {
             root->openFile(out[1].c_str()); //FILE | root->OpenFile(out[1].c_str());
@@ -67,10 +74,12 @@ void CommandLine::launchCommand() {
             system(command.c_str());
         }
         else {
+            log("Command not found!");
             return;
         }
     }
     else {
+        replaceStr(commandText, " ", "");
         if (commandText == "quit" or commandText == "exit") {
             std::exit(0);
         }
@@ -85,9 +94,12 @@ void CommandLine::launchCommand() {
             root->openFile(homedir + "/.config/beatrice/config.ini");
         }
         else {
+            log("Command not found!");
             return;
         }
     }
+
+    log("Command succesfully completed!");
 
     setPlaceholderText(commandText.c_str());
     saveToHistory();
@@ -156,7 +168,8 @@ string CommandLine::outToCommand(vector<string> out) {
 
     command = newCommand.toStdString();
 
-    log(command);
+    log("Convert out to bash command");
+    //log(command);
 
     return command;
 }
@@ -185,6 +198,36 @@ void CommandLine::nextCommand() {
     }
 }
 
+vector<string> CommandLine::splitCommand(string command) {
+    char sep = ' ';
+    vector<string> out;
+    split(command, sep, out);
+    return out;
+}
+
+void CommandLine::completeArg() {
+    if (rootParent->cmdList->count() == 0) {
+        insert(" ");
+        return;
+    }
+
+    QString text = rootParent->cmdList->currentItem()->text() + QString(" ");
+    QString prevText = "";
+
+    cursorBackward(true, 1);
+    QString prevChar = selectedText();
+    cursorForward(true, 1);
+
+    if (prevChar != " ") {
+        cursorWordBackward(true);
+        prevText = selectedText();
+    }
+
+    log("Completing arg: " + prevText.toStdString() + " to: " + text.toStdString());
+
+    insert(text);
+}
+
 void CommandLine::completeCommand() {
     clear();
     insert(placeholderText());
@@ -196,12 +239,16 @@ void CommandLine::updateWidgetStyle() {
                          root->theme["commandlineBackground"].c_str());
     setStyleSheet(style);
 
+    setGeometry(0, 0, root->cfg->commandLineWidth, root->cfg->commandLineHeight);
+
     QFont fnt(root->cfg->commandlineFontFamily.c_str());
     fnt.setPixelSize(root->cfg->commandlineFontSize);
     setFont(fnt);
 }
 
 void CommandLine::updateShortcuts() {
+    connect(this, &CommandLine::textChanged, this, [this]{ rootParent->cmdList->redrawCommands(); });
+
     QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand1), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));
 
@@ -209,10 +256,10 @@ void CommandLine::updateShortcuts() {
     connect(shortcut, SIGNAL(activated()), this, SLOT(completeCommand()));
 
     shortcut = new QShortcut(QKeySequence("Up"), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(previousCommand()));
+    connect(shortcut, &QShortcut::activated, this, [this]{ rootParent->previousItem(); } );
 
     shortcut = new QShortcut(QKeySequence("Down"), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(nextCommand()));
+    connect(shortcut, &QShortcut::activated, this, [this]{ rootParent->nextItem(); } );
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand2), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));

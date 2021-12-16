@@ -33,5 +33,6 @@ string getFileExt(string path);
 string getConfigPath();
 string getHomeDir();
 void log(string text);
+vector<int> betwStrToVectorInt(string str);
 
 #endif // UTILS_H
