@@ -73,6 +73,12 @@ void CommandLine::launchCommand() {
             string command = outToCommand(out);
             system(command.c_str());
         }
+        else if (out[0] == "syntax") {
+            string syntax = out[1];
+            root->currentFile->setSyntax(syntax);
+            QString text = root->textbox->toPlainText();
+            root->textbox->setPlainText(text);
+        }
         else {
             log("Command not found!");
             return;

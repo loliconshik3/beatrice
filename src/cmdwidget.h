@@ -21,7 +21,8 @@ public:
         {"File: new", "new"},
         {"Editor: open config file", "cfg"},
         {"Text: find", "find"},
-        {"Bash: launch command", "cmd"}
+        {"Bash: launch command", "cmd"},
+        {"File: change syntax", "syntax"}
     };
     /*vector<string> COMMAND_LIST = {
         "tabsize",

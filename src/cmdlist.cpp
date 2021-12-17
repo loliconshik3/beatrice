@@ -40,12 +40,15 @@ void CmdList::redrawCommands() {
     }*/
 
     //if (curComArg == "") {
-    for (const auto & command : rootParent->COMMAND_LIST) {
-        string cname = QString(command.second.c_str()).toLower().toStdString();
+    vector<string> out = rootParent->cmd->splitCommand(rootParent->cmd->text().toLower().toStdString());
+    if (out.size() < 2) {
+        for (const auto & command : rootParent->COMMAND_LIST) {
+            string cname = QString(command.second.c_str()).toLower().toStdString();
 
-        if ( cname.find(searchQuery) != string::npos ) {
-            QString name = command.first.c_str();
-            addItem(name);
+            if ( cname.find(searchQuery) != string::npos ) {
+                QString name = command.first.c_str();
+                addItem(name);
+            }
         }
     }
     /*}

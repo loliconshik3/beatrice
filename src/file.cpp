@@ -6,6 +6,7 @@ File::File(string name, string text, string path, string directory, bool isNew)
     this->name = name;
     this->text = text;
     this->path = path;
+    this->syntax    = getFileExt(name);
     this->extension = getFileExt(name);
     this->directory = directory;
     this->isNew     = isNew;
@@ -15,6 +16,15 @@ File::File(string name, string text, string path, string directory, bool isNew)
 
 bool File::isSaved() {
     if (text == savedText) {
+        return true;
+    }
+
+    return false;
+}
+
+bool File::setSyntax(string snt) {
+    if (std::find(SYNTAX_LIST.begin(), SYNTAX_LIST.end(), snt) != SYNTAX_LIST.end()) {
+        this->syntax = snt;
         return true;
     }
 

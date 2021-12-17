@@ -120,7 +120,7 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
 }
 
 void SyntaxHighlighter::highlightBlock(const QString &text) {
-    map<string, string> patterns = loadSyntax(root->currentFile->extension/*FILE | getFileExt(getFilename(root->filename))*/);
+    map<string, string> patterns = loadSyntax(root->currentFile->syntax);
     QTextCharFormat standartFormat;
     QTextCharFormat format;
     QRegExp rx;
