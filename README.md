@@ -30,6 +30,16 @@
 
 * And something else...
 
+# Installation
+
+* Clone git repository - `git clone https://github.com/loliconshik3/beatrice.git`
+
+* Move to beatrice directory - `cd beatrice`
+
+* Use qmake for build makefile - `qmake`
+
+* Build beatrice from source - `make`
+
 # Documentation
 
 * [Key-bindings](./docs/KEYBINDS.md)
