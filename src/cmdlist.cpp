@@ -16,7 +16,7 @@ void CmdList::loadCommands() {
     clear();
 
     for (const auto &name : rootParent->COMMAND_LIST) {
-        addItem(name.c_str());
+        addItem(name.first.c_str());
     }
 
     setCurrentItem(item(0));
@@ -41,10 +41,10 @@ void CmdList::redrawCommands() {
 
     //if (curComArg == "") {
     for (const auto & command : rootParent->COMMAND_LIST) {
-        string cname = QString(command.c_str()).toLower().toStdString();
+        string cname = QString(command.second.c_str()).toLower().toStdString();
 
         if ( cname.find(searchQuery) != string::npos ) {
-            QString name = command.c_str();
+            QString name = command.first.c_str();
             addItem(name);
         }
     }

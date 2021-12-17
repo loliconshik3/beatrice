@@ -12,7 +12,18 @@ class CmdWidget : public QWidget
 {
     Q_OBJECT
 public:
-    vector<string> COMMAND_LIST = {
+    map<string, string> COMMAND_LIST = {
+        {"Text: change tab size", "tabsize"},
+        {"File: open", "open"},
+        {"File: save", "save"},
+        {"Editor: quit", "quit"},
+        {"Editor: about", "about"},
+        {"File: new", "new"},
+        {"Editor: open config file", "cfg"},
+        {"Text: find", "find"},
+        {"Bash: launch command", "cmd"}
+    };
+    /*vector<string> COMMAND_LIST = {
         "tabsize",
         "open",
         "save",
@@ -22,7 +33,7 @@ public:
         "cfg",
         "find",
         "cmd"
-    };
+    };*/
 
     /*map<string, string, string> COMMAND_LIST = {
         {"tabsize", "int=1:12", "Change tab size (tabsize)", },

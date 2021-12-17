@@ -211,7 +211,9 @@ void CommandLine::completeArg() {
         return;
     }
 
-    QString text = rootParent->cmdList->currentItem()->text() + QString(" ");
+    //QString text = rootParent->cmdList->currentItem()->text() + QString(" ");
+    QString itemText = rootParent->cmdList->currentItem()->text();
+    QString text = rootParent->COMMAND_LIST[itemText.toStdString()].c_str() + QString(" ");
     QString prevText = "";
 
     cursorBackward(true, 1);
