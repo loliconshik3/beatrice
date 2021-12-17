@@ -113,11 +113,11 @@ map<string, string> Config::loadTheme_Micro() {
 map<string, string> Config::loadTheme_Dracula() {
     map<string, string> theme;
 
-    theme["flistBackground"]        = "#382a36";
+    theme["flistBackground"]        = "#383a46"; //382a36
     theme["flinfoBackground"]       = "#bd93f9";
-    theme["fltextBackground"]       = "#483a46";
-    theme["flwidgetBackground"]     = "#382a36";
-    theme["flsearchBackground"]     = "#382a36";
+    theme["fltextBackground"]       = "#483a50";
+    theme["flwidgetBackground"]     = "#383a46"; //382a36
+    theme["flsearchBackground"]     = "#44475a"; //382a36
 
     theme["flistFontColor"]         = "#d3d3d3";
     theme["flinfoFontColor"]        = "#382a36";
@@ -128,9 +128,9 @@ map<string, string> Config::loadTheme_Dracula() {
     theme["findBackground"]         = "#282a26";
     theme["textboxBackground"]      = "#282a36";
     theme["infopanelBackground"]    = "#bd93f9";
-    theme["clipboardBackground"]    = "#382a36";
+    theme["clipboardBackground"]    = "#383a46"; //382a36
     theme["mainwindowBackground"]   = "#282a36";
-    theme["commandlineBackground"]  = "#282a36";
+    theme["commandlineBackground"]  = "#44475a"; //282a36
 
     theme["findFontColor"]          = "#d3d3d3";
     theme["textboxFontColor"]       = "#d3d3d3";

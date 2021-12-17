@@ -26,6 +26,8 @@
 
 * Simple syntax highlight support. 
 
+* Macros support.
+
 * And something else...
 
 # Documentation
