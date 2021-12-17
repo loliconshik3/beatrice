@@ -78,6 +78,7 @@ void CmdList::redrawCommands() {
     }*/
 
     //sortItems();
+    rootParent->resizeWidgetByListItems();
     setCurrentItem(item(0));
 }
 

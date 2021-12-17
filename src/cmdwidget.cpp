@@ -8,15 +8,6 @@ CmdWidget::CmdWidget(MainWindow *parent) : QWidget(parent)
     updateWidgetStyle();
 }
 
-void CmdWidget::updateWidgetStyle() {
-    setWindowFlags(Qt::Popup);
-
-    setGeometry(0, 0, root->cfg->cmdWidgetWidth, root->cfg->cmdWidgetHeight);
-
-    move(root->cfg->cmdWidgetX, root->cfg->cmdWidgetY);
-
-}
-
 void CmdWidget::previousItem() {
     int itemIndex   = cmdList->currentIndex().row();
     int maxIndex    = 0;
@@ -39,4 +30,24 @@ void CmdWidget::nextItem() {
     else {
         cmdList->setCurrentItem(cmdList->item(0));
     }
+}
+
+
+void CmdWidget::resizeWidgetByListItems() {
+    if (cmdList->count() == 0) {
+        setFixedWidth(root->cfg->commandLineWidth);
+        setFixedHeight(root->cfg->commandLineHeight);
+    }
+    else {
+        setFixedWidth(root->cfg->cmdWidgetWidth);
+        setFixedHeight(root->cfg->cmdWidgetHeight);
+    }
+}
+
+void CmdWidget::updateWidgetStyle() {
+    setWindowFlags(Qt::Popup);
+
+    setGeometry(0, 0, root->cfg->cmdWidgetWidth, root->cfg->cmdWidgetHeight);
+
+    move(root->cfg->cmdWidgetX, root->cfg->cmdWidgetY);
 }
