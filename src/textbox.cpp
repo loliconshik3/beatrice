@@ -18,6 +18,7 @@ Textbox::Textbox(MainWindow *parent) :
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    setLineWrapMode(QTextEdit::NoWrap);
     setAutoFormatting(QTextEdit::AutoNone);
     setAcceptRichText(false);
 

@@ -88,6 +88,9 @@ void CmdList::updateWidgetStyle() {
                          root->theme["clipboardBackground"].c_str());
     setStyleSheet(style);
 
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     QFont fnt(root->cfg->clipboardFontFamily.c_str());
     fnt.setPixelSize(root->cfg->clipboardFontSize);
     setFont(fnt);
