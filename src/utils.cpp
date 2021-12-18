@@ -3,6 +3,19 @@
 #include <chrono>
 #include <ctime>
 
+bool isSyntaxExists(string syntax) {
+    const vector<string> SYNTAX_LIST = {
+      "py", "j", "cpp", "h", "c", "html", "ini", "cs",
+      "none"
+    };
+
+    if (std::find(SYNTAX_LIST.begin(), SYNTAX_LIST.end(), syntax) != SYNTAX_LIST.end()) {
+        return true;
+    }
+
+    return false;
+}
+
 void log(string text) {
     auto end        = chrono::system_clock::now();
     time_t end_time = chrono::system_clock::to_time_t(end);

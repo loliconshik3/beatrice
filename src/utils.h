@@ -23,6 +23,7 @@
 
 using namespace std;
 
+bool isSyntaxExists(string syntax);
 bool replaceStr(string &str, const string &from, const string &to);
 void split(string &str, char delim, vector<string> &out);
 int getSelectedLines(QTextCursor &cursor);

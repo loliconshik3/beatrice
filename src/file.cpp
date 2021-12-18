@@ -6,12 +6,13 @@ File::File(string name, string text, string path, string directory, bool isNew)
     this->name = name;
     this->text = text;
     this->path = path;
-    this->syntax    = getFileExt(name);
     this->extension = getFileExt(name);
     this->directory = directory;
     this->isNew     = isNew;
     this->savedText = text;
     this->cursorPosition = 0;
+
+    setSyntax(extension);
 }
 
 bool File::isSaved() {
@@ -23,10 +24,15 @@ bool File::isSaved() {
 }
 
 bool File::setSyntax(string snt) {
-    if (std::find(SYNTAX_LIST.begin(), SYNTAX_LIST.end(), snt) != SYNTAX_LIST.end()) {
+    log("Update file syntax to: " + snt);
+
+    if (isSyntaxExists(snt)) {
+        log("Syntax updating complete!");
         this->syntax = snt;
         return true;
     }
+
+    log("Updating error: Syntax does not exists!");
 
     return false;
 }

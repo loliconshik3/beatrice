@@ -97,6 +97,10 @@ map<string, string> SyntaxHighlighter::generateCPP() {
 map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     map<string, string> patterns = {};
 
+    if (!isSyntaxExists(ext)) {
+        return patterns;
+    }
+
     if (ext == "j") {
         patterns = generateJASS();
     }
