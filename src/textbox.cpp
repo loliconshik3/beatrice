@@ -863,6 +863,9 @@ void Textbox::updateShortcuts() {
 
     connect(this, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
 
+    connect(this, &Textbox::selectionChanged, this, [this]{ root->infopanel->updateText(); });
+
+
     // Line numbers
     lineNumberArea = new LineNumberArea(this);
     ///

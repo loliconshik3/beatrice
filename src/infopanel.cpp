@@ -42,6 +42,11 @@ void InfoPanel::updateText() {
         fname += "*";
     }
 
+    int selLength = root->textbox->getSelectionText().length();
+    if (selLength > 0) {
+        cursorPos = to_string(selLength);
+    }
+
     list <string> args = {
         "["+fileIndex+"/"+maxFiles+"] " + fname + " @ " + directory + " (" + cursorPos + ")",
         "ext: "  + extension + "/" + syntax,
