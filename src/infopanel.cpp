@@ -46,8 +46,8 @@ void InfoPanel::updateText() {
         "["+fileIndex+"/"+maxFiles+"] " + fname + " @ " + directory + " (" + cursorPos + ")",
         "ext: "  + extension + "/" + syntax,
         "tab: "  + tabSize,
-        "font: " + fontSize + "px",
-        "dir: "  + currentdir
+        "font: " + fontSize + "px"
+        //"dir: "  + currentdir
     };
 
     for (const string &arg : args) {

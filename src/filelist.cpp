@@ -211,6 +211,13 @@ void FileList::loadDirectoryFiles(string path) {
         addItem(fileName.c_str());
         setDirectoryFiles(backPath);
     }
+    //==========Add . item==========
+    fileName = CURRENT_DIR_NAME;
+    files[fileName] = path;
+    addItem(fileName.c_str());
+    setDirectoryFiles(path);
+    //==============================
+
     currentDirectory = path;
 
     sortItems();
@@ -257,7 +264,7 @@ void FileList::openFile() {
 
         rootParent->flsearch->clear();
 
-        if (curItem == BACK_NAME.c_str() or curItem.contains("[")) {
+        if (curItem == BACK_NAME.c_str() or curItem.contains("[") or curItem == CURRENT_DIR_NAME.c_str()) {
             loadDirectoryFiles(path);
         }
         else if (curItem == PICK_NAME.c_str()) {

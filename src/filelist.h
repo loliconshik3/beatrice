@@ -14,6 +14,7 @@ class FileList : public QListWidget
 {
     Q_OBJECT
 private:
+    const string CURRENT_DIR_NAME = ".";
     const string BACK_NAME = "..";
     const string PICK_NAME = ">> PICK DIRECTORY <<";
     string currentDirectory;
