@@ -150,6 +150,7 @@ void MainWindow::openFile(QString path) {
         files.insert(files.end(), file);
         updateCurrentFile(file);
         saveLastFile();
+        saveSessionFiles();
     }
 }
 
@@ -281,6 +282,45 @@ void MainWindow::closeCurrentFile() {
     }
     else {
         newFile();
+    }
+    saveSessionFiles();
+}
+
+void MainWindow::loadSessionFiles() {
+    string homedir = getHomeDir();
+    string path = homedir + "/.config/beatrice/cache/session";
+
+    QFile file(path.c_str());
+    if (file.open(QIODevice::ReadOnly)) {
+        QTextStream in(&file);
+        while (!in.atEnd())
+        {
+           QString line = in.readLine();
+
+           QFile loadedFile(line);
+           if (loadedFile.exists()) {
+                QString name = line;
+                openFile(name);
+            }
+        }
+        file.close();
+    }
+}
+
+void MainWindow::saveSessionFiles() {
+    string homedir = getHomeDir();
+    string path = homedir + "/.config/beatrice/cache/session";
+
+    QFile file(path.c_str());
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream out(&file);
+
+        for (const auto &file : files) {
+            QString name = file->path.c_str();
+            out << name + QString("\n");
+        }
+
+        file.close();
     }
 }
 

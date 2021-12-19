@@ -191,6 +191,9 @@ int main(int argc, char *argv[])
         window.newFile();
     }
     system("clear");
+    if (window.cfg->loadLastSessionFiles) {
+        window.loadSessionFiles();
+    }
 
     return app.exec();
 }

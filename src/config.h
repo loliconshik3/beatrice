@@ -19,6 +19,7 @@ public:
 
     QRect rect = QDesktopWidget().availableGeometry();
 
+    bool loadLastSessionFiles = true;
     int clipboardMaxSize = 10;
 
     int windowMinWidth  = 1000;

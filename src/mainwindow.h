@@ -71,7 +71,10 @@ public slots:
         exit(0);
     }
 
+    void loadSessionFiles();
+
 private:
+    void saveSessionFiles();
     void reloadConfig();
 
 };
