@@ -17,6 +17,7 @@ private:
     const string CURRENT_DIR_NAME = ".";
     const string BACK_NAME = "..";
     const string PICK_NAME = ">> PICK DIRECTORY <<";
+    string openMode = "STANDART";
     string currentDirectory;
 
     void updateShortcuts();
@@ -43,6 +44,7 @@ public slots:
 private slots:
     void currentItemChanged();
     void openFile();
+    void closeFile();
     void deleteFile();
     void setDirectoryFiles(string path);
     void setFileText(string name, QFile &file);

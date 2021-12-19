@@ -72,15 +72,20 @@ void FileList::currentItemChanged() {
         replaceStr(totalName, "!", "");
         replaceStr(totalName, "@", "");
 
-        if (name.at(0) == "!") {
-            infoText = QString("Create file: ") + totalName.c_str();
-        }
-        else if (name.at(0) == "@") {
-            infoText = QString("Create directory: ") + totalName.c_str();
-        }
+        if (name.length() > 0) {
+            if (name.at(0) == "!") {
+                infoText = QString("Create file: ") + totalName.c_str();
+            }
+            else if (name.at(0) == "@") {
+                infoText = QString("Create directory: ") + totalName.c_str();
+            }
 
-        if (currentDirectory == "") {
-            infoText = "Can't create any files or directories here!";
+            if (currentDirectory == "") {
+                infoText = "Can't create any files or directories here!";
+            }
+        }
+        else {
+            infoText = "";
         }
 
         rootParent->flinfo->setText(infoText);
@@ -160,6 +165,7 @@ void FileList::loadLastFiles() {
         }
         file.close();
     }
+    openMode = "LAST";
     currentDirectory = "";
 
     sortItems();
@@ -218,6 +224,7 @@ void FileList::loadDirectoryFiles(string path) {
     setDirectoryFiles(path);
     //==============================
 
+    openMode = "STANDART";
     currentDirectory = path;
 
     sortItems();
@@ -251,6 +258,7 @@ void FileList::loadTabFiles() {
         files[name]     = file->path;
         addItem(name.c_str());
     }
+    openMode = "TAB";
     currentDirectory = "";
 
     //sortItems();
@@ -347,6 +355,25 @@ void FileList::deleteFile() {
     }
 }
 
+void FileList::closeFile() {
+    if (currentDirectory != "" || openMode != "TAB" || count() <= 0) {
+        return;
+    }
+
+    QString filename = currentItem()->text();
+    string path      = files[filename.toStdString()];
+
+    File *curFile = root->currentFile;
+    File *fl = new File("", "", path, "", true);
+    File *file = fl->getFileInList(root->files);
+    root->currentFile = file;
+    root->closeCurrentFile();
+    root->currentFile = curFile;
+
+    files.erase(filename.toStdString());
+    takeItem(currentRow());
+}
+
 void FileList::redrawFiles() {
     clear();
 
@@ -387,6 +414,9 @@ void FileList::updateShortcuts() {
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_listDeleteFile), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(deleteFile()));
+
+    shortcut = new QShortcut(QKeySequence(root->cfg->sct_closeCurrentFile), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(closeFile()));
 
     connect(this, &FileList::itemSelectionChanged, this, &FileList::currentItemChanged);
 }
