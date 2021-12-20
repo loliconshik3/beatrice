@@ -653,10 +653,22 @@ void Textbox::updateLineNumberArea(int /*slider_pos*/)
 {
     Textbox::updateLineNumberArea();
 }
+
+void Textbox::updateCurrentLineColor() {
+    QTextEdit::ExtraSelection h;
+    h.cursor = textCursor();
+    h.format.setProperty(QTextFormat::FullWidthSelection, true);
+    h.format.setBackground(QColor(root->theme["textboxCurrentLineColor"].c_str()));
+    QList<QTextEdit::ExtraSelection> extras;
+    extras << h;
+    setExtraSelections(extras);
+}
+
 void Textbox::updateLineNumberArea()
 {
     root->currentFile->cursorPosition = textCursor().position();
     root->infopanel->updateText();
+    updateCurrentLineColor();
 
     /*
      * When the signal is emitted, the sliderPosition has been adjusted according to the action,
@@ -794,7 +806,7 @@ void Textbox::lineNumberAreaPaintEvent(QPaintEvent *event)
             painter.setPen((this->textCursor().blockNumber() == blockNumber) ? col_1 : col_0);
             painter.drawText(-5, top, //-0
                              lineNumberArea->width(), fontMetrics().height(),
-                             Qt::AlignRight, number); //Qt::AlignCenter
+                             Qt::AlignRight, number);
         }
 
         block = block.next();

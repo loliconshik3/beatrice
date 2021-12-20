@@ -53,6 +53,7 @@ public slots:
     void resizeEvent(QResizeEvent *e);
 
 private slots:
+    void updateCurrentLineColor();
 
     void scalePlus();
     void scaleMinus();
