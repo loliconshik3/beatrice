@@ -7,6 +7,8 @@
 #include <QTextEdit>
 #include <QKeyEvent>
 
+#include <QMimeData>
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -87,6 +89,14 @@ public:
     Textbox(MainWindow *parent=nullptr);
 
 protected:
+    void dropEvent(QDropEvent *event) {
+        QList<QUrl> urls = event->mimeData()->urls();
+        for (const auto &url : urls) {
+            QString path = url.toLocalFile();
+            root->openFile(path);
+        }
+    }
+
     void keyPressEvent(QKeyEvent *e) {
         if (e->key() == Qt::Key_Tab) {
             tabulation();

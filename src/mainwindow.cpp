@@ -198,6 +198,7 @@ void MainWindow::saveFile(QString path) {
                 currentFile->path       = fpath;
                 currentFile->directory  = fdir;
                 currentFile->extension  = fext;
+                currentFile->setSyntax(fext);
                 updateTitle();
                 infopanel->updateText();
             }
