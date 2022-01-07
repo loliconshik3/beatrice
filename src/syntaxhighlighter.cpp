@@ -36,7 +36,7 @@ map<string, string> SyntaxHighlighter::generatePython() {
         {"\".*\"", "#71c919"},
         {"'.*'", "#71c919"},
         //{"(?=def )(.*)(?=()", "#71c919"},
-        {"\\b(if|for|in|while|break|try|except|pass|return)\\b", "#d097a3"},
+        {"\\b(if|else|elif|for|in|while|break|try|except|pass|return)\\b", "#d097a3"},
         {"\\b(self|True|False)\\b", "#c95b8e"},
         {"\\b(def|class|from|import|async|as)\\b", "#ff8080"},
         {"\\b((import) .*|(from) .*)\\b", "#d097a3"},
@@ -84,11 +84,13 @@ map<string, string> SyntaxHighlighter::generateINI() {
 map<string, string> SyntaxHighlighter::generateCPP() {
     map<string, string> patterns = {
         //{"/*.**/", "#8a8d93"},
-        {"[0-9]|=", "#71c919"},
+        {"//.*\\s", "#8a8d93"},
+        {"\".*\"", "#71c919"},
+        {"[0-9]|=|;", "#71c919"},
         //{"(?=function )(.*)(?= takes)", "#71c919"},
         {"\\b(if|else|for|foreach|while)\\b", "#d097a3"},
         {"\\b(const|auto|std|void|string|int|NULL|nullptr|byte|true|false|bool)\\b", "#c95b8e"},
-        {"\\b(class|using|namespace|return|#include|#define|#ifndef|#endif|public|private|protected)\\b", "#ff8080"}
+        {"\\b(switch|case|class|using|namespace|return|#include|#define|#ifndef|#endif|public|private|protected)\\b", "#ff8080"}
     };
 
     return patterns;
@@ -110,7 +112,7 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
     else if (ext == "cs") {
         patterns = generateSharp();
     }
-    else if (ext == "cpp" || ext == "h") {
+    else if (ext == "cpp" || ext == "h" || ext == "c") {
         patterns = generateCPP();
     }
     else if (ext == "ini") {
