@@ -226,15 +226,14 @@ void Textbox::selectCurrentLine() {
 
 void Textbox::duplicateLine() {
     QTextCursor cursor  = textCursor();
-    int cursorPosition  = cursor.position();
 
     if (cursor.selectedText() == "") {
-        cursor.setPosition(cursorPosition);
         cursor.select(QTextCursor::LineUnderCursor);
     }
     QString selectedText = cursor.selectedText();
-    cursor.removeSelectedText();
-    insertPlainText(selectedText+"\n"+selectedText);
+    int end = cursor.selectionEnd();
+    cursor.setPosition(end);
+    insertPlainText("\n"+selectedText);
 
     setTextCursor(cursor);
 }
