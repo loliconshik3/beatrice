@@ -70,12 +70,12 @@ void Textbox::tabulation() {
     QTextCursor cursor  = textCursor();
     int lines           = getSelectedLines(cursor);
     string macName      = getPreviousWord();
-    string macros       = root->macros->getMacros(macName);
+    Macros *macros       = root->macrosList->getMacros(macName);
 
-    if (macros != "" && root->macros->isMacrosHasExtension(macName, root->currentFile->extension)) {
+    if (macros->text != "" && macros->hasExtension(root->currentFile->extension)) {
         removePreviousWord();
         cursor = textCursor();
-        insertPlainText(macros.c_str());
+        insertPlainText(macros->text.c_str());
         return;
     }
 
@@ -233,9 +233,8 @@ void Textbox::duplicateLine() {
     QString selectedText = cursor.selectedText();
     int end = cursor.selectionEnd();
     cursor.setPosition(end);
-    insertPlainText("\n"+selectedText);
-
     setTextCursor(cursor);
+    insertPlainText("\n"+selectedText);
 }
 
 void Textbox::removeLine() {

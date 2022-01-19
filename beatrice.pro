@@ -26,6 +26,7 @@ SOURCES += \
     src/infopanel.cpp \
     src/linenumberarea.cpp \
     src/macros.cpp \
+    src/macroslist.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/replacetext.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     src/infopanel.h \
     src/linenumberarea.h \
     src/macros.h \
+    src/macroslist.h \
     src/mainwindow.h \
     src/replacetext.h \
     src/syntaxhighlighter.h \

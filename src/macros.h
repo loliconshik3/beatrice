@@ -13,16 +13,17 @@ using namespace std;
 
 class Macros
 {
-public:
-    Macros();
-    map<string, string> macrosList;
-    map<string, vector<string>> macrosExtList;
+private:
+    vector<string> extensions;
 
-    bool isMacrosHasExtension(string name, string extension);
-    vector<string> getMacrosExtensions(string name);
-    void parseSettings(string name);
-    string getMacros(string name);
-    void loadMacros();
+public:
+    string name;
+    string text;
+
+    Macros(string name, string text);
+
+    void addExtension(string extension);
+    bool hasExtension(string extension);
 };
 
 #endif // MACROS_H

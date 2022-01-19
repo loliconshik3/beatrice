@@ -1,6 +1,7 @@
 #include "syntaxhighlighter.h"
 #include "mainwindow.h"
 #include "textbox.h"
+#include "macros.h"
 #include "utils.h"
 
 #include <QTextCharFormat>
@@ -156,12 +157,12 @@ void SyntaxHighlighter::highlightBlock(const QString &text) {
        }
     }
 
-    if (root->macros->macrosList.size() > 0) {
-        for (const auto &[name, txt] : root->macros->macrosList) {
+    if (root->macrosList->macroses.size() > 0) {
+        for (const auto &[name, macros] : root->macrosList->macroses) {
             QString rxStr = name.c_str();
             rx = QRegExp(rxStr);
 
-            if (!root->macros->isMacrosHasExtension(name, root->currentFile->extension)) {
+            if (!macros->hasExtension(root->currentFile->extension)) {
                 continue;
             }
 

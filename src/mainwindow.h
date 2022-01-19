@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "macroslist.h"
 #include "config.h"
-#include "macros.h"
 #include "utils.h"
 #include "file.h"
 
@@ -30,7 +30,7 @@ public:
     File *currentFile       = NULL;
     vector<File*> files     = {};
 
-    Macros *macros              = new Macros();
+    MacrosList *macrosList      = new MacrosList();
     Config *cfg                 = new Config();
     map<string, string> theme   = cfg->themeColors;
 
