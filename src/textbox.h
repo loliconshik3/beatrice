@@ -98,6 +98,33 @@ protected:
     }
 
     void keyPressEvent(QKeyEvent *e) {
+        QTextCursor cur = textCursor();
+        switch (e->key()) {
+            case (Qt::Key_Up): {
+                if (cur.blockNumber() == 0) {
+                    auto anchorState = QTextCursor::MoveAnchor;
+                    if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
+                        anchorState = QTextCursor::KeepAnchor;
+                    }
+                    cur.setPosition(0, anchorState);
+                    setTextCursor(cur);
+                }
+                break;
+            }
+
+            case (Qt::Key_Down): {
+                if (cur.blockNumber() == this->document()->blockCount()-1) {
+                    auto anchorState = QTextCursor::MoveAnchor;
+                    if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
+                        anchorState = QTextCursor::KeepAnchor;
+                    }
+                    cur.setPosition(this->toPlainText().length(), anchorState);
+                    setTextCursor(cur);
+                }
+                break;
+            }
+        }
+
         if (e->key() == Qt::Key_Tab) {
             tabulation();
         }
