@@ -72,7 +72,7 @@ void Textbox::tabulation() {
     string macName      = getPreviousWord();
     Macros *macros       = root->macrosList->getMacros(macName);
 
-    if (macros->text != "" && macros->hasExtension(root->currentFile->extension)) {
+    if (macros != NULL && macros->text != "" && macros->hasExtension(root->currentFile->extension)) {
         removePreviousWord();
         cursor = textCursor();
         insertPlainText(macros->text.c_str());
