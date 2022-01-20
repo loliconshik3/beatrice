@@ -9,11 +9,11 @@
 #include "findwidget.h"
 #include "clipboard.h"
 #include "cmdwidget.h"
+#include "cmdtext.h"
 #include "infopanel.h"
 #include "filelist.h"
 #include "findtext.h"
 #include "textbox.h"
-#include "cmdlist.h"
 #include "utils.h"
 
 #include <QApplication>
@@ -134,10 +134,9 @@ int main(int argc, char *argv[])
 
     CmdWidget cmdWidget(&window);
     CommandLine cmd(&cmdWidget);
-    CmdList cmdList(&cmdWidget);
+    CmdText cmdText(&cmdWidget);
 
     Textbox textbox(&window);
-    //CommandLine commandline(&window);
     InfoPanel infopanel(&window);
     Clipboard clipboard(&window);
 
@@ -154,7 +153,7 @@ int main(int argc, char *argv[])
     flwidget.flinfo     = &flinfo;
     flwidget.fltext     = &fltext;
     cmdWidget.cmd       = &cmd;
-    cmdWidget.cmdList   = &cmdList;
+    cmdWidget.cmdText   = &cmdText;
     window.commandline  = &cmdWidget;
     window.findwidget   = &findwidget;
     window.infopanel    = &infopanel;

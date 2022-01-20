@@ -1,5 +1,5 @@
 #include "commandline.h"
-#include "cmdlist.h"
+#include "cmdtext.h"
 #include "textbox.h"
 #include "utils.h"
 
@@ -34,8 +34,9 @@ void CommandLine::runLastCommand() {
 
 void CommandLine::launchCommand() {
     string commandText = text().toStdString();
+    bool isBashCommand = false;
 
-    rootParent->hide();
+    //rootParent->hide();
     clear();
 
     if (commandText == "") {
@@ -69,10 +70,6 @@ void CommandLine::launchCommand() {
             QRegExp rx = QRegExp(pattern);
             root->textbox->find(rx);
         }
-        else if (out[0] == "cmd") {
-            string command = outToCommand(out);
-            system(command.c_str());
-        }
         else if (out[0] == "syntax") {
             string syntax = out[1];
             root->currentFile->setSyntax(syntax);
@@ -81,7 +78,7 @@ void CommandLine::launchCommand() {
         }
         else {
             log("Command not found!");
-            return;
+            isBashCommand = true;
         }
     }
     else {
@@ -101,7 +98,27 @@ void CommandLine::launchCommand() {
         }
         else {
             log("Command not found!");
-            return;
+            isBashCommand = true;
+        }
+    }
+
+    if (isBashCommand) {
+        string command = outToCommand(out);
+
+        rootParent->cmdText->printCommand(command.c_str());
+
+        QProcess process;
+        process.start(command.c_str());
+        process.waitForFinished(-1); // will wait forever until finished
+
+        QString stdout = process.readAllStandardOutput();
+        QString stderr = process.readAllStandardError();
+
+        if (!stdout.isEmpty()) {
+            rootParent->cmdText->printOutput(stdout);
+        }
+        if (!stderr.isEmpty()) {
+            rootParent->cmdText->printOutput(stderr);
         }
     }
 
@@ -157,9 +174,9 @@ void CommandLine::saveToHistory() {
 }
 
 string CommandLine::outToCommand(vector<string> out) {
-    string command  = root->cfg->terminalCommand;
+    string command  = "";//root->cfg->terminalCommand;
     int length      = out.size() - 1;
-    int index       = 1;
+    int index       = 0;
 
     while (index <= length) {
         command += out[index] + " ";
@@ -211,31 +228,6 @@ vector<string> CommandLine::splitCommand(string command) {
     return out;
 }
 
-void CommandLine::completeArg() {
-    if (rootParent->cmdList->count() == 0) {
-        insert(" ");
-        return;
-    }
-
-    //QString text = rootParent->cmdList->currentItem()->text() + QString(" ");
-    QString itemText = rootParent->cmdList->currentItem()->text();
-    QString text = rootParent->COMMAND_LIST[itemText.toStdString()].c_str() + QString(" ");
-    QString prevText = "";
-
-    cursorBackward(true, 1);
-    QString prevChar = selectedText();
-    cursorForward(true, 1);
-
-    if (prevChar != " ") {
-        cursorWordBackward(true);
-        prevText = selectedText();
-    }
-
-    log("Completing arg: " + prevText.toStdString() + " to: " + text.toStdString());
-
-    insert(text);
-}
-
 void CommandLine::completeCommand() {
     clear();
     insert(placeholderText());
@@ -255,8 +247,6 @@ void CommandLine::updateWidgetStyle() {
 }
 
 void CommandLine::updateShortcuts() {
-    connect(this, &CommandLine::textChanged, this, [this]{ rootParent->cmdList->redrawCommands(); });
-
     QShortcut *shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand1), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));
 
@@ -264,10 +254,10 @@ void CommandLine::updateShortcuts() {
     connect(shortcut, SIGNAL(activated()), this, SLOT(completeCommand()));
 
     shortcut = new QShortcut(QKeySequence("Up"), this);
-    connect(shortcut, &QShortcut::activated, this, [this]{ rootParent->previousItem(); } );
+    connect(shortcut, &QShortcut::activated, this, [this]{ previousCommand(); } );
 
     shortcut = new QShortcut(QKeySequence("Down"), this);
-    connect(shortcut, &QShortcut::activated, this, [this]{ rootParent->nextItem(); } );
+    connect(shortcut, &QShortcut::activated, this, [this]{ nextCommand(); } );
 
     shortcut = new QShortcut(QKeySequence(root->cfg->sct_launchCommand2), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(launchCommand()));

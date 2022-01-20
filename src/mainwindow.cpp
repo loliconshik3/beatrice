@@ -2,7 +2,6 @@
 #include "filelisttext.h"
 #include "commandline.h"
 #include "cmdwidget.h"
-#include "cmdlist.h"
 #include "clipboard.h"
 #include "mainwindow.h"
 #include "findwidget.h"
@@ -266,7 +265,7 @@ void MainWindow::aboutScreen() {
 
 void MainWindow::openCmd() {
     commandline->show();
-    commandline->cmdList->loadCommands();
+    //commandline->cmdList->loadCommands();
 }
 
 void MainWindow::closeCurrentFile() {

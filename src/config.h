@@ -36,8 +36,8 @@ public:
     //=============================
 
     //==========COMMAND LINE==========
-    int cmdWidgetWidth          = rect.width() / 2;
-    int cmdWidgetHeight         = rect.height() / 3;
+    int cmdWidgetWidth          = width;
+    int cmdWidgetHeight         = height;
     int cmdWidgetX              = ( rect.width() - cmdWidgetWidth ) / 2;
     int cmdWidgetY              = ( rect.height() - cmdWidgetHeight ) / 2;
 

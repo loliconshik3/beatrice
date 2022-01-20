@@ -1,8 +1,9 @@
 #ifndef COMMANDLINE_H
 #define COMMANDLINE_H
 
-#include <QLineEdit>
 #include "cmdwidget.h"
+
+#include <QLineEdit>
 
 class CommandLine : public QLineEdit
 {
@@ -23,41 +24,17 @@ public:
 public slots:
     vector<string> splitCommand(string command);
     void runLastCommand();
-    void completeArg();
 
 private slots:
     string outToCommand(vector<string> out);
-    void launchCommand();
     void completeCommand();
+    void launchCommand();
     void saveToHistory();
     void loadHistory();
     void escape();
 
     void previousCommand();
     void nextCommand();
-
-protected:
-    void keyPressEvent(QKeyEvent *e) {
-
-        switch (e->key()) {
-            case (Qt::Key_Left): {
-                this->previousCommand();
-                return;
-            }
-
-            case (Qt::Key_Right): {
-                this->nextCommand();
-                return;
-            }
-
-            case (Qt::Key_Space): {
-                this->completeArg();
-                return;
-            }
-        }
-
-        QLineEdit::keyPressEvent(e);
-    }
 };
 
 #endif // COMMANDLINE_H

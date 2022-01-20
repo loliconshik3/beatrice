@@ -10,7 +10,7 @@ CONFIG += c++17 g++11
 
 SOURCES += \
     src/clipboard.cpp \
-    src/cmdlist.cpp \
+    src/cmdtext.cpp \
     src/cmdwidget.cpp \
     src/commandline.cpp \
     src/config.cpp \
@@ -36,7 +36,7 @@ SOURCES += \
 
 HEADERS += \
     src/clipboard.h \
-    src/cmdlist.h \
+    src/cmdtext.h \
     src/cmdwidget.h \
     src/commandline.h \
     src/config.h \

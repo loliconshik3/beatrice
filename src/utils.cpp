@@ -3,6 +3,13 @@
 #include <chrono>
 #include <ctime>
 
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
+
 bool isSyntaxExists(string syntax) {
     const vector<string> SYNTAX_LIST = {
       "py", "j", "cpp", "h", "c", "html", "ini", "cs",
