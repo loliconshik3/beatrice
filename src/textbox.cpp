@@ -299,7 +299,30 @@ void Textbox::enterKey() {
         cursor.setPosition(end);
         setTextCursor(cursor);
     }
+
+    QString aroundChars = getAroundChars().c_str();
+    list<QString> aroundList = {
+        "()", "{}", "[]"
+    };
+    bool arfound = (std::find(aroundList.begin(), aroundList.end(), aroundChars) != aroundList.end());
+
     insertPlainText("\n");
+    if (arfound) {
+        insertPlainText("\n");
+        if (tabs > 0) {
+            int bracketsTabs = tabs;
+            while (bracketsTabs > 0) {
+                insertTabAtLine();
+                bracketsTabs--;
+            }
+        }
+
+        cursor = textCursor();
+        cursor.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, 1);
+        setTextCursor(cursor);
+
+        insertTabAtLine();
+    }
 
     cursor.setVerticalMovementX(lineNumer);
     setTextCursor(cursor);
@@ -480,24 +503,12 @@ void Textbox::completeQuotes(string quote) {
             "()", "[]", "{}", "\"\"", "''",
             "))", "]]", "}}", "{{", "[[", "((",
         };
-        list<QString> checkSolo = {
-            "(", ")", "[", "]", "{", "}",
-            "'", "\""
-        };
         bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
-        bool foundSolo = false;
-        for (const auto &check : checkSolo) {
-            if (ach.contains(check)) {
-                foundSolo = true;
-                break;
-            }
-        }
 
-        if ((ach.length() > 1 && ( ach.contains(" ") ))
+        if ((ach.length() > 1 && ( ach.contains("  ") ))
             or ach.length() == 1
             or ach == ""
-            or found
-            or foundSolo) {
+            or found) {
 
             insertPlainText(totalQuote.c_str());
             moveCursorBack();
@@ -574,23 +585,12 @@ void Textbox::completeBrackets(string bracket, bool isNew) {
                 "()", "[]", "{}", "\"\"", "''",
                 "))", "]]", "}}", "{{", "[[", "(("
             };
-            list<QString> checkSolo = {
-                "(", ")", "[", "]", "{", "}",
-                "'", "\""
-            };
             bool found = (std::find(checkList.begin(), checkList.end(), ach) != checkList.end());
-            bool foundSolo = false;
-            for (const auto &check : checkSolo) {
-                if (ach.contains(check)) {
-                    foundSolo = true;
-                    break;
-                }
-            }
-            if ((ach.length() > 1 && ( ach.contains(" ") ))
+
+            if ((ach.length() > 1 && ( ach.contains("  ") ))
                 or ach.length() == 1
                 or ach == ""
-                or found
-                or foundSolo) {
+                or found) {
 
                 insertPlainText(totalBrackets.c_str());
                 moveCursorBack();
