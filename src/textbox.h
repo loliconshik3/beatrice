@@ -57,8 +57,13 @@ public slots:
 private slots:
     void updateCurrentLineColor();
 
+    bool isShiftPressed();
+    bool isControlPressed();
+
     void scalePlus();
     void scaleMinus();
+    void moveLineUp();
+    void moveLineDown();
     void moveCursorLeft();
     void moveCursorRight();
     void insertTabAtLine();
@@ -103,11 +108,16 @@ protected:
             case (Qt::Key_Up): {
                 if (cur.blockNumber() == 0) {
                     auto anchorState = QTextCursor::MoveAnchor;
-                    if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
+                    if (isShiftPressed()) {
                         anchorState = QTextCursor::KeepAnchor;
                     }
                     cur.setPosition(0, anchorState);
                     setTextCursor(cur);
+                }
+                else {
+                    if (isControlPressed()) {
+                        moveLineUp();
+                    }
                 }
                 break;
             }
@@ -115,11 +125,16 @@ protected:
             case (Qt::Key_Down): {
                 if (cur.blockNumber() == this->document()->blockCount()-1) {
                     auto anchorState = QTextCursor::MoveAnchor;
-                    if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
+                    if (isShiftPressed()) {
                         anchorState = QTextCursor::KeepAnchor;
                     }
                     cur.setPosition(this->toPlainText().length(), anchorState);
                     setTextCursor(cur);
+                }
+                else {
+                    if (isControlPressed()) {
+                        moveLineDown();
+                    }
                 }
                 break;
             }

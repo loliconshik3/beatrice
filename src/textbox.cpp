@@ -30,6 +30,14 @@ Textbox::Textbox(MainWindow *parent) :
     updateLineNumberAreaWidth(0);
 }
 
+bool Textbox::isShiftPressed() {
+    return QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier);
+}
+
+bool Textbox::isControlPressed() {
+    return QGuiApplication::keyboardModifiers().testFlag(Qt::ControlModifier);
+}
+
 int Textbox::countOfTabs(string str) {
     int tabs = 0;
     int symb = 0;
@@ -418,26 +426,74 @@ bool Textbox::nextSymbIsTab(QTextCursor::MoveOperation side) {
 
     cursor.clearSelection();
     cursor.movePosition(side, QTextCursor::KeepAnchor, tabSize);
-    if (cursor.selectedText() == tabString) {
-        return true;
-    }
 
-    return false;
+    return cursor.selectedText() == tabString;
+}
+
+void Textbox::moveLineUp() {
+    QTextCursor cursor  = textCursor();
+
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString lineText = cursor.selectedText();
+    cursor.clearSelection();
+
+    cursor.movePosition(QTextCursor::Up);
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString upLineText = cursor.selectedText();
+
+    cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, lineText.length()+1);
+    cursor.removeSelectedText();
+    setTextCursor(cursor);
+
+    insertPlainText(lineText);
+    insertPlainText("\n");
+    insertPlainText(upLineText);
+
+    cursor = textCursor();
+    cursor.movePosition(QTextCursor::Up);
+    setTextCursor(cursor);
+}
+
+void Textbox::moveLineDown() {
+    QTextCursor cursor  = textCursor();
+
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString lineText = cursor.selectedText();
+    cursor.clearSelection();
+
+    cursor.movePosition(QTextCursor::Down);
+    cursor.select(QTextCursor::LineUnderCursor);
+    QString downLineText = cursor.selectedText();
+
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::StartOfLine, QTextCursor::KeepAnchor);
+    cursor.movePosition(QTextCursor::Up, QTextCursor::KeepAnchor);
+    cursor.removeSelectedText();
+    setTextCursor(cursor);
+
+    insertPlainText(downLineText);
+    insertPlainText("\n");
+    insertPlainText(lineText);
 }
 
 void Textbox::moveCursorRight() {
     QTextCursor cursor  = textCursor();
     auto anchorState    = QTextCursor::MoveAnchor;
+    auto moveState      = QTextCursor::Right;
 
-    if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
+    if (QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)) {
         anchorState = QTextCursor::KeepAnchor;
     }
 
-    if (!nextSymbIsTab(QTextCursor::Right)) {
-        cursor.movePosition(QTextCursor::Right, anchorState, 1);
+    if (isControlPressed()) {
+        moveState = QTextCursor::NextWord;
+    }
+
+    if (!nextSymbIsTab(QTextCursor::Right) || moveState == QTextCursor::NextWord) {
+        cursor.movePosition(moveState, anchorState, 1);
     }
     else {
-        cursor.movePosition(QTextCursor::Right, anchorState, tabSize);
+        cursor.movePosition(moveState, anchorState, tabSize);
     }
 
     setTextCursor(cursor);
@@ -446,16 +502,21 @@ void Textbox::moveCursorRight() {
 void Textbox::moveCursorLeft() {
     QTextCursor cursor = textCursor();
     auto anchorState = QTextCursor::MoveAnchor;
+    auto moveState   = QTextCursor::Left;
 
     if(QGuiApplication::keyboardModifiers().testFlag(Qt::ShiftModifier)){
         anchorState = QTextCursor::KeepAnchor;
     }
 
-    if (!nextSymbIsTab(QTextCursor::Left)) {
-        cursor.movePosition(QTextCursor::Left, anchorState, 1);
+    if (isControlPressed()) {
+        moveState = QTextCursor::PreviousWord;
+    }
+
+    if (!nextSymbIsTab(QTextCursor::Left) || moveState == QTextCursor::PreviousWord) {
+        cursor.movePosition(moveState, anchorState, 1);
     }
     else {
-        cursor.movePosition(QTextCursor::Left, anchorState, tabSize);
+        cursor.movePosition(moveState, anchorState, tabSize);
     }
 
     setTextCursor(cursor);
