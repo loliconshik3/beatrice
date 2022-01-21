@@ -108,6 +108,7 @@ void CommandLine::launchCommand() {
         rootParent->cmdText->printCommand(command.c_str());
 
         QProcess process;
+        process.setWorkingDirectory(getPathDir(root->currentFile->path).c_str());
         process.start(command.c_str());
         process.waitForFinished(-1); // will wait forever until finished
 
