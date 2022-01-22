@@ -240,6 +240,10 @@ void MainWindow::insertSaveCommand(bool saveas) {
     if (currentFile->isNew or saveas) { //FILE | textbox->isNew or saveas
         log("Insert save command in to cmd");
         commandline->show();
+        if (commandline->isHidden()) {
+            log("hide");
+        }
+
         commandline->cmd->clear();
         commandline->cmd->insert("save ");
         commandline->cmd->setFocus();

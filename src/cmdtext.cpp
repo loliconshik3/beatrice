@@ -46,5 +46,5 @@ void CmdText::updateWidgetStyle() {
     fnt.setPixelSize(root->cfg->clipboardFontSize);
     setFont(fnt);
 
-    setGeometry(0, root->cfg->cmdListTopPadding, root->cfg->cmdListWidth, root->cfg->cmdListHeight);
+    //setGeometry(0, root->cfg->cmdListTopPadding, root->cfg->cmdListWidth, root->cfg->cmdListHeight);
 }

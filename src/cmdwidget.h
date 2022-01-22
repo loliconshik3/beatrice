@@ -19,7 +19,6 @@ public:
     CmdText *cmdText = NULL;
 
     void updateWidgetStyle();
-    void resizeWidgetByListItems();
 };
 
 #endif // CMDWIDGET_H

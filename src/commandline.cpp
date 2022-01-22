@@ -240,7 +240,7 @@ void CommandLine::updateWidgetStyle() {
                          root->theme["commandlineBackground"].c_str());
     setStyleSheet(style);
 
-    setGeometry(0, 0, root->cfg->commandLineWidth, root->cfg->commandLineHeight);
+    //setGeometry(0, 0, root->cfg->commandLineWidth, root->cfg->commandLineHeight);
 
     QFont fnt(root->cfg->commandlineFontFamily.c_str());
     fnt.setPixelSize(root->cfg->commandlineFontSize);
