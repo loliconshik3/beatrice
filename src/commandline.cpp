@@ -32,6 +32,23 @@ void CommandLine::runLastCommand() {
     launchCommand();
 }
 
+void CommandLine::bashCommandFinished(int, QProcess::ExitStatus) {
+    QProcess *process = qobject_cast<QProcess *>(sender());
+
+    QString stdout = process->readAllStandardOutput();
+    QString stderr = process->readAllStandardError();
+
+    if (!stdout.isEmpty()) {
+        rootParent->cmdText->printOutput(stdout);
+    }
+    if (!stderr.isEmpty()) {
+        rootParent->cmdText->printOutput(stderr);
+    }
+
+    this->setDisabled(false);
+    this->setFocus();
+}
+
 void CommandLine::launchCommand() {
     string commandText = text().toStdString();
     bool isBashCommand = false;
@@ -107,20 +124,11 @@ void CommandLine::launchCommand() {
 
         rootParent->cmdText->printCommand(command.c_str());
 
-        QProcess process;
-        process.setWorkingDirectory(getPathDir(root->currentFile->path).c_str());
-        process.start(command.c_str());
-        process.waitForFinished(-1); // will wait forever until finished
-
-        QString stdout = process.readAllStandardOutput();
-        QString stderr = process.readAllStandardError();
-
-        if (!stdout.isEmpty()) {
-            rootParent->cmdText->printOutput(stdout);
-        }
-        if (!stderr.isEmpty()) {
-            rootParent->cmdText->printOutput(stderr);
-        }
+        this->setDisabled(true);
+        QProcess *process = new QProcess();
+        process->setWorkingDirectory(getPathDir(root->currentFile->path).c_str());
+        connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(bashCommandFinished(int, QProcess::ExitStatus)));
+        process->start(command.c_str());
     }
 
     log("Command succesfully completed!");

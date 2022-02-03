@@ -4,6 +4,7 @@
 #include "cmdwidget.h"
 
 #include <QLineEdit>
+#include <QProcess>
 
 class CommandLine : public QLineEdit
 {
@@ -26,6 +27,8 @@ public slots:
     void runLastCommand();
 
 private slots:
+    void bashCommandFinished(int, QProcess::ExitStatus);
+
     string outToCommand(vector<string> out);
     void completeCommand();
     void launchCommand();
