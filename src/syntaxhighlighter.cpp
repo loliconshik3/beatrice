@@ -104,23 +104,22 @@ map<string, string> SyntaxHighlighter::loadSyntax(const string &ext) {
         return patterns;
     }
 
-    if (ext == "j") {
-        patterns = generateJASS();
-    }
-    else if (ext == "py") {
-        patterns = generatePython();
-    }
-    else if (ext == "cs") {
-        patterns = generateSharp();
-    }
-    else if (ext == "cpp" || ext == "h" || ext == "c") {
-        patterns = generateCPP();
-    }
-    else if (ext == "ini") {
-        patterns = generateINI();
-    }
-    else if (ext == "html") {
-        patterns = generateHTML();
+    const std::unordered_map<std::string, std::function<void()>> mp{
+        {"j",       [&](){ patterns = generateJASS();   }},
+        {"py",      [&](){ patterns = generatePython(); }},
+        {"cs",      [&](){ patterns = generateSharp();  }},
+        {"cpp",     [&](){ patterns = generateCPP();    }},
+        {"h",       [&](){ patterns = generateCPP();    }},
+        {"c",       [&](){ patterns = generateCPP();    }},
+        {"ini",     [&](){ patterns = generateINI();    }},
+        {"html",    [&](){ patterns = generateHTML();   }},
+    };
+    for (const auto& el : mp) {
+        string name = el.first;
+
+        if (name == ext) {
+            el.second();
+        }
     }
 
     return patterns;

@@ -28,6 +28,7 @@ public slots:
 
 private slots:
     void bashCommandFinished(int, QProcess::ExitStatus);
+    void bashCommandError(QProcess::ProcessError);
 
     string outToCommand(vector<string> out);
     void completeCommand();

@@ -32,17 +32,26 @@ void CommandLine::runLastCommand() {
     launchCommand();
 }
 
+void CommandLine::bashCommandError(QProcess::ProcessError) {
+    QProcess *process = qobject_cast<QProcess *>(sender());
+
+    QString stderr = process->readAllStandardError();
+
+    if (!stderr.isEmpty()) {
+        rootParent->cmdText->printOutput(stderr);
+    }
+
+    this->setDisabled(false);
+    this->setFocus();
+}
+
 void CommandLine::bashCommandFinished(int, QProcess::ExitStatus) {
     QProcess *process = qobject_cast<QProcess *>(sender());
 
     QString stdout = process->readAllStandardOutput();
-    QString stderr = process->readAllStandardError();
 
     if (!stdout.isEmpty()) {
         rootParent->cmdText->printOutput(stdout);
-    }
-    if (!stderr.isEmpty()) {
-        rootParent->cmdText->printOutput(stderr);
     }
 
     this->setDisabled(false);
@@ -109,6 +118,9 @@ void CommandLine::launchCommand() {
         else if (commandText == "new"){
             root->newFile();
         }
+        else if (commandText == "clear"){
+            rootParent->cmdText->clear();
+        }
         else if (commandText == "cfg" or commandText == "config") {
             QString homedir = getHomeDir().c_str();
             root->openFile(homedir + "/.config/beatrice/config.ini");
@@ -128,6 +140,7 @@ void CommandLine::launchCommand() {
         QProcess *process = new QProcess();
         process->setWorkingDirectory(getPathDir(root->currentFile->path).c_str());
         connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(bashCommandFinished(int, QProcess::ExitStatus)));
+        connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(bashCommandError(QProcess::ProcessError)));
         process->start(command.c_str());
     }
 

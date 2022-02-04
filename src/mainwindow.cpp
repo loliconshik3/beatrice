@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     string path = fs::current_path();
     currentFile = new File("Untitled", "", path+"/Untitled", getFilename(path), true);
-    //setStyleSheet("QWidget { background: #1f222d }");//#262728 }");//#2e2f30
 
     log("Editor has been started...");
 
@@ -87,7 +86,6 @@ void MainWindow::openFile(QString path) {
     File *file          = new File("Untitled", "", path.toStdString(), "", true);
     string homedir      = getHomeDir();
     QString testPath    = path;
-    bool createNewFile  = false;
 
     QString filePath    = "";
     QString fileText    = "";
@@ -113,15 +111,11 @@ void MainWindow::openFile(QString path) {
         else {
             if (path.contains(homedir.c_str())) {
                 filePath = path;
-                createNewFile = true;
             }
             else {
                 string dir = getPathDir(currentFile->path);//CURDIR currentDirectory;
                 filePath = dir.c_str() + QString("/") + path;
                 QFile pathFile(filePath);
-                if (!pathFile.exists()) {
-                    createNewFile = true;
-                }
             }
             cout << filePath.toStdString() << endl;
         }

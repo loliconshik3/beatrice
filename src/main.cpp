@@ -164,7 +164,6 @@ int main(int argc, char *argv[])
 
     layout->addWidget(window.textbox, 0, 0);
     layout->addWidget(window.infopanel, 1, 0);
-    //layout->addWidget(window.commandline, 2, 0);
     layout->setContentsMargins(5, 5, 5, 5);
     layout->setSpacing(0);
 
@@ -173,10 +172,8 @@ int main(int argc, char *argv[])
     window.show();
     window.textbox->show();
     window.infopanel->show();
-    //window.commandline->show();
     flwidget.hide();
     findwidget.hide();
-    //cmdWidget.hide();
     window.commandline->updateWidgetStyle();
     window.infopanel->updateText();
 
