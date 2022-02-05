@@ -15,6 +15,7 @@ private:
 public:
     vector<string> history;
     int historyIndex = 0;
+    QProcess *currentProcess = NULL;
 
     MainWindow *root = NULL;
     CmdWidget *rootParent = NULL;
@@ -24,9 +25,11 @@ public:
 
 public slots:
     vector<string> splitCommand(string command);
+    void killCurrentProcess();
     void runLastCommand();
 
 private slots:
+    void printOutput(QProcess *pr);
     void bashCommandFinished(int, QProcess::ExitStatus);
     void bashCommandError(QProcess::ProcessError);
 

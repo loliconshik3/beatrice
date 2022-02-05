@@ -19,6 +19,9 @@ public:
     CmdText *cmdText = NULL;
 
     void updateWidgetStyle();
+
+public slots:
+    void killCurrentProcess();
 };
 
 #endif // CMDWIDGET_H

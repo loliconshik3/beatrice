@@ -45,15 +45,29 @@ void CommandLine::bashCommandError(QProcess::ProcessError) {
     this->setFocus();
 }
 
-void CommandLine::bashCommandFinished(int, QProcess::ExitStatus) {
-    QProcess *process = qobject_cast<QProcess *>(sender());
-
-    QString stdout = process->readAllStandardOutput();
+void CommandLine::printOutput(QProcess *pr) {
+    QString stdout = pr->readAllStandardOutput();
 
     if (!stdout.isEmpty()) {
         rootParent->cmdText->printOutput(stdout);
     }
+}
 
+void CommandLine::bashCommandFinished(int, QProcess::ExitStatus) {
+    QProcess *process = qobject_cast<QProcess *>(sender());
+
+    printOutput(process);
+
+    this->setDisabled(false);
+    this->setFocus();
+}
+
+void CommandLine::killCurrentProcess() {
+    QProcess *process = currentProcess;
+
+    printOutput(process);
+
+    process->kill();
     this->setDisabled(false);
     this->setFocus();
 }
@@ -137,11 +151,11 @@ void CommandLine::launchCommand() {
         rootParent->cmdText->printCommand(command.c_str());
 
         this->setDisabled(true);
-        QProcess *process = new QProcess();
-        process->setWorkingDirectory(getPathDir(root->currentFile->path).c_str());
-        connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(bashCommandFinished(int, QProcess::ExitStatus)));
-        connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(bashCommandError(QProcess::ProcessError)));
-        process->start(command.c_str());
+        currentProcess = new QProcess(this);
+        currentProcess->setWorkingDirectory(getPathDir(root->currentFile->path).c_str());
+        connect(currentProcess, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(bashCommandFinished(int, QProcess::ExitStatus)));
+        connect(currentProcess, SIGNAL(error(QProcess::ProcessError)), this, SLOT(bashCommandError(QProcess::ProcessError)));
+        currentProcess->start(command.c_str());
     }
 
     log("Command succesfully completed!");

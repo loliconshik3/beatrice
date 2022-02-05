@@ -3,10 +3,20 @@
 #include "cmdtext.h"
 
 #include <QGridLayout>
+#include <QShortcut>
 
 CmdWidget::CmdWidget(MainWindow *parent) : QWidget()
 {
     root = parent;
+
+    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+c"), this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(killCurrentProcess()));
+}
+
+void CmdWidget::killCurrentProcess() {
+    if (!cmd->isEnabled()) {
+        cmd->killCurrentProcess();
+    }
 }
 
 void CmdWidget::updateWidgetStyle() {
