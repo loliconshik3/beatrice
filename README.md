@@ -36,9 +36,11 @@
 
 * Move to beatrice directory - `cd beatrice`
 
-* Use qmake for build makefile - `qmake`
+* Make `bin` directory and move to it - `mkdir bin && cd bin`
 
-* Build beatrice from source - `make`
+* Use cmake for build makefile - `cmake ..`
+
+* Build beatrice from source - `cmake --build .`
 
 # Documentation
 
